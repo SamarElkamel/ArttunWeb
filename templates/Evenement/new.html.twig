@@ -1,11 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New évenement{% endblock %}
+{% block title %}New Event{% endblock %}
 
 {% block body %}
-    <h1>Create new évenement</h1>
+<a href="{{ path('app__venement_index') }}" id="back-button">
+  <i class="fas fa-arrow-left"></i> Back to list
+</a>
+    <h1>Create new event</h1>
+ <div class="form-container">
+  {{ include('Evenement/_form.html.twig') }}
+  </div>
+{% block stylesheets %}
+  <style>
+  .event-photo {
+    width: 250px;
+    height: 250px;
+  }
 
-    {{ include('Evenement/_form.html.twig') }}
+  #back-button {
+  display: inline-block;
+  margin : 10px 0 20px 10px 
+}
 
-    <a href="{{ path('app__venement_index') }}">back to list</a>
+h1 {
+  text-align: center;
+}
+
+  .form-container {
+    text-align: center;
+  }
+  </style>
+ {% endblock %}
+  
 {% endblock %}

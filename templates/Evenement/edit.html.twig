@@ -1,13 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Evenement{% endblock %}
+{% block title %}Edit event{% endblock %}
 
 {% block body %}
-    <h1>Edit évenement</h1>
-
+<a href="{{ path('app__venement_index') }}" id="back-button">
+  <i class="fas fa-arrow-left"></i> Back to list
+</a>
+    <h1>Edit event</h1>
+  <div class="form-container">
     {{ include('Evenement/_form.html.twig', {'button_label': 'Update'}) }}
+ </div>
+   
+    {% block stylesheets %}
+  <style>
+ 
+  #back-button {
+  display: inline-block;
+  margin : 10px 0 20px 10px 
+}
 
-    <a href="{{ path('app__venement_index') }}">back to list</a>
+h1 {
+  text-align: center;
+}
 
-    {{ include('Evenement/_delete_form.html.twig') }}
+  .form-container {
+    text-align: center;
+  }
+  </style>
+ {% endblock %}
 {% endblock %}

@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}évenement{% endblock %}
+{% block title %}Events{% endblock %}
 
 {% block body %}
-    <h1>évenement</h1>
+<a href="{{ path('app__venement_index') }}" id="back-button">
+  <i class="fas fa-arrow-left"></i> Back to list
+</a>
+    <h1>Events</h1>
 
     <table class="table">
         <tbody>
+    
             <tr>
-                <th>Id</th>
-                <td>{{ _venement.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
+                <th>Title</th>
                 <td>{{ _venement.libelle }}</td>
             </tr>
             <tr>
@@ -24,27 +24,54 @@
                 <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Frais</th>
+                <th>Costs</th>
                 <td>{{ _venement.frais }}</td>
             </tr>
             <tr>
                 <th>Photo</th>
-                <td>{{ _venement.photo }}</td>
+                 <td>
+        <img src="{{ asset(_venement.photo) }}" class="event-photo">
+    </td>
+                
             </tr>
             <tr>
-                <th>Localisation</th>
+                <th>Location</th>
                 <td>{{ _venement.localisation }}</td>
             </tr>
             <tr>
-                <th>Siteweb</th>
+                <th>Website</th>
                 <td>{{ _venement.siteweb }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app__venement_index') }}">back to list</a>
+<span style="display: flex; align-items: center;">
+  <a href="{{ path('app__venement_edit', {'id': _venement.id}) }}">
+    <i class="fas fa-edit"></i> Edit
+  </a>
+  {{ include('Evenement/_delete_form.html.twig') }}
+</span>
 
-    <a href="{{ path('app__venement_edit', {'id': _venement.id}) }}">edit</a>
 
-    {{ include('Evenement/_delete_form.html.twig') }}
+
+{% block stylesheets %}
+  <style>
+  .event-photo {
+    width: 350px;
+    height: 350px;
+  }
+
+   #back-button {
+  display: inline-block;
+  margin : 10px 0 20px 10px 
+}
+
+h1 {
+  text-align: center;
+}
+
+  </style>
+ {% endblock %}
+
+
 {% endblock %}
