@@ -1,11 +1,84 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{% for child in form.children %}
+    {% if child.vars.errors|length > 0 %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in child.vars.errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endfor %}
+
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <div class="form-group">
+        {{ form_label(form.libelle , 'Title') }}
+        {{ form_widget(form.libelle, {'attr': {'class': 'form-control'}}) }}
+       
+      
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description, 'Description') }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+    </div>
+  
+   <div class="form-group">
+    {{ form_label(form.photo, 'Photo') }}
+    <div>
+        {% if form.photo.vars.value %}
+               <img src="{{ asset(form.photo.vars.value) }}" alt="Current Photo" style="max-width: 250px; display: inline-block;">
+        {% else %}
+            <p>No photo uploaded.</p>
+        {% endif %}
+        <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload Photo</button>
+        {{ form_widget(form.photo, {'attr': {'style': 'display: none;'}}) }}
+        <input type="file" id="photoUpload" style="display: none;" accept="image/*" />
+    </div>
+    
+     <div class="form-group">
+        {{ form_label(form.date, 'Date') }}
+        {{ form_widget(form.date, {'attr': {'type': 'date'}}) }}
+    </div>
+     <div class="form-group">
+          {{ form_label(form.frais, 'Costs') }}
+          {{ form_widget(form.frais, {'attr': {'class': 'form-control'}}) }}
+     </div>
+     <div class="form-group">
+          {{ form_label(form.localisation, 'Location') }}
+          {{ form_widget(form.localisation, {'attr': {'class': 'form-control'}}) }}
+     </div>
+     <div class="form-group">
+          {{ form_label(form.siteweb, 'Website') }}
+          {{ form_widget(form.siteweb, {'attr': {'class': 'form-control'}}) }}
+     </div>
+    
+
     <button class="btn btn-primary" id="save">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
 {% block stylesheets %}
   <style>
  #save{
     margin : 20px 0 0 0 ; 
  }
+
+ .form-control {
+        margin: 0 60px 10px 60px; 
+    }
+
    </style>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#uploadButton').click(function() {
+            $('#photoUpload').click();
+        });
+
+        $('#photoUpload').change(function() {
+            var fileName = $(this).val().split('\\').pop();
+            $('#uploadButton').text(fileName);
+        });
+    });
+</script>
+
  {% endblock %}

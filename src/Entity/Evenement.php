@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EvenementRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 
@@ -20,9 +22,11 @@ class Evenement
     #[ORM\Column(name: "description", type: "string", length: 1000, nullable: false)]
     private string $description;
 
+    #[Assert\GreaterThanOrEqual("today", message: "The date should not be in the past.")]
     #[ORM\Column(name: "date", type: "date", nullable: false)]
     private \DateTime $date;
 
+    #[Assert\Type(type: "float", message: "Costs must be a numerical value.")]
     #[ORM\Column(name: "frais", type: "float", precision: 10, scale: 0, nullable: false)]
     private float $frais;
 
