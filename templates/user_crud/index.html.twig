@@ -1,0 +1,231 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+
+            <div class="row g-4 mb-4">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span>Session</span>
+                                    <div class="d-flex align-items-end mt-2">
+                                        <h4 class="mb-0 me-2">{{ count }}</h4>
+                                        <small class="text-success">(+29%)</small>
+                                    </div>
+                                    <p class="mb-0">Total Users</p>
+                                </div>
+                                <div class="avatar">
+            <span class="avatar-initial rounded bg-label-primary">
+              <i class="bx bx-user bx-sm"></i>
+            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span>Paid Users</span>
+                                    <div class="d-flex align-items-end mt-2">
+                                        <h4 class="mb-0 me-2"></h4>
+                                        <small class="text-success">(+18%)</small>
+                                    </div>
+                                    <p class="mb-0">Last week analytics </p>
+                                </div>
+                                <div class="avatar">
+            <span class="avatar-initial rounded bg-label-danger">
+              <i class="bx bx-user-check bx-sm"></i>
+            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span>Active Users</span>
+                                    <div class="d-flex align-items-end mt-2">
+                                        <h4 class="mb-0 me-2"></h4>
+                                        <small class="text-danger">(-14%)</small>
+                                    </div>
+                                    <p class="mb-0">Last week analytics</p>
+                                </div>
+                                <div class="avatar">
+            <span class="avatar-initial rounded bg-label-success">
+              <i class="bx bx-group bx-sm"></i>
+            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span>Pending Users</span>
+                                    <div class="d-flex align-items-end mt-2">
+                                        <h4 class="mb-0 me-2"></h4>
+                                        <small class="text-success">(+42%)</small>
+                                    </div>
+                                    <p class="mb-0">Last week analytics</p>
+                                </div>
+                                <div class="avatar">
+            <span class="avatar-initial rounded bg-label-warning">
+              <i class="bx bx-user-voice bx-sm"></i>
+            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Users List Table -->
+
+            <div class="card">
+                <div class="card-header border-bottom" style="color:red;margin-top : 15px; margin-left:42%;">
+                    <h5 class="card-title">User Management</h5>
+                    <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+                        <div class="col-md-4 user_role"></div>
+                        <div class="col-md-4 user_plan"></div>
+                        <div class="col-md-4 user_status"></div>
+                    </div>
+                    <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label style="margin-right:30px"><input style="padding-right: 150px" type="search" class="form-control" placeholder="Search.." aria-controls="DataTables_Table_0"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-datatable table-responsive">
+                    <table class="datatables-users table border-top">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Type</th>
+                            <th>Photo</th>
+                            <th>Mail</th>
+                            <th>Mot De Passe</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for c in users %}
+                            <tr>
+                                <td>{{ c.id }}</td>
+                                <td>{{ c.nom }}</td>
+                                <td>{{ c.prenom }}</td>
+                                <td>{{ c.type }}</td>
+                                <td>{{ c.photo }}</td>
+                                <td>{{ c.adresseMail }}</td>
+                                <td>{{ c.mdp }}</td>
+                                <td><a href="/user/edit?{{ c.id }}" class="settings" title="Settings" data-toggle="tooltip"><i class="bi bi-pen"></i></a>
+                                    <a href="/user/delete?{{ c.id }}" class="delete" title="Delete" data-toggle="tooltip"><i class="bi bi-trash-fill"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="overlay" onclick="hideoverlay()" style="  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+  z-index: 999; /* ensures the overlay stays on top */">
+                <div class="card mb-4" style="position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* ensures the centered div stays on top of the overlay */
+  background-color: #fff; /* background color of the centered div */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
+                    <h5 class="card-header">Edit User</h5>
+                    <div class="card-body demo-vertical-spacing demo-only-element">
+
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon11">@</span>
+                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon11">
+                        </div>
+
+                        <div class="form-password-toggle">
+                            <label class="form-label" for="basic-default-password32">Password</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" class="form-control" id="basic-default-password32" placeholder="············" aria-describedby="basic-default-password">
+                                <span class="input-group-text cursor-pointer" id="basic-default-password"><i class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="input-group input-group-merge">
+                            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon33">
+                            <span class="input-group-text" id="basic-addon33">@example.com</span>
+                        </div>
+
+                        <select id="defaultSelect" class="form-select">
+                            <option>Default select</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="inputGroupFile02">
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        </div>
+                        <button style="margin:300px " type="button" class="btn rounded-pill btn-primary">Submit</button>
+
+                    </div>
+                </div>
+
+            </div>
+            </div>
+
+
+        </div>
+        <!-- / Content -->
+
+        <!-- Footer -->
+        <!-- Footer-->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                    © <script>document.write(new Date().getFullYear())</script>
+                    , made with ❤️ by <a href="https://themeselection.com/" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
+                </div>
+                <div  class="d-none d-lg-inline-block">
+                    <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/laravel-introduction.html" target="_blank" class="footer-link me-4">Documentation</a>
+                    <a href="https://themeselection.com/support/" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>
+                </div>
+            </div>
+        </footer>
+        <!--/ Footer-->
+        <!-- / Footer -->
+        <div class="content-backdrop fade"></div>
+    </div>
+    <script>
+        function hideoverlay(){
+            document.getElementById('overlay').style.display = 'none';
+        }</script>
+{% endblock %}
