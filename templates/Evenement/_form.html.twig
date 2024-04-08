@@ -1,25 +1,21 @@
-{% for child in form.children %}
-    {% if child.vars.errors|length > 0 %}
-        <div class="alert alert-danger">
-            <ul>
-                {% for error in child.vars.errors %}
-                    <li>{{ error.message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-{% endfor %}
 
 {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
-    <div class="form-group">
+   <div class="card-body">
+   <div class="mb-3">
         {{ form_label(form.libelle , 'Title') }}
         {{ form_widget(form.libelle, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert alert-danger">
+        {{ form_errors(form.libelle) }}
+        </div>
        
       
     </div>
     <div class="form-group">
         {{ form_label(form.description, 'Description') }}
         {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+         <div class="alert alert-danger">
+        {{ form_errors(form.description) }}
+        </div>
     </div>
   
    <div class="form-group">
@@ -38,18 +34,30 @@
      <div class="form-group">
         {{ form_label(form.date, 'Date') }}
         {{ form_widget(form.date, {'attr': {'type': 'date'}}) }}
+        <div class="alert alert-danger">
+        {{ form_errors(form.date) }}
+        </div>
     </div>
      <div class="form-group">
           {{ form_label(form.frais, 'Costs') }}
           {{ form_widget(form.frais, {'attr': {'class': 'form-control'}}) }}
+          <div class="alert alert-danger">
+          {{ form_errors(form.frais) }}
+          </div>
      </div>
      <div class="form-group">
           {{ form_label(form.localisation, 'Location') }}
           {{ form_widget(form.localisation, {'attr': {'class': 'form-control'}}) }}
+          <div class="alert alert-danger">
+          {{ form_errors(form.localisation) }}
+           </div>
      </div>
      <div class="form-group">
           {{ form_label(form.siteweb, 'Website') }}
           {{ form_widget(form.siteweb, {'attr': {'class': 'form-control'}}) }}
+          <div class="alert alert-danger">
+          {{ form_errors(form.siteweb) }}
+          </div>
      </div>
     
 
