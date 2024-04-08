@@ -1,3 +1,9 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+front_office_home:
+    path: /
+    controller: App\Controller\FrontOfficeController::index
+
+
