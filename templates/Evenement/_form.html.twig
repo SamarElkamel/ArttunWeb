@@ -1,24 +1,77 @@
+{# basic_form_template.twig #}
 
+<div class="text-center"> 
+<div class="col-md-6 d-inline-block">
+<div class="card mb-3"> 
+ <br>
+<div class="card-header d-flex justify-content-between align-items-center">
+ </div>
+<div class="card-body">
 {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
-   <div class="card-body">
-   <div class="mb-3">
+      <div class="mb-3 text-start">
         {{ form_label(form.libelle , 'Title') }}
-        {{ form_widget(form.libelle, {'attr': {'class': 'form-control'}}) }}
-        <div class="alert alert-danger">
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.libelle, {'attr': {'class': 'form-control' ,'placeholder': 'Enter Title'}}) }}
+        </div>
         {{ form_errors(form.libelle) }}
         </div>
        
-      
-    </div>
-    <div class="form-group">
+         <div class="mb-3 text-start">
         {{ form_label(form.description, 'Description') }}
-        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
-         <div class="alert alert-danger">
-        {{ form_errors(form.description) }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+         {{ form_widget(form.description, {'attr': {'class': 'form-control', 'style': 'height: 150px;', 'placeholder': 'Enter description...'}}) }}
+          </div>
+         {{ form_errors(form.description) }}
+         </div>
+    
+
+     <div class="mb-3 text-start">
+        {{ form_label(form.date, 'Date') }}
         </div>
-    </div>
-  
-   <div class="form-group">
+        <div class="mb-3 text-center">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.date, {'attr': {'type': 'date'}}) }}
+        </div>
+        {{ form_errors(form.date) }}
+        </div>
+ 
+    
+       <div class="mb-3 text-start">
+        {{ form_label(form.frais, 'Costs') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.frais, {'attr': {'class': 'form-control' , 'placeholder': 'Enter Cost'}}) }}
+        </div>
+        {{ form_errors(form.frais) }}
+        </div>
+
+        <div class="mb-3 text-start">
+        {{ form_label(form.localisation, 'Location') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.localisation, {'attr': {'class': 'form-control' ,'placeholder': 'Enter location'}}) }}
+        </div>
+        {{ form_errors(form.localisation) }}
+        </div>
+
+          <div class="mb-3 text-start">
+        {{ form_label(form.siteweb, 'Website') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.siteweb, {'attr': {'class': 'form-control' , 'placeholder': 'Enter website'}}) }}
+        </div>
+        {{ form_errors(form.siteweb) }}
+        </div>
+
+      <div class="mb-3">
+   <div class="mb-3 text-start">
     {{ form_label(form.photo, 'Photo') }}
     <div>
         {% if form.photo.vars.value %}
@@ -27,41 +80,17 @@
             <p>No photo uploaded.</p>
         {% endif %}
         <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload Photo</button>
+           <div class="input-group input-group-merge">
         {{ form_widget(form.photo, {'attr': {'style': 'display: none;'}}) }}
+        </div>
         <input type="file" id="photoUpload" style="display: none;" accept="image/*" />
     </div>
-    
-     <div class="form-group">
-        {{ form_label(form.date, 'Date') }}
-        {{ form_widget(form.date, {'attr': {'type': 'date'}}) }}
-        <div class="alert alert-danger">
-        {{ form_errors(form.date) }}
-        </div>
-    </div>
-     <div class="form-group">
-          {{ form_label(form.frais, 'Costs') }}
-          {{ form_widget(form.frais, {'attr': {'class': 'form-control'}}) }}
-          <div class="alert alert-danger">
-          {{ form_errors(form.frais) }}
-          </div>
-     </div>
-     <div class="form-group">
-          {{ form_label(form.localisation, 'Location') }}
-          {{ form_widget(form.localisation, {'attr': {'class': 'form-control'}}) }}
-          <div class="alert alert-danger">
-          {{ form_errors(form.localisation) }}
-           </div>
-     </div>
-     <div class="form-group">
-          {{ form_label(form.siteweb, 'Website') }}
-          {{ form_widget(form.siteweb, {'attr': {'class': 'form-control'}}) }}
-          <div class="alert alert-danger">
-          {{ form_errors(form.siteweb) }}
-          </div>
-     </div>
-    
 
+
+    
+<div class="text-center">
     <button class="btn btn-primary" id="save">{{ button_label|default('Save') }}</button>
+</div>
 {{ form_end(form) }}
 
 {% block stylesheets %}
