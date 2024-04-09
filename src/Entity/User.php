@@ -4,79 +4,37 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * User
- *
- * @ORM\Table(name="user", indexes={@ORM\Index(name="adresse", columns={"adresse"})})
- * @ORM\Entity
- */
 class User
 {
+    private ?int $id;
+
+    private ?string $nom;
+
+    private ?string $prenom;
+
+    private ?string $type;
+
+    private ?string $photo;
+
+    private ?int $adresse;
+
+    private ?string $adresseMail;
+
+    private ?string $mdp;
+
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
-     */
-    private $nom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=50, nullable=false)
-     */
-    private $prenom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=50, nullable=false)
-     */
-    private $type;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="photo", type="string", length=100, nullable=false)
-     */
-    private $photo;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="adresse", type="integer", nullable=false)
-     */
-    private $adresse;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresse_mail", type="string", length=100, nullable=false)
-     */
-    private $adresseMail;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mdp", type="string", length=300, nullable=false)
-     */
-    private $mdp;
-
-    // Getters and setters
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
+     */
     public function getNom(): ?string
     {
         return $this->nom;
@@ -85,10 +43,12 @@ class User
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
+    /**
+     * @ORM\Column(name="prenom", type="string", length=50, nullable=false)
+     */
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -97,10 +57,12 @@ class User
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
+    /**
+     * @ORM\Column(name="type", type="string", length=50, nullable=false)
+     */
     public function getType(): ?string
     {
         return $this->type;
@@ -109,10 +71,12 @@ class User
     public function setType(string $type): self
     {
         $this->type = $type;
-
         return $this;
     }
 
+    /**
+     * @ORM\Column(name="photo", type="string", length=100, nullable=false)
+     */
     public function getPhoto(): ?string
     {
         return $this->photo;
@@ -121,10 +85,12 @@ class User
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
-
         return $this;
     }
 
+    /**
+     * @ORM\Column(name="adresse", type="integer", nullable=false)
+     */
     public function getAdresse(): ?int
     {
         return $this->adresse;
@@ -133,10 +99,12 @@ class User
     public function setAdresse(int $adresse): self
     {
         $this->adresse = $adresse;
-
         return $this;
     }
 
+    /**
+     * @ORM\Column(name="adresse_mail", type="string", length=100, nullable=false)
+     */
     public function getAdresseMail(): ?string
     {
         return $this->adresseMail;
@@ -145,10 +113,12 @@ class User
     public function setAdresseMail(string $adresseMail): self
     {
         $this->adresseMail = $adresseMail;
-
         return $this;
     }
 
+    /**
+     * @ORM\Column(name="mdp", type="string", length=300, nullable=false)
+     */
     public function getMdp(): ?string
     {
         return $this->mdp;
@@ -157,7 +127,6 @@ class User
     public function setMdp(string $mdp): self
     {
         $this->mdp = $mdp;
-
         return $this;
     }
 }
