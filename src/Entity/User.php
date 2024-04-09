@@ -3,74 +3,44 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * User
- *
- * @ORM\Table(name="user", indexes={@ORM\Index(name="adresse", columns={"adresse"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "id", type: "integer", nullable: false)]
+    private int $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
-     */
-    private $nom;
+    #[Assert\NotBlank(message: "Please enter the user's first name.")]
+    #[ORM\Column(name: "nom", type: "string", length: 50, nullable: false)]
+    private string $nom;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=50, nullable=false)
-     */
-    private $prenom;
+    #[Assert\NotBlank(message: "Please enter the user's last name.")]
+    #[ORM\Column(name: "prenom", type: "string", length: 50, nullable: false)]
+    private string $prenom;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=50, nullable=false)
-     */
-    private $type;
+    #[Assert\NotBlank(message: "Please enter the user's type.")]
+    #[ORM\Column(name: "type", type: "string", length: 50, nullable: false)]
+    private string $type;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="photo", type="string", length=100, nullable=false)
-     */
-    private $photo;
+    #[ORM\Column(name: "photo", type: "string", length: 100, nullable: true)]
+    private ?string $photo;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="adresse", type="integer", nullable=false)
-     */
-    private $adresse;
+    #[Assert\NotBlank(message: "Please enter the user's address.")]
+    #[ORM\Column(name: "adresse", type: "integer", nullable: false)]
+    private int $adresse;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresse_mail", type="string", length=100, nullable=false)
-     */
-    private $adresseMail;
+    #[Assert\NotBlank(message: "Please enter the user's email address.")]
+    #[Assert\Email(message: "Please enter a valid email address.")]
+    #[ORM\Column(name: "adresse_mail", type: "string", length: 100, nullable: false)]
+    private string $adresseMail;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mdp", type="string", length=300, nullable=false)
-     */
-    private $mdp;
-
-    // Getters and setters
+    #[Assert\NotBlank(message: "Please enter the user's password.")]
+    #[ORM\Column(name: "mdp", type: "string", length: 300, nullable: false)]
+    private string $mdp;
 
     public function getId(): ?int
     {
@@ -85,7 +55,6 @@ class User
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -97,7 +66,6 @@ class User
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
@@ -109,7 +77,6 @@ class User
     public function setType(string $type): self
     {
         $this->type = $type;
-
         return $this;
     }
 
@@ -118,10 +85,9 @@ class User
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
-
         return $this;
     }
 
@@ -133,7 +99,6 @@ class User
     public function setAdresse(int $adresse): self
     {
         $this->adresse = $adresse;
-
         return $this;
     }
 
@@ -145,7 +110,6 @@ class User
     public function setAdresseMail(string $adresseMail): self
     {
         $this->adresseMail = $adresseMail;
-
         return $this;
     }
 
@@ -157,7 +121,6 @@ class User
     public function setMdp(string $mdp): self
     {
         $this->mdp = $mdp;
-
         return $this;
     }
 }

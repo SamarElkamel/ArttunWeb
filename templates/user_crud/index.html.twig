@@ -134,8 +134,8 @@
                                 <td>{{ c.photo }}</td>
                                 <td>{{ c.adresseMail }}</td>
                                 <td>{{ c.mdp }}</td>
-                                <td><a href="/user/edit?{{ c.id }}" class="settings" title="Settings" data-toggle="tooltip"><i class="bi bi-pen"></i></a>
-                                    <a href="/user/delete?{{ c.id }}" class="delete" title="Delete" data-toggle="tooltip"><i class="bi bi-trash-fill"></i></a>
+                                <td><button onclick="showoverlay('{{ c.id }}', '{{ c.nom }}', '{{ c.prenom }}', '{{ c.type }}', '{{ c.photo }}', '{{ c.adresseMail }}', '{{ c.mdp }}')" class="settings" title="Settings" data-toggle="tooltip"><i class="bi bi-pen"></i></button>
+                                    <button href="/user/delete?{{ c.id }}" class="delete" title="Delete" data-toggle="tooltip"><i class="bi bi-trash-fill"></i></button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -165,31 +165,34 @@
 
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon11">@</span>
-                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon11">
+                            <input type="text" id="nomfield" class="form-control" placeholder="Nom" aria-label="Nom" aria-describedby="basic-addon11">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon11">@</span>
+                            <input type="text" id="prenomfield" class="form-control" placeholder="Prenom" aria-label="Prenom" aria-describedby="basic-addon11">
                         </div>
 
                         <div class="form-password-toggle">
                             <label class="form-label" for="basic-default-password32">Password</label>
                             <div class="input-group input-group-merge">
-                                <input type="password" class="form-control" id="basic-default-password32" placeholder="············" aria-describedby="basic-default-password">
+                                <input id="passowrdfield" type="password" class="form-control" id="basic-default-password32" placeholder="············" aria-describedby="basic-default-password">
                                 <span class="input-group-text cursor-pointer" id="basic-default-password"><i class="bx bx-hide"></i></span>
                             </div>
                         </div>
 
                         <div class="input-group input-group-merge">
-                            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon33">
+                            <input id="mailfield" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon33">
                             <span class="input-group-text" id="basic-addon33">@example.com</span>
                         </div>
 
-                        <select id="defaultSelect" class="form-select">
-                            <option>Default select</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select id="type" class="form-select">
+                            <option selected>Choose Type ... </option>
+                            <option value="1">Admin</option>
+                            <option value="2">Client</option>
                         </select>
 
                         <div class="input-group">
-                            <input type="file" class="form-control" id="inputGroupFile02">
+                            <input id="filefield" type="file" class="form-control" id="inputGroupFile02">
                             <label class="input-group-text" for="inputGroupFile02">Upload</label>
                         </div>
                         <button style="margin:300px " type="button" class="btn rounded-pill btn-primary">Submit</button>
@@ -225,7 +228,32 @@
         <div class="content-backdrop fade"></div>
     </div>
     <script>
-        function hideoverlay(){
+        function hideoverlay() {
             document.getElementById('overlay').style.display = 'none';
-        }</script>
+        }
+        function showoverlay(id, nom, prenom, type, photo, adresseMail, mdp) {
+            // Fill in the form with the information from the row
+            document.getElementById('nomfield').value = nom;
+            document.getElementById('prenomfield').value = prenom;
+            //document.getElementById('typeField').value = type;
+            // Get the current value of the input field with id 'type'
+            var currentValue = document.getElementById('type').value;
+
+            /*switch (currentValue) {
+                case 'client':
+                    document.getElementById('type').value = 2;
+                    break;
+                case 'admin':
+                    document.getElementById('type').value = 1;
+                    break;
+            }*/
+            //document.getElementById('filefield').value = photo;
+            document.getElementById('mailfield').value = adresseMail;
+            document.getElementById('passowrdfield').value = mdp;
+
+            // Show the overlay
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+    </script>
 {% endblock %}

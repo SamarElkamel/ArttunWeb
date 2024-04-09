@@ -3,75 +3,121 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AdressesRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Adresses
- *
- * @ORM\Table(name="adresses")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: AdressesRepository::class)]
 class Adresses
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=50, nullable=false)
-     */
-    private $country;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "id", type: "integer", nullable: false)]
+    private int $id;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="state", type="string", length=50, nullable=true)
-     */
-    private $state;
+    #[Assert\NotBlank(message: "Please enter the country.")]
+    #[ORM\Column(name: "country", type: "string", length: 100, nullable: false)]
+    private string $country;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=50, nullable=false)
-     */
-    private $city;
+    #[ORM\Column(name: "state", type: "string", length: 100, nullable: true)]
+    private ?string $state;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="code", type="integer", nullable=false)
-     */
-    private $code;
+    #[Assert\NotBlank(message: "Please enter the city.")]
+    #[ORM\Column(name: "city", type: "string", length: 100, nullable: false)]
+    private string $city;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="street", type="string", length=50, nullable=false)
-     */
-    private $street;
+    #[Assert\NotBlank(message: "Please enter the postal code.")]
+    #[ORM\Column(name: "code", type: "integer", nullable: false)]
+    private int $code;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="lon", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $lon;
+    #[Assert\NotBlank(message: "Please enter the street address.")]
+    #[ORM\Column(name: "street", type: "string", length: 255, nullable: false)]
+    private string $street;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="lat", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $lat;
+    #[ORM\Column(name: "lon", type: "float", nullable: false)]
+    private float $lon;
 
-    /**
-     * @var \User
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="adresse")
-     * })
-     */
-    private $id;
+    #[ORM\Column(name: "lat", type: "float", nullable: false)]
+    private float $lat;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(?string $state): self
+    {
+        $this->state = $state;
+        return $this;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+        return $this;
+    }
+
+    public function getCode(): int
+    {
+        return $this->code;
+    }
+
+    public function setCode(int $code): self
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    public function getStreet(): string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+        return $this;
+    }
+
+    public function getLon(): float
+    {
+        return $this->lon;
+    }
+
+    public function setLon(float $lon): self
+    {
+        $this->lon = $lon;
+        return $this;
+    }
+
+    public function getLat(): float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+        return $this;
+    }
 }
