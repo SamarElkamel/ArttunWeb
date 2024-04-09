@@ -3,41 +3,56 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AdressesRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: AdressesRepository::class)]
 class Adresses
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "id", type: "integer", nullable: false)]
+    private int $id;
+
+    #[Assert\NotBlank(message: "Please enter the country.")]
+    #[ORM\Column(name: "country", type: "string", length: 100, nullable: false)]
     private string $country;
 
+    #[ORM\Column(name: "state", type: "string", length: 100, nullable: true)]
     private ?string $state;
 
+    #[Assert\NotBlank(message: "Please enter the city.")]
+    #[ORM\Column(name: "city", type: "string", length: 100, nullable: false)]
     private string $city;
 
+    #[Assert\NotBlank(message: "Please enter the postal code.")]
+    #[ORM\Column(name: "code", type: "integer", nullable: false)]
     private int $code;
 
+    #[Assert\NotBlank(message: "Please enter the street address.")]
+    #[ORM\Column(name: "street", type: "string", length: 255, nullable: false)]
     private string $street;
 
+    #[ORM\Column(name: "lon", type: "float", nullable: false)]
     private float $lon;
 
+    #[ORM\Column(name: "lat", type: "float", nullable: false)]
     private float $lat;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="adresse")
-     * })
-     */
-    private $id;
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getCountry(): string
     {
         return $this->country;
     }
 
-    public function setCountry(string $country): void
+    public function setCountry(string $country): self
     {
         $this->country = $country;
+        return $this;
     }
 
     public function getState(): ?string
@@ -45,9 +60,10 @@ class Adresses
         return $this->state;
     }
 
-    public function setState(?string $state): void
+    public function setState(?string $state): self
     {
         $this->state = $state;
+        return $this;
     }
 
     public function getCity(): string
@@ -55,9 +71,10 @@ class Adresses
         return $this->city;
     }
 
-    public function setCity(string $city): void
+    public function setCity(string $city): self
     {
         $this->city = $city;
+        return $this;
     }
 
     public function getCode(): int
@@ -65,9 +82,10 @@ class Adresses
         return $this->code;
     }
 
-    public function setCode(int $code): void
+    public function setCode(int $code): self
     {
         $this->code = $code;
+        return $this;
     }
 
     public function getStreet(): string
@@ -75,9 +93,10 @@ class Adresses
         return $this->street;
     }
 
-    public function setStreet(string $street): void
+    public function setStreet(string $street): self
     {
         $this->street = $street;
+        return $this;
     }
 
     public function getLon(): float
@@ -85,9 +104,10 @@ class Adresses
         return $this->lon;
     }
 
-    public function setLon(float $lon): void
+    public function setLon(float $lon): self
     {
         $this->lon = $lon;
+        return $this;
     }
 
     public function getLat(): float
@@ -95,18 +115,9 @@ class Adresses
         return $this->lat;
     }
 
-    public function setLat(float $lat): void
+    public function setLat(float $lat): self
     {
         $this->lat = $lat;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id): void
-    {
-        $this->id = $id;
+        return $this;
     }
 }

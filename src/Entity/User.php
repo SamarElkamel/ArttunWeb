@@ -3,38 +3,50 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "id", type: "integer", nullable: false)]
+    private int $id;
 
-    private ?string $nom;
+    #[Assert\NotBlank(message: "Please enter the user's first name.")]
+    #[ORM\Column(name: "nom", type: "string", length: 50, nullable: false)]
+    private string $nom;
 
-    private ?string $prenom;
+    #[Assert\NotBlank(message: "Please enter the user's last name.")]
+    #[ORM\Column(name: "prenom", type: "string", length: 50, nullable: false)]
+    private string $prenom;
 
-    private ?string $type;
+    #[Assert\NotBlank(message: "Please enter the user's type.")]
+    #[ORM\Column(name: "type", type: "string", length: 50, nullable: false)]
+    private string $type;
 
+    #[ORM\Column(name: "photo", type: "string", length: 100, nullable: true)]
     private ?string $photo;
 
-    private ?int $adresse;
+    #[Assert\NotBlank(message: "Please enter the user's address.")]
+    #[ORM\Column(name: "adresse", type: "integer", nullable: false)]
+    private int $adresse;
 
-    private ?string $adresseMail;
+    #[Assert\NotBlank(message: "Please enter the user's email address.")]
+    #[Assert\Email(message: "Please enter a valid email address.")]
+    #[ORM\Column(name: "adresse_mail", type: "string", length: 100, nullable: false)]
+    private string $adresseMail;
 
-    private ?string $mdp;
+    #[Assert\NotBlank(message: "Please enter the user's password.")]
+    #[ORM\Column(name: "mdp", type: "string", length: 300, nullable: false)]
+    private string $mdp;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
-     */
     public function getNom(): ?string
     {
         return $this->nom;
@@ -46,9 +58,6 @@ class User
         return $this;
     }
 
-    /**
-     * @ORM\Column(name="prenom", type="string", length=50, nullable=false)
-     */
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -60,9 +69,6 @@ class User
         return $this;
     }
 
-    /**
-     * @ORM\Column(name="type", type="string", length=50, nullable=false)
-     */
     public function getType(): ?string
     {
         return $this->type;
@@ -74,23 +80,17 @@ class User
         return $this;
     }
 
-    /**
-     * @ORM\Column(name="photo", type="string", length=100, nullable=false)
-     */
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
         return $this;
     }
 
-    /**
-     * @ORM\Column(name="adresse", type="integer", nullable=false)
-     */
     public function getAdresse(): ?int
     {
         return $this->adresse;
@@ -102,9 +102,6 @@ class User
         return $this;
     }
 
-    /**
-     * @ORM\Column(name="adresse_mail", type="string", length=100, nullable=false)
-     */
     public function getAdresseMail(): ?string
     {
         return $this->adresseMail;
@@ -116,9 +113,6 @@ class User
         return $this;
     }
 
-    /**
-     * @ORM\Column(name="mdp", type="string", length=300, nullable=false)
-     */
     public function getMdp(): ?string
     {
         return $this->mdp;
