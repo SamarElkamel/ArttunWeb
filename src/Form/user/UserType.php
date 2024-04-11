@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\user;
 
-use App\Entity\User;
+use App\Entity\user\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
