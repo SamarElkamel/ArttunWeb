@@ -1,0 +1,47 @@
+block module
+
+    include ../../data/menu-listing
+    .ps-searchbox
+        .ps-searchbox__remove: i.fa.fa-remove
+        .container
+            header
+                p Enter your keywords:
+                form(method="post" action="/product-grid.html")
+                    input.form-control(type="text" placeholder="")
+                    button: i.ps-icon--search
+            .ps-searchbox__result
+                .row
+                    +column({cols: [6, 6, 12, 12]})
+                        each val in menu_3
+                            .ps-product--list.ps-product--list-light.mt-60
+                                .ps-product__thumbnail
+                                    a(href='product-detail.html').ps-product__overlay
+                                    img(src=val.imagepath alt="")
+                                .ps-product__content
+                                    h4.ps-product__title
+                                        a(href='product-detail.html') #{val.title}
+                                    p #{val.description}
+                                    p.ps-product__price
+                                        del #{val.originPrice}
+                                        | #{val.salePrice}
+                                    a(href='cart.html').ps-btn.ps-btn--xs Order now
+                                        i.fa.fa-angle-right
+                    +column({cols: [6, 6, 12, 12]})
+                        each val in menu_4
+                            .ps-product--list.ps-product--list-light.mt-60
+                                .ps-product__thumbnail
+                                    a(href='product-detail.html').ps-product__overlay
+                                    img(src=val.imagepath alt="")
+                                .ps-product__content
+                                    h4.ps-product__title
+                                        a(href='product-detail.html') #{val.title}
+                                    p #{val.description}
+                                    p.ps-product__price
+                                        del #{val.originPrice}
+                                        | #{val.salePrice}
+                                    a(href='cart.html').ps-btn.ps-btn--xs Order now
+                                        i.fa.fa-angle-right
+            footer.text-center
+                a.ps-searchbox__morelink(href="product-grid.html") VIEW ALL RESULT
+
+

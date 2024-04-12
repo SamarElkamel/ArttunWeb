@@ -1,0 +1,116 @@
+.ps-new {
+    position: relative;
+    margin-bottom: 30px;
+    @include border-radius(6px);
+    overflow: hidden;
+    img {
+        @include border-radius(6px);
+        @include transition(all .4s ease);
+    }
+    &__container {
+        @include max-area();
+        @include border-radius(6px);
+        padding: 20px 30px;
+        background-color: rgba(41, 32, 60, 0.75);
+    }
+    &__header {
+        p {
+            font-family: $font-1st;
+            font-size: 16px;
+            color: #fff;
+            a {
+                color: #e75e4e;
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+    }
+    &__title {
+        font-family: $font-2nd;
+        font-size: 20px;
+        line-height: 2em;
+        color: #fff;
+        &:hover {
+            color: $color-1st;
+        }
+    }
+    &__content {
+        p {
+            margin-bottom: 15px;
+            font-family: Poppins;
+            font-size: 14px;
+            line-height: 1.57;
+            color: #fff;
+        }
+    }
+    &:hover {
+        cursor: default;
+        img {
+            @include transform(scale(1.1, 1.1));
+        }
+        .ps-new__title {
+            color: $color-1st;
+        }
+    }
+    @include media("<lg") {
+        &__container {
+            margin-top: 20px;
+            position: relative;
+            @include transform(translate(0, 0));
+        }
+    }
+    @include media("<md") {
+        img {
+            width: 100%;
+        }
+    }
+    @include media("<xs") {
+        &__header {
+            p {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+.ps-new--large {
+    .ps-new__header {
+        p {
+            margin-bottom: 100px;
+        }
+    }
+    .ps-new__title {
+        margin-bottom: 10px;
+        font-size: 36px;
+        line-height: 1.56em;
+    }
+    .ps-new__content {
+        p {
+            margin-bottom: 35px;
+        }
+    }
+    @include media("<lg") {
+        .ps-new__header {
+            p {
+                margin-bottom: 10px;
+            }
+        }
+        .ps-new__title {
+            margin-bottom: 10px;
+            font-size: 20px;
+            line-height: 1.56em;
+            br {
+                display: none;
+            }
+        }
+        .ps-new__content {
+            p {
+                margin-bottom: 10px;
+                br {
+                    display: none;
+                }
+            }
+        }
+    }
+}

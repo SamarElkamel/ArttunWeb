@@ -1,0 +1,38 @@
+.ps-select2 + .select2 {
+    margin-bottom: 30px;
+    width: 100% !important;
+    position: relative;
+    &:after {
+        content: "\f107";
+        font-family: FontAwesome;
+        @include vertical-align();
+        right: 10px;
+        font-size: 20px;
+    }
+    .select2-selection--single {
+        height: 45px;
+        @include border-radius(45px);
+        &:focus {
+            outline: none;
+            @include box-shadow(none);
+        }
+        .select2-selection__rendered {
+            height: 45px;
+            font-family: $font-1st;
+            color: #626262;
+            line-height: 45px;
+            font-size: 14px;
+            &:focus {
+                @include box-shadow(none);
+            }
+        }
+        .select2-selection__arrow {
+            display: none;
+        }
+    }
+    &.select2-container--open {
+        &:after {
+            content: "\f106";
+        }
+    }
+}

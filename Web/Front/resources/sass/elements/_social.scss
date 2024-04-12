@@ -1,0 +1,22 @@
+.ps-social-header {
+    a {
+        position: relative;
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-left: 1px solid #eaeaea;
+        color: #000;
+        i {
+            @include center();
+        }
+        &:hover {
+            background-color: #eaeaea;
+            color: $color-1st;
+        }
+    }
+    li:last-child {
+        a {
+            border-right: 1px solid #eaeaea;
+        }
+    }
+}

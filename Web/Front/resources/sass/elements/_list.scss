@@ -1,0 +1,164 @@
+.ps-list {
+    @include clearfix;
+    li {
+        float: left;
+    }
+    a {
+        font-size: 14px;
+    }
+}
+
+.ps-list--dot {
+    li {
+        position: relative;
+        float: none;
+        margin-bottom: 25px;
+        font-family: $font-1st;
+        font-size: 14px;
+        color: #4e3939;
+        padding-left: 25px;
+        &:before {
+            content: '';
+            @include vertical-align();
+            display: block;
+            left: 5px;
+            width: 5px;
+            height: 5px;
+            background-color: #4e3939;
+            @include border-radius(50%);
+        }
+    }
+}
+
+.ps-list--line {
+    li {
+        margin-bottom: 10px;
+    }
+    a {
+        position: relative;
+        display: block;
+        font-family: $font-1st;
+        font-size: 14px;
+        line-height: 30px;
+        color: #7d8997;
+        &:before {
+            @include vertical-align();
+            left: 0;
+            content: '';
+            width: 0;
+            height: 1px;
+            background-color: $color-1st;
+            @include transition(all .4s ease);
+        }
+        &:hover {
+            padding-left: 25px;
+            color: $color-1st;
+            &:before {
+                width: 20px;
+            }
+        }
+    }
+}
+
+.ps-list--circle {
+    .circle {
+        display: block;
+        @include vertical-align();
+        left: 0;
+        width: 20px;
+        height: 20px;
+        @include border-radius(50%);
+        border: 1px solid #d9d9d9;
+        @include transition(all .4s ease);
+        background-color: #fff;
+        &:before {
+            content: "\f00c";
+            @include center();
+            font-family: FontAwesome;
+            font-size: 10px;
+            color: #fff;
+            @include hidden;
+        }
+    }
+    a {
+        position: relative;
+        display: block;
+        padding-left: 30px;
+        font-family: $font-1st;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        color: #626262;
+        &:hover {
+            color: $color-2nd;
+            .circle {
+                background-color: $color-2nd;
+                border-color: $color-2nd;
+                &:before {
+                    color: #fff;
+                    @include show;
+                }
+            }
+        }
+    }
+
+    li {
+        margin-bottom: 20px;
+        &.current {
+            a {
+                color: $color-2nd;
+            }
+            .circle {
+                background-color: $color-2nd;
+                &:before {
+                    @include show;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+.ps-list--arrow {
+    a {
+        position: relative;
+        display: block;
+        padding-left: 15px;
+        font-family: $font-1st;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        color: #626262;
+        &:before {
+            content: "\f105";
+            @include vertical-align();
+            left: 0;
+            font-family: FontAwesome;
+        }
+        &:hover {
+            color: $color-2nd;
+            .circle {
+                background-color: $color-2nd;
+                border-color: $color-2nd;
+                &:before {
+                    color: #fff;
+                    @include show;
+                }
+            }
+        }
+    }
+
+    li {
+        margin-bottom: 20px;
+        &.current {
+            a {
+                color: $color-2nd;
+            }
+            .circle {
+                background-color: $color-2nd;
+                &:before {
+                    @include show;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

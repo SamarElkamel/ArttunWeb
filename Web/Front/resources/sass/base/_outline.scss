@@ -1,0 +1,26 @@
+a,
+input,
+textarea,
+button,
+select {
+    outline: none;
+}
+
+a:hover,
+h1:focus,
+h2:focus,
+h3:focus,
+h4:focus,
+h5:focus,
+h6:focus {
+    text-decoration: none;
+}
+
+a:focus,
+button:focus,
+select:focus,
+input:focus,
+textarea:focus {
+    outline: none;
+    text-decoration: none;
+}

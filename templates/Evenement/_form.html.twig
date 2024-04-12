@@ -72,7 +72,7 @@
 
       <div class="mb-3">
    <div class="mb-3 text-start">
-    {{ form_label(form.photo, 'Photo') }}
+    {{ form_label(form.photo, 'photo') }}
     <div>
         {% if form.photo.vars.value %}
                <img src="{{ asset(form.photo.vars.value) }}" alt="Current Photo" style="max-width: 250px; display: inline-block;">
@@ -83,7 +83,7 @@
            <div class="input-group input-group-merge">
         {{ form_widget(form.photo, {'attr': {'style': 'display: none;'}}) }}
         </div>
-        <input type="file" id="photoUpload" style="display: none;" accept="image/*" />
+        <input type="file" id="photo" style="display: none;" accept="image/*" />
     </div>
 
 
@@ -108,12 +108,14 @@
 <script>
     $(document).ready(function() {
         $('#uploadButton').click(function() {
-            $('#photoUpload').click();
+            $('#photo').click();
         });
 
-        $('#photoUpload').change(function() {
+        $('#photo').change(function() {
             var fileName = $(this).val().split('\\').pop();
             $('#uploadButton').text(fileName);
+             var formData = new FormData($('#event_form')[0]);
+             formData.append('photo', $(this)[0].files[0]);
         });
     });
 </script>

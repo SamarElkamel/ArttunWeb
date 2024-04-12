@@ -1,0 +1,52 @@
+.ps-testimonial {
+    &__thumbnail {
+        width: 120px;
+        margin: 0 auto;
+        margin-bottom: 15px;
+        img {
+            @include border-radius(50%);
+            border: 2px solid #fff;
+        }
+    }
+    &__header {
+        p {
+            font-family: $font-1st;
+            font-size: 14px;
+            text-align: center;
+            color: #3c3c3c;
+        }
+    }
+    &__content {
+        p {
+            font-family: $font-2nd;
+            font-size: 24px;
+            line-height: 1.9em;
+            color: #3c3c3c;
+        }
+    }
+    @include media("<sm") {
+        &__content {
+            p {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.ps-testimonial--2 {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+    p {
+        font-family: $font-2nd;
+        font-size: 30px;
+        line-height: 1.83em;
+        color: #ffffff;
+    }
+    p.author {
+        font-family: $font-1st;
+        font-size: 20px;
+        text-align: center;
+        color: #ee7560;
+    }
+}

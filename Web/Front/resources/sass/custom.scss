@@ -1,0 +1,123 @@
+/*
+    Project: BAKERY
+    Version: 1.0
+    Date Created: 03/03/2017
+    Last Updated: 04/23/2017
+    Author: Nghia Luong Minh
+    Website: http://minhnghia.info
+    Email: minhnghia7793@gmail.com
+*/
+
+/*
+    TABLE OF CONTENT
+    1. Common and reset
+    2. ELEMENTS
+        2.1 masonry
+        2.2 list
+        2.3 form
+        2.4 social
+        2.5 people
+        2.6 product
+        2.7 subscribe
+        2.8 widget
+        2.9 testimonial
+        2.10 rating
+        2.11 banner
+        2.12 breadcrumb
+        2.13 pagination
+        2.14 block
+        2.15 countdown
+        2.16 cake
+        2.17 award
+        2.18 badge
+        2.19 modal
+        2.20 new
+        2.21 section
+        2.22 filter
+        2.23 loader
+    3. COMPONENT
+        3.1 navigation
+        3.2 slider
+        3.3 cart
+        3.4 search
+        3.5 niceselect
+        3.6 shop
+        3.7 contact
+        3.8 pages
+    4. MODULES
+        4.1 header
+        4.2 footer
+        4.3 sidebar
+    5. UTILS
+        5.1 background
+        5.2 margin
+        5.3 padding
+    6. CUSTOM STYLESHEET
+*/
+// 1. Mixins & Library
+@import "vendor/bourbon/_bourbon";
+@import "utils/mixin";
+@import "vendor/_masonry_grid";
+@import "vendor/_hover_effect";
+@import "vendor/media_query";
+
+@import "utils/variable";
+/* 1. Common and reset */
+
+@import "base/outline";
+@import "base/reset";
+@import "base/media";
+@import "base/typhography";
+
+/* 2. ELEMENTS */
+@import "elements/masonry";
+@import "elements/list";
+@import "elements/form";
+@import "elements/button";
+@import "elements/social";
+@import "elements/people";
+@import "elements/product";
+@import "elements/subscribe";
+@import "elements/widget";
+@import "elements/testimonial";
+@import "elements/rating";
+@import "elements/banner";
+@import "elements/breadcrumb";
+@import "elements/pagination";
+@import "elements/block";
+@import "elements/post";
+@import "elements/countdown";
+@import "elements/cake";
+@import "elements/award";
+@import "elements/badge";
+@import "elements/modal";
+@import "elements/new";
+@import "elements/section";
+@import "elements/filter";
+@import "elements/loader";
+@import "elements/parallax";
+
+/* 3. COMPONENTS**************/
+@import "components/navigation";
+@import "components/slider";
+@import "components/cart";
+@import "components/search";
+@import "components/niceselect";
+@import "components/shop";
+@import "components/contact";
+@import "components/pages";
+
+/* 4. MODULES */
+@import "modules/header";
+@import "modules/footer";
+@import "modules/sidebar";
+
+/* ************LAYOUT**************/
+
+/* 5. UTILS*/
+
+@import "frames/background";
+@import "frames/margin";
+@import "frames/padding";
+
+/* 6. CUSTOM STYLESHEET*/

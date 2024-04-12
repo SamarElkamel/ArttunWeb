@@ -1,0 +1,67 @@
+.ps-subscribe {
+    h4 {
+        margin-bottom: 10px;
+        font-family: $font-2nd;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.3em;
+        color: #ffffff;
+    }
+    p {
+        margin-bottom: 15px;
+        font-family: $font-1st;
+        font-size: 14px;
+        line-height: 1.7em;
+        font-weight: 400;
+        color: #fff;
+    }
+    &__logo {
+        display: block;
+        margin: 0 auto;
+        max-width: 120px;
+    }
+    &__highlight {
+        letter-spacing: 1.8px;
+    }
+    &__form {
+        position: relative;
+        input {
+            height: 40px;
+            padding: 0 30px;
+            font-family: $font-1st;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #ffffff;
+            @include border-radius(40px);
+            border-color: #3d3c41;
+            background-color: #3d3c41;
+            @include placeholder() {
+                font-family: $font-1st;
+                font-size: 12px;
+                letter-spacing: 1px;
+                color: #ffffff;
+            }
+        }
+        .ps-btn {
+            padding: 10 20px;
+            @include vertical-align();
+            right: 0;
+        }
+    }
+    @include media("<sm") {
+        text-align: left;
+        .ps-subscribe__logo {
+            text-align: left;
+            margin-left: 0;
+            margin-bottom: 20px;
+        }
+        .ps-subscribe__form {
+            .ps-btn {
+                margin-top: 10px;
+                position: relative;
+                @include transform(translate(0, 0));
+                width: 100%;
+            }
+        }
+    }
+}

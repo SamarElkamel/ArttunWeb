@@ -1,0 +1,39 @@
+extends ../master
+
+block title
+    title Bakery | Product Grid
+block page_header
+
+    - var currentPage = 'product'
+    include ../utils/mixins
+    include ../common/common-element
+    include ../partials/modules/search
+    include ../partials/header-2
+
+block page_content
+
+    // Heros
+    .ps-section--hero
+        img(src="images/hero/02.jpg" alt="")
+        .ps-section__content.text-center
+            h3.ps-section__title OUR BAKERY
+            .ps-breadcrumb
+                ol.breadcrumb
+                    li: a(href="index.html") Home
+                    li: a(href="product-grid.html") Shop
+                    li.active Anytime Cakes
+    include ../partials/modules/product-detail
+    include ../partials/section/subscribe
+
+    //footer
+    include ../partials/footer
+    include ../partials/modules/product-quickview
+
+
+
+
+
+
+
+
+

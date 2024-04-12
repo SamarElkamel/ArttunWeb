@@ -1,0 +1,30 @@
+extends ../master
+
+block title
+    title Bakery | Contact 2
+block page_header
+
+    - var currentPage = 'contact'
+    include ../utils/mixins
+    include ../common/common-element
+    include ../partials/modules/search
+    include ../partials/header-2
+
+block page_content
+
+    //section
+    include ../partials/section/section-hero
+    - var contactType = 2;
+    include ../partials/modules/contact
+    include ../partials/section/subscribe
+    //footer
+    include ../partials/footer
+
+
+
+
+
+
+
+
+

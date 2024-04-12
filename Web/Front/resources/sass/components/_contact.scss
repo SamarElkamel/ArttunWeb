@@ -1,0 +1,56 @@
+.ps-contact {
+    .ps-contact__submit {
+        padding: 13px 60px 12px;
+    }
+    #contact-map {
+        height: 400px;
+    }
+}
+
+
+.ps-contact__block {
+    margin-bottom: 30px;
+    h4 {
+        margin-bottom: 15px;
+        font-family: $font-2nd;
+        font-size: 18px;
+        line-height: 1em;
+        letter-spacing: 0.2px;
+        font-weight: 400;
+        color: #626262;
+    }
+    p {
+        margin-bottom: 15px;
+        font-family: $font-1st;
+        font-size: 14px;
+        line-height: 1.14em;
+        letter-spacing: 0.2px;
+        color: #b2b2b2;
+        strong {
+            font-family: $font-1st;
+            font-size: 14px;
+            line-height: 1.2em;
+            letter-spacing: 0.2px;
+            color: #626262;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        i {
+            margin-right: 10px;
+        }
+    }
+}
+
+.ps-contact__social {
+    @include clearfix;
+    a {
+        color: #b2b2b2;
+        &:hover {
+            color: $color-2nd;
+        }
+    }
+    li {
+        float: left;
+        margin-right: 25px;
+    }
+}

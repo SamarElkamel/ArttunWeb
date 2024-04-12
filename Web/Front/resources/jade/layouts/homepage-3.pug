@@ -1,0 +1,36 @@
+extends ../master
+
+block title
+    title Bakery | Homepage 3
+
+block page_header
+    - var currentPage = 'homepage'
+    include ../utils/mixins
+    include ../common/common-element
+    include ../partials/modules/search
+    include ../partials/header-2
+block page_content
+
+    - var bannerType = 2;
+    include ../partials/section/revolution-slider
+    include ../partials/section/list-product-2
+    - var counDownType = 2;
+    include ../partials/section/countdown
+    include ../partials/section/special-2
+    include ../partials/section/team
+    include ../partials/section/offer
+    include ../partials/section/partner
+    include ../partials/section/contact
+    include ../partials/section/subscribe
+
+    include ../partials/footer
+    include ../partials/modules/product-quickview
+    include ../partials/modules/subscribe-popup
+
+
+
+
+
+
+
+

@@ -1,0 +1,243 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+
+
+<body>
+
+
+	<div id="booking" class="section">
+	<h1> If you have more than 3 guests, a 10% discount will be applied to your bill, and a 20% discount will be applied if you have more than 5 guests.
+     </h1>
+		<div class="section-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="booking-form">
+                <form method="POST" >
+				<input type="hidden" name="eventId" value="{{ _venement.id }}">
+                    <div class="row no-margin">
+                   
+                    <div class="col-md-4">
+											<div class="form-group">
+												<span class="form-label">Guests</span>
+												<select name="guests" id="guests" class="form-control"  onchange="calculateTotalPrice()">
+													<option>0</option>
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+													<option>4</option>
+													<option>5</option>
+													<option>6</option>
+													<option>7</option>
+													<option>8</option>
+												</select>
+												<span class="select-arrow"></span>
+											</div>
+                        </div>
+
+                       
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <span class="form-label">Total Price</span>
+                                <input name="totalPrice" id="totalPrice" class="form-control" type="text" value={{ _venement.frais}} readonly>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-4">
+                            <div class="form-btn">
+                                <button class="submit-btn">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+	</div>
+</body>
+
+<script>
+    function calculateTotalPrice() {
+        const guestsSelect = document.getElementById('guests'); 
+        const totalPriceInput = document.getElementById('totalPrice'); 
+        const basePrice = {{_venement.frais}}
+        const numberOfGuests = parseInt(guestsSelect.value); 
+        let totalPrice = basePrice * (numberOfGuests + 1); 
+		 if (numberOfGuests > 3 && numberOfGuests <= 5) {
+            totalPrice *= 0.9; 
+        } else if (numberOfGuests > 5) {
+            totalPrice *= 0.8; 
+        }
+        totalPriceInput.value = totalPrice.toFixed(2); 
+		
+    }
+</script>
+
+
+
+
+{% block stylesheets %}
+<style>
+
+body
+{
+	
+	background-image: url("/assets/img/backgrounds/af0a6888-5bfe-41f9-882f-49f1c65c8e0b-classic-art-van-gogh-starry-night-wallpaper-1.png")
+}
+
+h1 
+{
+	color : white ; 
+}
+
+.section {
+	position: relative;
+	height: 100vh;
+}
+
+.section .section-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#booking {
+	font-family: 'Poppins', sans-serif;
+	background-image: url('../img/background.jpg');
+	background-size: cover;
+	background-position: center;
+}
+
+#booking::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.booking-form {
+	background: #fff;
+	border-radius: 2px;
+}
+
+.booking-form>form .row.no-margin {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.booking-form>form .row.no-margin>[class*="col-"] {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.booking-form .form-group {
+	position: relative;
+	padding: 25px;
+	margin-bottom: 0px;
+}
+
+.booking-form .form-group:after {
+	content: '';
+	background: rgba(129, 131, 144, 0.15);
+	position: absolute;
+	top: 25px;
+	bottom: 0;
+	right: 0px;
+	width: 2px;
+	height: 75px;
+}
+
+.booking-form .form-control {
+	background-color: transparent;
+	border-radius: 0px;
+	border: none;
+	height: 50px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	font-size: 20px;
+	color: #222;
+	font-weight: 400;
+	padding: 0;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: #818390;
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: #818390;
+}
+
+.booking-form .form-control::placeholder {
+	color: #818390;
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: #818390;
+}
+
+.booking-form select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 0px;
+	bottom: 30px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: #818390;
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.booking-form .form-label {
+	color: #000000;
+	display: block;
+	font-weight: 400;
+	height: 25px;
+	line-height: 25px;
+	font-size: 14px;
+}
+
+.booking-form .form-btn {
+	padding: 25px;
+}
+
+.booking-form .submit-btn {
+	background: #9F78FF;
+	border: none;
+	text-transform: capitalize;
+	display: block;
+	border-radius: 2px;
+	width: 100%;
+	height: 75px;
+	font-size: 16px;
+	font-weight: 400;
+	color: #fff;
+}
+</style>
+
+{% endblock %}
+{% endblock %}

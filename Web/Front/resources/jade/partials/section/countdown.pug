@@ -1,0 +1,45 @@
+block section
+    if (counDownType == 2)
+        .ps-section.ps-section--pattern.pt-80.pb-80
+            .container
+                .ps-countdown
+                    .row
+                        +column({cols: [6, 6, 12, 12]})
+                            img(src="images/counter.png" alt="")
+                        +column({cols: [6, 6, 12, 12]})
+                            header.text-center
+                                .ps-section__top Hot Deal Today
+                                h4 Vanilla cupcake with red sugar flowers
+                                p Only: <span> £1.55 </span>
+                                ul.ps-countdown__time(data-time="April 21, 2018 15:37:25")
+                                    //li <span class="days"></span><p>Days</p>
+                                    //li.divider :
+                                    li <span class="hours"></span><p>Hours</p>
+                                    li.divider :
+                                    li <span class="minutes"></span><p>minutes</p>
+                                    li.divider :
+                                    li <span class="seconds"></span><p>Seconds</p>
+                                a(href='#').ps-btn Order Now
+                                    i.fa.fa-angle-right
+    else
+        .ps-section.pt-80.pb-40
+            .container
+                .ps-countdown
+                    .row
+                        +column({cols: [6, 6, 12, 12]})
+                            img(src="images/counter.png" alt="" )
+                        +column({cols: [6, 6, 12, 12]})
+                            header.text-center
+                                .ps-section__top Hot Deal Today
+                                h4 Vanilla cupcake with red sugar flowers
+                                p Only: <span> £1.55 </span>
+                                ul.ps-countdown__time(data-time="May 13, 2018 15:37:25")
+                                    //li <span class="days"></span><p>Days</p>
+                                    //li.divider :
+                                    li <span class="hours"></span><p>Hours</p>
+                                    li.divider :
+                                    li <span class="minutes"></span><p>minutes</p>
+                                    li.divider :
+                                    li <span class="seconds"></span><p>Seconds</p>
+                                a(href='#').ps-btn Order Now
+                                    i.fa.fa-angle-right

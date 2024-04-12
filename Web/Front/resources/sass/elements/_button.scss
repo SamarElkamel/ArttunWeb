@@ -1,0 +1,148 @@
+.menu-toggle {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    display: none;
+    span,
+    &:before,
+    &:after {
+        position: absolute;
+        right: 5px;
+        height: 2px;
+        background-color: #666;
+        z-index: 100;
+        @include transition(all 0.4s ease);
+    }
+    span {
+        top: 50%;
+        width: 15px;
+        @include transform(translateY(-50%));
+    }
+    &:before,
+    &:after {
+        content: '';
+    }
+    &:before {
+        top: 7px;
+        width: 10px;
+    }
+    &:after {
+        bottom: 7px;
+        width: 20px;
+    }
+    &:hover {
+        cursor: pointer;
+        span,
+        &:before,
+        &:after {
+            width: 20px;
+        }
+    }
+}
+
+.menu-toggle--active {
+    span {
+        @include transform(translateX(100%));
+        visibility: hidden;
+        opacity: 0;
+    }
+    &:before,
+    &:after {
+        top: 50%;
+        bottom: auto;
+        width: 20px;
+        @include transform-origin(50% 50%);
+    }
+    &:before {
+        @include transform(rotate(45deg));
+    }
+    &:after {
+        @include transform(rotate(-45deg));
+    }
+}
+
+.ps-btn, button.ps-btn {
+    display: inline-block;
+    padding: 11px 40px 9px;
+    border: none;
+    font-family: $font-1st;
+    font-size: 14px;
+    line-height: 25px;
+    @include border-radius(50px);
+    color: #fff;
+    text-transform: uppercase;
+    @include transition(all .4s ease);
+    @include linear-gradient(90deg, #ee7560, #ff5858);
+    i {
+        margin-left: 15px;
+        font-size: 20px;
+        @include transition(all .4s ease);
+    }
+    &:hover {
+        @include box-shadow(0 6px 15px 0 rgba(36, 36, 38, 0.15));
+        color: #fff;
+        i {
+            @include transform(translateX(10px));
+        }
+    }
+}
+.ps-btn--lg, button.ps-btn--lg {
+    padding: 20px 60px 20px;
+    line-height: 20px;
+    i {
+        font-size: 16px;
+    }
+}
+.ps-btn--sm, button.ps-btn--sm {
+    padding: 10px 32px;
+    line-height: 20px;
+    i {
+        font-size: 16px;
+    }
+}
+
+.ps-btn--xs, button.ps-btn--xs {
+    padding: 6px 20px;
+    font-size: 12px;
+    i {
+        font-size: 14px;
+    }
+}
+
+.ps-btn--fullwidth, button.ps-btn--fullwidth {
+    width: 100%;
+    text-align: center;
+}
+
+#back2top {
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    z-index: 10000;
+    background-color: transparent;
+    @include border-radius(50%);
+    border: 2px solid $color-2nd;
+    @include transition(all 0.5s ease);
+   @include hidden;
+    i {
+        @include center();
+        color: $color-2nd;
+        z-index: 10001;
+        font-size: 20px;
+    }
+    &:hover {
+        cursor: pointer;
+        background-color: $color-2nd;
+        i {
+            color: #fff;
+        }
+    }
+    &.active {
+        bottom: 30px;
+        @include show;
+    }
+}

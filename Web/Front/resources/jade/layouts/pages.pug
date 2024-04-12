@@ -1,0 +1,29 @@
+extends ../master
+
+block title
+    title Bakery | Pages Listing
+block page_header
+
+    - var currentPage = 'product'
+    include ../utils/mixins
+    include ../common/common-element
+    //include ../partials/module_header
+
+block page_content
+    include ../data/pages
+    section.ps-section
+        .container
+            .jumbotron
+                .text-center
+                    img(src="images/logo-1.png" alt="" style="max-width: 100px")
+                    h3.mt-30 Pages Listing
+                ol(style="list-style: decimal;")
+                    each val in pages
+                        li: a(href=val.url target="_blank") #{val.text}
+
+
+
+
+
+
+

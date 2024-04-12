@@ -1,0 +1,44 @@
+block moduleHeader
+    include ../data/menu
+    include ../data/social
+    .header--sidebar
+    header.header(data-responsive='1199')
+        .header__top
+            .container
+                .row
+                    +column({cols: [8, 7, 12, 12]})
+                        p 460 West 34th Street, 15th floor, New York - Hotline: 804-377-3580 - 804-399-3580
+                    +column({cols: [4, 5, 12, 12]})
+                        a(href='#').ps-search-btn
+                            i.ps-icon--search
+                        .btn-group.ps-dropdown
+                            a(href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") USD
+                                i.fa.fa-angle-down
+                            ul.dropdown-menu
+                                li: a(href='#') USD
+                                li: a(href='#') SGD
+                                li: a(href='#') ERO
+                                li: a(href='#') JPN
+                        .btn-group.ps-dropdown
+                            a(href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Language
+                                i.fa.fa-angle-down
+                            ul.dropdown-menu
+                                li: a(href='#') English
+                                li: a(href='#') Japanese
+                                li: a(href='#') Chinese
+        nav.navigation
+            .container
+                .menu-toggle
+                    span
+                .navigation__left
+                    +makeMenu(homepage_1_left, 'menu menu--left')
+                a(href='index.html').ps-logo
+                    img(src="images/logo-1.png" alt="")
+                .navigation__right
+                    +makeMenu(homepage_1_right, 'menu menu--right')
+                    +cart
+
+
+
+
+

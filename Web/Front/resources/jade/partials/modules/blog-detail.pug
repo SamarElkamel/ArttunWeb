@@ -1,0 +1,78 @@
+block module
+    include ../../data/blog
+    .ps-section--page-reverse
+        .container
+            .row
+                +column({cols: [9, 9, 12, 12]})
+                    .ps-blog-detail.pt-80.pb-80
+                        .ps-post
+                            .ps-post__thumbnail
+                                a(href='blog-detail.html').ps-post__overlay
+                                img(src="images/blog/img-blog-4.jpg" alt="")
+                            .ps-post__header
+                                a(href='blog-detail.html').ps-post__title Barbecue Party Tips For A Truly Amazing Event
+                                .ps-post__meta
+                                    span
+                                        i.fa.fa-calendar-check-o
+                                        | November 25, 2017
+                                    span
+                                        i.fa.fa-comment-o
+                                        | 24 Comments
+                                    span.tags
+                                        i.fa.fa-tags
+                                        a(href='blog-listing.html') Travel
+                                        a(href='blog-listing.html') Summer
+                                        a(href='blog-listing.html') Women
+                            .ps-post__content
+                                p No matter how far along you are in your sophistication as an amateur astronomer, there is always one fundamental moment that we all go back to. That is that very first moment that we went out where you could really see the cosmos well and you took in the night sky. For city dwellers, this is a revelation as profound as if we discovered aliens living among us. Most of us have no idea the vast panorama of lights that dot a clear night sky when there are no city lights to interfere with the view.
+                                blockquote
+                                    p: i It seems from the moment you begin to take your love of astronomy seriously, the thing that is on your mind is what kind of telescope will you get. And there is no question, investing in a good telescope can really enhance your enjoyment of your new passion in astronomy.
+                                    p Rodney Cannon
+                                p In the history of modern astronomy, there is probably no one greater leap forward than the building and launch of the space telescope known as the Hubble. While NASA has had many ups and downs, the launch and continued operation of the Hubble space telescope probably ranks next to the moon landings and the development of the Space Shuttle as one of the greatest space exploration accomplishments of the last hundred years.
+                            footer.ps-post__footer
+                                .row
+                                    +column({cols: [4, 12, 12, 12]})
+                                        .ps-post__tags
+                                            i.fa.fa-tags
+                                            a(href='blog-listing.html') Travel
+                                            a(href='blog-listing.html') Balkal
+                                            a(href='blog-listing.html') Lake
+                                    +column({cols: [8, 12, 12, 12]})
+                                        .ps-post__action
+                                            a(href='#').like Like
+                                                i.fa.fa-heart
+                                                span: i 2
+                                            a(href='#').facebook
+                                                i.fa.fa-facebook
+                                                | Share
+                                            a(href='#').twitter
+                                                i.fa.fa-twitter
+                                                | Tweet
+
+                        +author-box("images/blog/people.png")
+                        // Comment
+                        .ps-blog-comment
+                            h3 Comments(2)
+                            .ps-comment
+                                +comment-box("images/blog/people.png")
+                                .ps-comment__replay
+                                    +comment-box("images/blog/people.png")
+                        //Contact
+                        .ps-contact
+                            h3 LEAVE A COMMENT
+                            form(action="action" method="post")
+                                .form-group: input.form-control(type="text" placeholder="First Name")
+                                .form-group: input.form-control(type="email" placeholder="E-mail")
+                                .form-group: input.form-control(type="text" placeholder="Telephone")
+                                .form-group
+                                    select.ps-select(data-placeholder="Popupar product")
+                                        option(value="01") Popular products
+                                        option(value="01") Item 01
+                                        option(value="02") Item 02
+                                        option(value="03") Item 03
+                                .form-group: textarea.form-control(placeholder="Text your message here..." rows="6")
+                                .form-group: button.ps-btn.ps-btn--sm.ps-contact__submit Submit
+
+                +column({cols: [3, 3, 12, 12]})
+                    - var sidebarType = "right";
+                    include  sidebar

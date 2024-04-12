@@ -1,0 +1,19 @@
+block section
+    include ../../data/list
+    .ps-section.ps-section--award.pt-80.pb-40
+        .container
+            .ps-section__header.text-center.mb-50
+                .ps-section__top Our Record
+                h3.ps-section__title WINNER AWARDS
+            .ps-section__content
+                .row
+                    each val in award
+                        +column({cols: [4, 4, 12, 12]})
+                            .ps-award.text-center
+                                .ps-award__icon
+                                    img(src=val.imagepath alt="")
+                                .ps-award__content
+                                    h3 #{val.title}
+                                    span #{val.year}
+                                    p #{val.description}
+                                    a(href='#').ps-btn.ps-btn--xs Read more

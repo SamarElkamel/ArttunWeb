@@ -1,0 +1,24 @@
+block page
+    include ../../data/list-product
+    if (shopType == "listing")
+        .ps-section--page
+            .container
+                .row
+                    .col-lg-9.col-md-9.col-sm-12.col-xs-12.col-lg-push-3.col-md-push-3
+                        .ps-shop-listing.pt-80.pb-40
+                            +shop_featured
+                            +shop_filter
+                            include product-listing
+                    .col-lg-3.col-md-3.col-sm-12.col-xs-12.col-lg-pull-9.col-md-pull-9
+                        include  sidebar
+    else
+        .ps-section--page
+            .container
+                .row
+                    .col-lg-9.col-md-9.col-sm-12.col-xs-12.col-lg-push-3.col-md-push-3
+                        .ps-shop-grid.pt-80
+                            +shop_featured
+                            +shop_filter
+                            include product-grid
+                    .col-lg-3.col-md-3.col-sm-12.col-xs-12.col-lg-pull-9.col-md-pull-9
+                        include  sidebar

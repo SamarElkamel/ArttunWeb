@@ -1,0 +1,29 @@
+extends ../master
+
+block title
+    title Bakery | 404 Pages
+block page_header
+
+    - var currentPage = '404'
+    include ../utils/mixins
+    include ../common/common-element
+
+block page_content
+    .ps-error.bg--cover(data-background="images/background/img-404.jpg")
+        .ps-error__content.text-center
+            h1 404
+            h3 PAGES NOT FOUND
+            p OOPS ! Seems you're go out range our Bakery ! :(
+            a(href='homepage.html').ps-btn Back to home
+                i.fa.fa-angle-right
+
+
+
+
+
+
+
+
+
+
+

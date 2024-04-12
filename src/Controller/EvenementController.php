@@ -31,16 +31,10 @@ class EvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $photoFile = $form->get('photo')->getData();
-            if ($photoFile) {
-                $uploadsDirectory = $this->getParameter('uploads_directory');
-                $photoFileName = md5(uniqid()) . '.' . $photoFile->guessExtension();
-                $photoFile->move($uploadsDirectory, $photoFileName);
-                $Evenement->setPhoto($photoFileName);
-            }
-            else 
-            $Evenement->setPhoto('https://live.staticflickr.com/7481/15343881233_eedf62af28_z.jpg');
-
+            $photo = $form->get('photo')->getData();
+                $fichier = md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('upload_directory'), $fichier);
+                $Evenement->setPhoto($fichier);
             $entityManager->persist($Evenement);
             $entityManager->flush();
 

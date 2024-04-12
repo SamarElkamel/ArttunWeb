@@ -1,0 +1,206 @@
+.navigation {
+    position: relative;
+    @include clearfix;
+    padding: 20px 0;
+    &__left {
+        float: left;
+    }
+    &__right {
+        float: right;
+        @include clearfix;
+        .menu {
+            float: left;
+        }
+        .ps-cart {
+            margin-left: 60px;
+            float: right;
+        }
+    }
+}
+
+.sub-menu {
+    min-width: 200px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 1000;
+    padding-top: 10px;
+    background-color: #fff;
+    @include transform(translate(-50%, 30px));
+    @include transition(all 0.4s ease);
+    @include box-shadow(0 10px 30px 0 rgba(0, 0, 0, 0.2));
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        z-index: 10;
+        @include triangle(15px, #fff, up);
+    }
+    > li {
+        display: block;
+        margin-right: 0;
+        width: 100%;
+        padding: 0 20px 0 30px;
+        > a {
+            display: inline-block;
+            font-family: $font-1st;
+            padding: 8px 0px;
+            width: 100%;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #3c3c3c;
+            &:before {
+                @include vertical-align();
+                left: 0;
+                content: '';
+                width: 0;
+                height: 1px;
+                background-color: $color-1st;
+                @include transition(all .4s ease);
+            }
+            &:hover {
+                padding-left: 25px;
+                color: $color-1st;
+                &:before {
+                    width: 20px;
+                }
+            }
+        }
+        &.end-block {
+            border-bottom: 1px solid #ebebeb;
+        }
+        &.try-theme {
+            border-top: 1px solid #ebebeb;
+            > a {
+                padding: 15px 0;
+                &:before {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.menu {
+    @include clearfix();
+    > li {
+        display: inline-block;
+        position: relative;
+        float: left;
+        margin-right: 10px;
+        > a {
+            display: inline-block;
+            padding: 9px 25px 7px;
+            font-family: $font-1st;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 15px;
+            text-transform: uppercase;
+            color: $color-heading;
+            border: 2px solid transparent;
+            @include border-radius(35px);
+            &:hover {
+                color: $color-1st;
+                border-color: $color-2nd;
+            }
+        }
+        .sub-menu {
+            @include hidden();
+        }
+        &.current {
+            > a {
+                color: $color-2nd;
+                border-color: $color-2nd;
+            }
+        }
+        &.menu-item-has-children {
+            > a {
+                &:after {
+                    content: "\e900";
+                    font-family: 'ps-icon' !important;
+                    position: absolute;
+                    top: 50%;
+                    right: 10px;
+                    @include transform(translateY(-50%) rotate(-90deg));
+                    font-size: 10px;
+                    z-index: 10;
+                }
+            }
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+        &:hover {
+            .sub-menu {
+                @include show();
+                @include transform(translate(-50%, 10px));
+            }
+        }
+    }
+    @include media("<lg") {
+        &.active {
+            @include show;
+        }
+        .sub-menu {
+            position: relative;
+            padding: 0;
+            left: 0;
+            @include transform(translate(0, 0));
+            @include transition(all 0s ease);
+            display: none;
+            &:before {
+                display: none;
+            }
+            > li {
+                padding: 0;
+                border-bottom: 1px solid #eee;
+                > a {
+                    padding: 10px 15px;
+                    &:before {
+                        display: none;
+                    }
+                }
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+        > li {
+            display: inline-block;
+            float: none;
+            width: 100%;
+            > a {
+                width: 100%;
+                padding: 10px 15px;
+                font-size: 14px;
+                line-height: 20px;
+                border-bottom: 1px solid #eee;
+                @include border-radius(0);
+                &:hover, &:active {
+                    border: none;
+                    border-bottom: 1px solid #eee;
+                }
+            }
+            .sub-menu {
+                @include show;
+            }
+            &.current {
+                > a {
+                    border: none;
+                    border-bottom: 1px solid lighten($color-1st, 20%);
+                }
+            }
+            &:hover {
+                .sub-menu {
+                    @include transform(translate(0, 0));
+                }
+            }
+        }
+
+    }
+}
+
+

@@ -1,0 +1,85 @@
+block module
+    include ../../data/list
+    if (contactType == 2)
+        .ps-section.pt-80.pb-80
+            .container
+                .ps-contact.ps-contact--2
+                    #contact-map.mb-60(data-address="New York, NY" data-title="BAKERY LOCATION!" data-zoom="17")
+                    .row
+                        +column({cols: [6, 6, 12, 12]})
+                            .ps-contact__info
+                                .ps-contact__block
+                                    h4 OFFICE AT AMERICA
+                                    p: strong BASEMENT COMPANY, NEW YORK
+                                    p
+                                        i.fa.fa-envelope-o
+                                        | enquiry@bakery.com
+                                    p
+                                        i.fa.fa-phone
+                                        | +1 650-253-0000
+                                    +singleList("ps-contact__social", contact_social)
+                                .ps-contact__block
+                                    h4 OFFICE AT PARIS
+                                    p: strong 189/32 BASEMENT COMPANY, PARIS, FRANCE
+                                    p
+                                        i.fa.fa-envelope-o
+                                        | enquiry@bakery.com
+                                    p
+                                        i.fa.fa-phone
+                                        | +1 650-253-0000
+                                    +singleList("ps-contact__social", contact_social)
+                                .ps-contact__block
+                                    h4 OFFICE AT VIETNAM
+                                    p: strong 189/32 BASEMENT COMPANY, PARIS, FRANCE
+                                    p
+                                        i.fa.fa-envelope-o
+                                        | enquiry@bakery.com
+                                    p
+                                        i.fa.fa-phone
+                                        | +1 650-253-0000
+                                    +singleList("ps-contact__social", contact_social)
+                        +column({cols: [6, 6, 12, 12]})
+                            .ps-contact__form
+                                .form-group: input.form-control(type="text" placeholder="First Name")
+                                .form-group: input.form-control(type="email" placeholder="E-mail")
+                                .form-group: input.form-control(type="text" placeholder="Telephone")
+                                .form-group
+                                    select.ps-select(data-placeholder="Popupar product")
+                                        option(value="01") Popular products
+                                        option(value="01") Item 01
+                                        option(value="02") Item 02
+                                        option(value="03") Item 03
+                                .form-group: textarea.form-control(rows="5" placeholder="Text your message here...")
+                                .form-group.text-center.mt-30: button.ps-btn.ps-btn--sm.ps-contact__submit Submit
+    else
+        .ps-section.pt-80.pb-80
+            .container
+                .ps-contact
+                    .row
+                        +column({cols: [6, 6, 12, 12]})
+                            .ps-contact__info
+                                #contact-map.mb-60(data-address="New York, NY" data-title="BAKERY LOCATION!" data-zoom="17")
+                                .ps-contact__block
+                                    h4 BASEMENT COMPANY, NEW YORK
+                                    p
+                                        i.fa.fa-envelope-o
+                                        | enquiry@bakery.com
+                                    p
+                                        i.fa.fa-phone
+                                        | +1 650-253-0000
+                                    h4 Follow Us
+                                    +singleList("ps-contact__social", contact_social)
+
+                        +column({cols: [6, 6, 12, 12]})
+                            .ps-contact__form
+                                .form-group: input.form-control(type="text" placeholder="First Name")
+                                .form-group: input.form-control(type="email" placeholder="E-mail")
+                                .form-group: input.form-control(type="text" placeholder="Telephone")
+                                .form-group
+                                    select.ps-select(data-placeholder="Popupar product")
+                                        option(value="01") Popular products
+                                        option(value="01") Item 01
+                                        option(value="02") Item 02
+                                        option(value="03") Item 03
+                                .form-group: textarea.form-control(rows="6" placeholder="Text your message here...")
+                                .form-group.mt-30: button.ps-btn.ps-btn--sm.ps-contact__submit Submit

@@ -1,0 +1,36 @@
+block page
+    include ../../data/list-product
+    .ps-section.pt-80.pb-40
+        .container
+            .ps-section__header.mb-50.text-center
+                .ps-section__top With Bread All Sorrows Are Less.
+                h3.ps-section__title.ps-section__title--full Special Bakery
+            .ps-section__content
+                .ps-product-special.ps-product-special--2
+                    .row
+                        +column({cols: [3, 3, 12, 12]})
+                            .slick.ps-cake-list
+                                - for (var i = 0; i < 5; i++)
+                                    .slick-item
+                                        a(href='javascript:;').ps-cake
+                                            img(src="images/special/img-cr-"+(i+1)+".jpg" alt="")
+                        +column({cols: [9, 9, 12, 12]})
+                            .slick.ps-cake-detail
+                                - for (var i = 0; i < 5; i++)
+                                    .ps-cake--detail.ps-cake--detail--2
+                                        .ps-cake__thumbnail
+                                            img(src="images/special/small0"+(i+1)+".jpg" alt="")
+                                            if ( i%2 == 0 )
+                                                .ps-badge.ps-badge--large: span HOT
+                                        .ps-cake__content
+                                            h3 Vanilla cupcake with red sugar flowers
+                                            p INGREDIENTS:
+                                            p _ 45 grams plain flour.
+                                            p _ 1 teaspoon cocoa powder.
+                                            p _ 1 egg. _ 10 grams melted butter.
+                                            p _ 100 millilitres milk.
+                                            p PREPARATION:
+                                            p Pie gummi bears jujubes cake lemon drops gummi bears croissant macaroon pie. Fruitcake tootsie roll chocolate cake. Carrot cake cake bear claw jujubes topping cake apple pie. Jujubes…
+                                            p.ps-cake__total.mb-30 Only Today:<span>£5.99</span>
+                                            a(href='#').ps-btn.ps-btn--sm Order now
+                                                i.fa.fa-angle-right

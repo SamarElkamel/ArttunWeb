@@ -1,0 +1,129 @@
+.ps-search-btn {
+    position: relative;
+    display: block;
+    height: 40px;
+    width: 40px;
+    float: right;
+    border-right: 1px solid #eaeaea;
+    i {
+        @include center();
+        font-size: 14px;
+        color: #000;
+    }
+    &:hover {
+        i {
+            color: $color-1st;
+        }
+    }
+}
+
+.ps-searchbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    padding-top: 50px;
+    overflow-y: scroll;
+    background-color: rgba(41, 32, 60, 0.95);
+    @include transform(translateY(-100%));
+    @include transition(all .4s $ease-out-quad);
+    @include hidden;
+    &__remove {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        @include border-radius(50%);
+        cursor: pointer;
+        @include transition(all .4s ease);
+        i {
+            @include center();
+            font-size: 20px;
+            color: $color-2nd;
+            @include transition(all .4s ease);
+        }
+        &:hover {
+            background-color: $color-1st;
+            i {
+                color: #fff;
+            }
+        }
+    }
+    header {
+        p {
+            font-family: $font-2nd;
+            font-size: 20px;
+            color: #ffffff;
+            font-weight: 400;
+            letter-spacing: .05em;
+        }
+    }
+    form {
+        position: relative;
+        margin-bottom: 30px;
+        input.form-control {
+            background-color: transparent;
+            border: none;
+            @include border-radius(0);
+            border-bottom: 2px solid #767676;
+            font-family: $font-2nd;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: .1em;
+            &:focus {
+                border-color: $color-2nd;
+            }
+        }
+        button {
+            background: none;
+            border: none;
+            @include vertical-align();
+            right: 0;
+            i {
+                font-size: 30px;
+                color: #fff;
+            }
+        }
+    }
+    &__morelink {
+        position: relative;
+        display: inline-block;
+        font-family: $font-1st;
+        font-size: 14px;
+        color: #ffffff;
+        text-transform: uppercase;
+        line-height: 1.5em;
+        &:before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: $color-2nd;
+        }
+        &:hover {
+            color: $color-2nd;
+        }
+    }
+    &.active {
+        @include show;
+        @include transform(translateY(0));
+    }
+    @include media("<sm") {
+        padding-bottom: 30px;
+        &__remove {
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            i {
+                font-size: 14px;
+            }
+        }
+    }
+}

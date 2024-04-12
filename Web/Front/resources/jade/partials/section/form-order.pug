@@ -1,0 +1,46 @@
+block section
+    .ps-section.ps-section--order-form.pt-80.pb-80
+        .container
+            .ps-section__header.text-center.mb-50
+                .ps-section__top Making People Happy
+                h3.ps-section__title.ps-section__title--full OFFER FORM
+            .ps-section__content
+                form(action="_acttion" method="post")
+                    .row
+                        +column({cols: [6, 6, 12, 12]})
+                            .form-group
+                                label Your Name <span>*</span>
+                                input.form-control(type="text" placeholder="")
+                            .form-group
+                                label Your Adress <span>*</span>
+                                input.form-control(type="text" placeholder="")
+                            .form-group.form-group--icon
+                                label Choose the date you want order bakery<span>*</span>
+                                .icon-wrap
+                                    i.fa.fa-calendar-check-o
+                                    input.form-control.date-picker(type="text" placeholder="")
+                            .form-group
+                                label Name Bakery
+                                input.form-control(type="text" placeholder="")
+                        +column({cols: [6, 6, 12, 12]})
+                            .form-group
+                                label Number Phone
+                                input.form-control(type="text" placeholder="")
+                            .form-group
+                                label Your Email
+                                input.form-control(type="text" placeholder="")
+                            .form-group.form-group--icon
+                                label Best time contact to you
+                                .icon-wrap
+                                    i.fa.fa-clock-o
+                                    input.form-control.time-picker(type="text" placeholder="")
+                            .form-group
+                                label Quantity bakery
+                                input.form-control(type="text" placeholder="")
+                        +column({cols: [12, 12, 12, 12]})
+                            .form-group.mb-20
+                                label Notes about your order, e.g. special notes for delivery.
+                                textarea(class="form-control", rows="6")
+                            .form-group.text-center
+                                button.ps-btn Order Bakery Now
+                                    i.fa.fa-angle-right

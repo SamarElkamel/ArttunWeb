@@ -1,0 +1,163 @@
+.ps-widget {
+    position: relative;
+}
+
+.ps-widget--footer {
+    margin-bottom: 20px;
+    .ps-widget__header {
+        margin-bottom: 20px;
+    }
+    .ps-widget__title {
+        font-family: $font-2nd;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #000000;
+    }
+}
+
+.ps-widget--payment {
+    ul {
+        a {
+            display: inline-block;
+            margin-bottom: 7px;
+            margin-right: 3px;
+        }
+        li {
+            display: inline;
+        }
+    }
+}
+
+.ps-widget--worktime {
+    p {
+        font-family: $font-1st;
+        color: #949494;
+        strong {
+            display: block;
+            margin-bottom: 10px;
+            font-family: $font-1st;
+            color: #535353;
+            font-weight: 400;
+        }
+    }
+}
+
+.ps-widget--connect {
+    .ps-widget__social {
+        margin-bottom: 25px;
+        @include clearfix;
+        display: block;
+        a {
+            position: relative;
+            display: block;
+            width: 25px;
+            height: 25px;
+            i {
+                @include center();
+                font-size: 18px;
+            }
+            &:hover {
+                color: $color-1st;
+            }
+        }
+        li {
+            float: left;
+            margin-right: 25px;
+        }
+    }
+    p {
+        margin-top: 45px;
+        font-family: $font-2nd;
+        font-size: 12px;
+        line-height: 1.66em;
+        color: #79808e;
+        a {
+            color: $color-1st;
+            font-family: inherit;
+        }
+    }
+}
+
+.ps-widget--sidebar {
+    margin-bottom: 60px;
+    .ps-widget__header {
+        margin-bottom: 25px;
+    }
+    .ps-widget__title {
+        font-family: $font-2nd;
+        font-size: 18px;
+        letter-spacing: 2px;
+        color: #505050;
+        text-transform: uppercase;
+    }
+}
+
+.ps-widget--search {
+    form {
+        position: relative;
+    }
+    .form-control {
+        height: 40px;
+        padding: 0 20px;
+        @include border-radius(40px);
+        border: 1px solid #e5e5e5;
+        color: #fff;
+        background-color: #fff;
+        font-family: $font-1st;
+        font-size: 12px;
+        color: #c4c4c4;
+        @include placeholder() {
+            color: #c4c4c4;
+        }
+        &:focus {
+            border-color: $color-2nd;
+
+        }
+    }
+    button {
+        @include vertical-align();
+        right: 20px;
+        margin-top: 2px;
+        border: none;
+        background-color: transparent;
+        @include transition(all .4s ease);
+        &:hover {
+            color: $color-2nd;
+        }
+    }
+    input:focus ~ button {
+        color: $color-2nd;
+    }
+}
+
+.ps-widget--best-seller {
+    .ps-product--sidebar {
+        margin-bottom: 25px;
+    }
+}
+
+.ps-widget--tags {
+    .ps-tags {
+        a {
+            display: inline-block;
+            margin-right: 15px;
+            padding: 5px 15px;
+            margin-bottom: 20px;
+            font-family: $font-1st;
+            font-size: 12px;
+            letter-spacing: 0.2px;
+            line-height: 15px;
+            color: #626262;
+            border: 1px solid #d9d9d9;
+            @include border-radius(25px);
+            &:hover {
+                color: $color-2nd;
+                border-color: $color-2nd;
+            }
+        }
+        li {
+            display: inline-block;
+        }
+    }
+}

@@ -1,0 +1,103 @@
+block sidebar
+    include ../../data/list
+    mixin widget-search()
+        aside.ps-widget.ps-widget--sidebar.ps-widget--search
+            form(method="post" action="search-result.html")
+                input.form-control(type="text" placeholder="Type here bakery name...")
+                button(type="submit")
+                    i.ps-icon--search
+    mixin widget-category-1()
+        aside.ps-widget.ps-widget--sidebar.ps-widget--category
+            .ps-widget__header
+                h3.ps-widget__title CATEGORY
+            .ps-widget__content
+                ul.ps-list--circle
+                    each val in widget_category
+                        li(class=(val.current == true) ? 'current' : '')
+                            a(href=val.link)
+                                span.circle
+                                | #{val.text}
+    mixin widget-category-2()
+        aside.ps-widget.ps-widget--sidebar.ps-widget--category
+            .ps-widget__header
+                h3.ps-widget__title Category
+            .ps-widget__content
+                ul.ps-list--arrow
+                    each val in widget_category
+                        li(class=(val.current == true) ? 'current' : '')
+                            a(href=val.link)
+                                span.circle
+                                | #{val.text}
+    mixin widget-filter()
+        aside.ps-widget.ps-widget--sidebar.ps-widget--filter
+            .ps-widget__header
+                h3.ps-widget__title Fillter Prices
+            .ps-widget__content
+                .ac-slider(data-default-min='300', data-default-max ='2000', data-max = '3450' data-step='50', data-unit ='$')
+                p.ac-slider__meta
+                    | Price:
+                    span.ac-slider__value.ac-slider__min
+                    | -
+                    span.ac-slider__value.ac-slider__max
+                a(href="#").ac-slider__filter.ps-btn.ps-btn--xs Filter
+    mixin widget-ads
+        aside.ps-widget.ps-widget--sidebar.ps-widget--ads
+            .ps-widget__header
+                h3.ps-widget__title Ads Banner
+            .ps-widget__content
+                img(src="images/widget/banner2x.png" alt="")
+    mixin widget-best-seller
+        aside.ps-widget.ps-widget--sidebar.ps-widget--best-seller
+            .ps-widget__header
+                h3.ps-widget__title Best seller
+            .ps-widget__content
+                each val in widget_best_seller
+                    .ps-product--sidebar
+                        .ps-product__thumbnail
+                            a(href='product-detail.html').ps-product__overlay
+                            img(src=val.imagepath alt="")
+                        .ps-product__content
+                            h4.ps-product__title
+                                a(href='product-detail.html') #{val.title}
+                            p.ps-product__price
+                                del #{val.originPrice}
+                                | #{val.salePrice}
+                            a(href='product-detail.html').ps-btn.ps-btn--xs Purchase
+    mixin widget-tag()
+        aside.ps-widget.ps-widget--sidebar.ps-widget--tags
+            .ps-widget__header
+                h3.ps-widget__title TAGS
+            .ps-widget__content
+                +singleList("ps-tags", widget_tag)
+    mixin recent-post()
+         aside.ps-widget.ps-widget--sidebar.ps-widget--recent-post
+            .ps-widget__header
+                h3.ps-widget__title Recent Post
+            .ps-widget__content
+                each val in widget_recent_post
+                    .ps-post.ps-post--sidebar
+                        .ps-post__thumbnail
+                            a.ps-post__overlay(href="#")
+                            img(src=val alt="")
+                        .ps-post__content
+                            a(href='#' data-number-line='2') Micenas Placerat Nibh Loreming Fentum
+                            span SEP 29, 2015
+    if (sidebarType == 'right')
+        .ps-sidebar
+            +widget-search
+            +widget-category-2
+            +widget-ads
+            +recent-post
+            +widget-tag
+    else
+        .ps-sidebar
+            +widget-search
+            +widget-category-1
+            +widget-filter
+            +widget-ads
+            +widget-best-seller
+            +widget-tag
+
+
+
+

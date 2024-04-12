@@ -1,0 +1,29 @@
+block section
+    if (aboutType == 2)
+        .ps-section.ps-section--about.ps-section--pattern.pt-80.pb-0
+            .container
+                .row
+                    +column({cols: [7, 7, 12, 12]})
+                        .ps-section__header.text-center
+                            .ps-section__top Our Chef
+                            h3.ps-section__title Mr. Regan Vanilla
+                        .ps-section__content
+                            p “Soufflé danish gummi bears tart. Pie wafer icing. Gummies jelly beans powder. Chocolate bar pudding macaroon candy canes chocolate apple pie chocolate cake. Sweet caramels sesame snaps halvah bear claw wafer. Sweet roll soufflé muffin topping muffin brownie…”
+                            .ps-about__sign.text-center.mb-30.mt-40: img(src="images/about/img-signature.png" alt="")
+                            p.ps-about-sign CEO - Vanila Bakery Shop
+                    +column({cols: [5, 5, 12, 12]})
+                        img(src="images/about/about-intro-2.png" alt="")
+    else
+        .ps-section.ps-section--about.pt-100.pb-40
+            .container
+                .row
+                    +column({cols: [7, 7, 12, 12]})
+                        .ps-section__header.text-center
+                            .ps-section__top Our Baker
+                            h3.ps-section__title Ms. Velvet Vanilla
+                        .ps-section__content.text-center
+                            p “Soufflé danish gummi bears tart. Pie wafer icing. Gummies jelly beans powder. Chocolate bar pudding macaroon candy canes chocolate apple pie chocolate cake. Sweet caramels sesame snaps halvah bear claw wafer. Sweet roll soufflé muffin topping muffin brownie…”
+                            .ps-about__sign.text-center.mb-30.mt-40: img(src="images/about/img-signature.png" alt="")
+                            p.ps-about-sign CEO - Vanila Bakery Shop
+                    +column({cols: [5, 5, 12, 12]})
+                        img(src="images/about/about-intro.png" alt="")

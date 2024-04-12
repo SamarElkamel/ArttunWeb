@@ -1,0 +1,63 @@
+* {
+    font-family: $font-1st;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    position: relative;
+    color: #303030;
+    margin-top: 0;
+    margin-bottom: 10px;
+    a {
+        color: inherit;
+    }
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5 {
+    font-size: 16px;
+}
+
+h6 {
+    font-size: 12px;
+}
+
+p {
+    font-size: 14px;
+    line-height: 1.5em;
+    color: #999;
+    span {
+        font-family: inherit;
+        color: inherit;
+        font-size: inherit;
+    }
+}
+
+a {
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    @include transition(all 0.4s ease);
+
+}
+
+ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

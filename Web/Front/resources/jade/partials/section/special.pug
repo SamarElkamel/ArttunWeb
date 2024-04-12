@@ -1,0 +1,64 @@
+block page
+    include ../../data/list-product
+    .ps-section.pt-80.pb-40
+        .container
+            .ps-section__header.mb-50.text-center
+                .ps-section__top With Bread All Sorrows Are Less.
+                h3.ps-section__title.ps-section__title--full Special Bakery
+            .ps-section__content
+                .ps-product-special
+                    .owl-slider.ps-cake-list.mb-50(
+                        data-owl-auto= 'true',
+                        data-owl-loop= 'false',
+                        data-owl-speed= '10000',
+                        data-owl-gap= '30',
+                        data-owl-nav= 'false',
+                        data-owl-dots= 'false',
+                        data-owl-animate-in= '',
+                        data-owl-animate-out= '',
+                        data-owl-item= '5',
+                        data-owl-item-xs= '2',
+                        data-owl-item-sm= '3',
+                        data-owl-item-md= '4',
+                        data-owl-item-lg= '5',
+                        data-owl-nav-left = '<i class="fa fa-angle-left"></i>',
+                        data-owl-nav-right = '<i class="fa fa-angle-right"></i>',
+                    )
+                        - for (var i = 0; i < 5; i++)
+                            a(href='javascript:;').ps-cake
+                                img(src="images/special/img-cr-"+(i+1)+".jpg" alt="")
+                    .owl-slider.ps-cake-detail(
+                        data-owl-auto= 'true',
+                        data-owl-loop= 'false',
+                        data-owl-speed= '10000',
+                        data-owl-gap= '0',
+                        data-owl-nav= 'false',
+                        data-owl-dots= 'false',
+                        data-owl-animate-in= 'fadeIn',
+                        data-owl-animate-out= 'fadeOut',
+                        data-owl-item= '1',
+                        data-owl-item-xs= '1',
+                        data-owl-item-sm= '1',
+                        data-owl-item-md= '1',
+                        data-owl-item-lg= '1',
+                        data-owl-nav-left = '<i class="fa fa-angle-left"></i>',
+                        data-owl-nav-right = '<i class="fa fa-angle-right"></i>',
+                    )
+                        - for (var i = 0; i < 5; i++)
+                            .ps-cake--detail
+                                .ps-cake__thumbnail
+                                    img(src="images/special/img-cr-"+(i+1)+".jpg" alt="")
+                                    if ( i%2 == 0 )
+                                        .ps-badge.ps-badge--large: span HOT
+                                .ps-cake__content
+                                    h3 Vanilla cupcake with red sugar flowers
+                                    p INGREDIENTS:
+                                    p _ 45 grams plain flour.
+                                    p _ 1 teaspoon cocoa powder.
+                                    p _ 1 egg. _ 10 grams melted butter.
+                                    p _ 100 millilitres milk.
+                                    p PREPARATION:
+                                    p Pie gummi bears jujubes cake lemon drops gummi bears croissant macaroon pie. Fruitcake tootsie roll chocolate cake. Carrot cake cake bear claw jujubes topping cake apple pie. Jujubes…
+                                    p.ps-cake__total.mb-30 Only Today: <span>£5.99</span>
+                                    a(href='#').ps-btn.ps-btn--sm Order now
+                                        i.fa.fa-angle-right

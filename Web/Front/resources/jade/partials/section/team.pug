@@ -1,0 +1,50 @@
+block section
+    include ../../data/people
+    if (teamType == 'about')
+        section.ps-section.ps-section--team.ps-section--team-2.pt-80.pb-80
+            .container
+                .ps-section__header.text-center
+                    .ps-section__top Golden Hand
+                    h3.ps-section__title.ps-section__title--full OUR TEAM
+                .ps-section__content
+                    .row
+                        each val in about_team
+                            +column({cols: [4, 4, 12, 12]})
+                                article.ps-people.ps-people--2
+                                    .ps-people__thumbnail
+                                        a(href='#').ps-people__overlay
+                                        img(src=val.imagepath alt="")
+                                    .ps-people__content
+                                        h4 #{val.title}
+                                        span.ps-people__position #{val.position}
+                                        p #{val.description}
+                                        +singleList("ps-people__social", people_social)
+    else
+        section.ps-section.ps-section--team.ps-section--pattern.pt-80.pb-80
+            .container
+                .row
+                    +column({cols: [4, 4, 12, 12]})
+                        .ps-section__header
+                            h3.ps-section__title.ps-section__title--left OUR BAKER
+                            p We all have those moments in our lives when we feel as if everything needs to be exactly rigt.
+                            p Dessert tiramisu tart donut macaroon. Gummi bears lollipop marzipan. Caramels gummi bears icing jelly beans cheesecake brownie topping candy sugaplum.
+                            ul.ps-list.ps-list--dot
+                                li Caramels gummi bears
+                                li Caramels gummi bears
+                                li Caramels gummi bears
+                            a(href='#').ps-btn.ps-section__morelink Read more
+                                i.fa.fa-angle-right
+                    +column({cols: [8, 8, 12, 12]})
+                        .ps-section__content
+                            .row
+                                each val in homepage_team
+                                    +column({cols: [6, 6, 6, 12]})
+                                        article.ps-people
+                                            .ps-people__thumbnail
+                                                a(href='#').ps-people__overlay
+                                                img(src=val.imagepath alt="")
+                                            .ps-people__content
+                                                h4 #{val.title}
+                                                span.ps-people__position #{val.position}
+                                                p #{val.description}
+                                                +singleList("ps-people__social", people_social)

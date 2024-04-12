@@ -1,0 +1,33 @@
+.ps-award {
+    margin-bottom: 40px;
+    &__icon {
+        width: 100px;
+        margin: 0 auto 20px;
+    }
+    &__content {
+        text-align: center;
+        h3 {
+            margin-bottom: 0;
+            font-family: $font-2nd;
+            font-size: 18px;
+            color: #000000;
+        }
+        span {
+            margin-bottom: 20px;
+            display: block;
+            font-family: $font-2nd;
+            font-size: 14px;
+            font-style: italic;
+            color: #505050;
+        }
+        p {
+            font-family: $font-1st;
+            font-size: 14px;
+            line-height: 1.57em;
+            color: #4e3939;
+        }
+        .ps-btn {
+            margin-top: 20px;
+        }
+    }
+}
