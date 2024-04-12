@@ -24,9 +24,24 @@
     <link rel="stylesheet" href="/assets/Front/css/slick.css">
     <link rel="stylesheet" href="/assets/Front/css/nice-select.css">
     <link rel="stylesheet" href="/assets/Front/css/style.css">
+  
+  
     
 </head>
 <body class="full-wrapper">
+<script>
+       
+        function toggleMenu() {
+            var menu = document.getElementById("userMenu");
+            if (menu.classList.contains("hidden")) {
+                menu.classList.remove("hidden");
+            } else {
+                menu.classList.add("hidden");
+            }
+        }
+    </script>
+
+
     <!-- ? Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -40,6 +55,7 @@
     </div>
     <!-- Preloader Start-->
     <header>
+  
         <!-- Header Start -->
         <div class="header-area ">
             <div class="main-header header-sticky">
@@ -55,16 +71,16 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="index.html">Home</a></li> 
-                                        <li><a href="shop.html">shop</a></li>
-                                        <li><a href="/show/events/front">Events</a></li>
-                                        <li><a href="blog.html">Blog</a>
+                                        <li><a href="blog.html">Shop</a>
                                             <ul class="submenu">
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li><a href="blog_details.html">Blog Details</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                                <li><a href="product_details.html">Product Details</a></li>
+                                                <li><a href="blog.html">Painting</a></li>
+                                                <li><a href="blog_details.html">Sculpture</a></li>
+                                                <li><a href="elements.html">Drawing materials</a></li>
+                                                <li><a href="product_details.html">Plastic art</a></li>
                                             </ul>
                                         </li>
+                                        <li><a href="/show/events/front">Events</a></li>
+                                        <li><a href="shop.html">Claims</a></li>
                                         <li><a href="contact.html">Contact</a></li>
                                     </ul>
                                 </nav>
@@ -73,9 +89,9 @@
                         <div class="header-right1 d-flex align-items-center">
                             <!-- Social -->
                             <div class="header-social d-none d-md-block">
-                                <a href="#"><i class="fab fa-twitter"></i></a>
+    
                                 <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+
                             </div>
                             <!-- Search Box -->
                             <div class="search d-none d-md-block">
@@ -86,10 +102,29 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="card-stor">
-                                            <img src="assets/img/gallery/card.svg" alt="">
-                                            <span>0</span>
-                                        </div>
+
+</div>
+
+<div class="main-menu  d-none d-lg-block">
+  <div class="card-stor">
+                                <nav>
+                                    <ul id="navigation">
+                                       
+                                        <li>
+                                           <img src="/assets/img/icons/user/profile.png" alt="User Icon">
+                                            <ul class="submenu">
+                                                <li><a href="#">My Profile</a></li>
+                                                <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
+                                                <li><a href="#">Log Out</a></li>
+                                            </ul>
+                                        </li>
+                                     
+                                    </ul>
+                                </nav>
+                            </div> 
+                            </div>
+
+
                                     </li>
                                 </ul>
                             </div>
@@ -261,4 +296,7 @@
 <script src="/assets/Front/js/main.js"></script>
 
 </body>
+
+
+
 </html>
