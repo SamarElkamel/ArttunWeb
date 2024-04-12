@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Entity\user\User;
 #[ORM\Entity]
 #[ORM\Table(name: 'réservation')]
 class Reservation
