@@ -18,13 +18,12 @@ class ReservationController extends AbstractController
     #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        $reservations = $entityManager
-            ->getRepository(Reservation::class)
-            ->findAll();
+        $userId = 44; 
+        $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findBy(['idClient' => $userId]);
 
-        return $this->render('reservation/index.html.twig', [
-            'reservations' => $reservations,
-        ]);
+    return $this->render('reservation/index.html.twig', [
+        'reservations' => $reservations,
+    ]);
     }
 
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
@@ -95,4 +94,9 @@ class ReservationController extends AbstractController
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
+
+   
+
+
+
 }

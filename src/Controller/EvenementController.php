@@ -29,18 +29,22 @@ class EvenementController extends AbstractController
         $Evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $Evenement);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $photo = $form->get('photo')->getData();
+    
+            if ($photo) {
                 $fichier = md5(uniqid()) . '.' . $photo->guessExtension();
                 $photo->move($this->getParameter('upload_directory'), $fichier);
                 $Evenement->setPhoto($fichier);
+            }
+    
             $entityManager->persist($Evenement);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('Evenement/new.html.twig', [
             '_venement' => $Evenement,
             'form' => $form,

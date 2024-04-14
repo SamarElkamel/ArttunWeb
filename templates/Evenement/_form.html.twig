@@ -71,24 +71,15 @@
         </div>
 
       <div class="mb-3">
-   <div class="mb-3 text-start">
-    {{ form_label(form.photo, 'photo') }}
-    <div>
-        {% if form.photo.vars.value %}
-               <img src="{{ asset(form.photo.vars.value) }}" alt="Current Photo" style="max-width: 250px; display: inline-block;">
-        {% else %}
-            <p>No photo uploaded.</p>
-        {% endif %}
-        <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload Photo</button>
-           <div class="input-group input-group-merge">
-        {{ form_widget(form.photo, {'attr': {'style': 'display: none;'}}) }}
-        </div>
-        <input type="file" id="photo" style="display: none;" accept="image/*" />
-    </div>
-
-
-    
+<div class="mb-3">
+    {{ form_label(form.photo, 'Photo') }}
+                    {{ form_widget(form.photo, {'attr': {'class': 'form-control-file', 'onchange': 'previewImage(event)'}}) }}
+                    <div id="image-preview"></div>
+                </div>
+              
+</div>
 <div class="text-center">
+
     <button class="btn btn-primary" id="save">{{ button_label|default('Save') }}</button>
 </div>
 {{ form_end(form) }}
@@ -104,8 +95,22 @@
     }
 
    </style>
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+
+ {% endblock %}
+   
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var imgElement = document.getElementById("image-preview");
+            imgElement.innerHTML = '<img src="' + reader.result + '" class="img-fluid" alt="Preview">';
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+
     $(document).ready(function() {
         $('#uploadButton').click(function() {
             $('#photo').click();
@@ -113,11 +118,14 @@
 
         $('#photo').change(function() {
             var fileName = $(this).val().split('\\').pop();
-            $('#uploadButton').text(fileName);
-             var formData = new FormData($('#event_form')[0]);
-             formData.append('photo', $(this)[0].files[0]);
+            $('#uploadButton').text('Upload Photo: ' + fileName);
+        });
+
+        $('#save').click(function() {
+            $('#event_form').submit();
         });
     });
-</script>
+    </script>
+{% endblock %}
 
- {% endblock %}
+
