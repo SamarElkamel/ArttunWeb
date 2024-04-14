@@ -121,7 +121,7 @@
                 <td>{{ _venement.description }}</td>
                 <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>
                 <td>{{ _venement.frais }}</td>
-                <td> <img src="{{ asset(_venement.photo) }}" class="event-photo"></td>
+                <td> <img src="{{ asset('/uploads/' ~ _venement.photo) }}" class="event-photo"></td>
                 <td>{{ _venement.localisation }}</td>
                 <td>{{ _venement.siteweb }}</td>
              <td>

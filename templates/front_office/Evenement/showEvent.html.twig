@@ -12,7 +12,7 @@
         {% for _venement in _venements %}
 		<article class="postcard light blue">
 			<a class="postcard__img_link" href="#">
-				<img src="{{ asset(_venement.photo) }}"  class="postcard__img">
+				<img src="{{ asset('/uploads/' ~ _venement.photo) }}"  class="postcard__img">
 			</a>
 			<div class="postcard__text t-dark">
 				<h1 class="postcard__title blue"><a href="#">{{ _venement.libelle }}</a></h1>

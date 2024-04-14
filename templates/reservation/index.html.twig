@@ -15,7 +15,7 @@
 <div class="col-md-4">
     <hr>
     <div class="profile-card-6">
-    <img src="{{ asset(reservation.idEvenement.photo) }}"  class="img">
+    <img src="{{ asset('/uploads/' ~ reservation.idEvenement.photo) }}"  class="img">
    
         <div class="profile-name">{{reservation.idEvenement.libelle}}
             <br>{{reservation.totalprix}} DT</div>
