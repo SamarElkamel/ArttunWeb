@@ -4,7 +4,7 @@
 
 {% block body %}
 
- <img src="{{ asset(_venement.photo) }}" class="event-photo">
+ <img src="{{ asset('/uploads/' ~ _venement.photo) }}" class="event-photo">
 
     <table class="table">
         <tbody>
