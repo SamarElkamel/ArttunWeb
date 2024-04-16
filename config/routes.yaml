@@ -1,0 +1,7 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+commandesmission:
+    path: /commandesmission
+    controller: App\Controller\MissionController::createMission
+    methods: ['POST']

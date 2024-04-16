@@ -1,0 +1,101 @@
+{# basic_form_template.twig #}
+{% block styles %}
+<style>
+    .error-message {
+        color: red;
+        font-size: 14px;
+        display: block;
+        margin-top: 4px;
+        word-wrap: break-word;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+</style>
+{% endblock %}
+<div class="text-center" style="max-height: 10rem;">
+    <div class="col-md d-inline-block">
+        <div class="card mb-3">
+            <br>
+            <h3> Modifier un livreur</h3>
+            <div class="card-header d-flex justify-content-between align-items-center">
+            </div>
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'livreur_form'}}) }}
+                <div class="mb-3 text-start">
+                    <label class="form-label">Nom</label>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bx-user bx-flashing"></i></span>
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <span class="error-message">{{ form_errors(form.nom) }}</span>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Prénom</label>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bx-user bx-flashing"></i></span>
+                        {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <span class="error-message">{{ form_errors(form.prenom) }}</span>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Email</label>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bx-envelope bx-flashing"></i></span>
+                        {{ form_widget(form.mail, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <span class="error-message">{{ form_errors(form.mail) }}</span>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Mot de passe</label>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bxs-lock bx-flashing"></i></span>
+                        {{ form_widget(form.mdp, {'attr': {'class': 'form-control phone-mask'}}) }}
+                    </div>
+                    <span class="error-message">{{ form_errors(form.mdp) }}</span>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Photo actuelle</label>
+                </div>
+                <div class="mb-3">
+                    {% if livreur.photo %}
+                        <img id="photo_livreur" src="{{ asset('assets/img/' ~ livreur.photo) }}" alt="Photo du livreur" style="width: 70px; height: 70px;" class="img-fluid">
+                    {% else %}
+                        <p>Aucune photo disponible</p>
+                    {% endif %}
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Nouvelle photo</label>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bxs-image bx-flashing"></i></span>
+                        {{ form_widget(form.photo, {'attr': {'class': 'form-control', 'onchange': 'previewPhoto(this)'}}) }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                <a href="{{ path('app_livreur_index') }}" class="btn btn-primary">Retour</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewPhoto(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('photo_livreur').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

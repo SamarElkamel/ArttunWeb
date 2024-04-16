@@ -1,0 +1,102 @@
+{# basic_form_template.twig #}
+{% block styles %}
+<style>
+    .error-message {
+     color: red;
+        font-size: 14px;
+        display: block;
+        margin-top: 4px;
+        word-wrap: break-word; /* Pour que les messages d'erreur se divisent en plusieurs lignes si nécessaire */
+        max-width: 300px; /* Largeur maximale des messages d'erreur */
+        margin: 0 auto; /* Pour centrer horizontalement les messages d'erreur */
+    }
+</style>
+{% endblock %}
+<div class="text-center" style="max-height: 10rem;"> {# Centering container horizontally #}
+    <div class="col-md d-inline-block"> {# Making the form inline block to center it horizontally and reducing card size #}
+<div class="card mb-3" > {# Reduced card height #}
+        <br>
+            <h3> Ajouter un livreur</h3>
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+            </div>
+            <div class="card-body">
+                {# Include the form start here #}
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                {# Text above Name field #}
+                <div class="mb-3 text-start">
+                    <label class="form-label">Nom</label>
+                </div>
+                
+<div class="mb-3">
+    <div class="input-group input-group-merge">
+        <span class="input-group-text"><i class="bx bx-user bx-flashing"></i></span>
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+    </div>
+                    <span class="error-message">{{ form_errors(form.nom) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+</div>
+                {# Text above Last Name field #}
+                <div class="mb-3 text-start">
+                    <label class="form-label">Prénom</label>
+                </div>
+                {# Last Name field #}
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bx-user bx-flashing"></i></span>
+                        {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <span class="error-message">{{ form_errors(form.prenom) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+                </div>
+
+                {# Text above Email field #}
+                <div class="mb-3 text-start">
+                    <label class="form-label">Email</label>
+                </div>
+                {# Email field #}
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bx-envelope bx-flashing"></i></span>
+                        {{ form_widget(form.mail, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <span class="error-message">{{ form_errors(form.mail) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+
+                </div>
+
+                {# Text above Password field #}
+                <div class="mb-3 text-start">
+                    <label class="form-label">Mot de passe</label>
+                </div>
+                {# Password field #}
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bxs-lock bx-flashing"></i></span>
+                        {{ form_widget(form.mdp, {'attr': {'class': 'form-control phone-mask'}}) }}
+                    </div>
+                    <span class="error-message">{{ form_errors(form.mdp) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+
+                </div>
+
+                {# Text above Picture field #}
+                <div class="mb-3 text-start">
+                    <label class="form-label">Photo</label>
+                </div>
+                {# Picture field #}
+                <div class="mb-3">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="bx bxs-image bx-flashing"></i></span>
+                        {{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+                {# Submit button #}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <a href="{{ path('app_livreur_index') }}" class="btn btn-primary">Retour</a>
+
+                {# Include the form end here #}
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+</div>

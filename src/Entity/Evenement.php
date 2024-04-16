@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EvenementRepository;
+
+#[ORM\Entity(repositoryClass: EvenementRepository::class)]
+
+class Evenement
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "id", type: "integer", nullable: false)]
+    private int $id;
+
+    #[ORM\Column(name: "Libelle", type: "string", length: 50, nullable: false)]
+    private string $libelle;
+
+    #[ORM\Column(name: "description", type: "string", length: 1000, nullable: false)]
+    private string $description;
+
+    #[ORM\Column(name: "date", type: "date", nullable: false)]
+    private \DateTime $date;
+
+    #[ORM\Column(name: "frais", type: "float", precision: 10, scale: 0, nullable: false)]
+    private float $frais;
+
+    #[ORM\Column(name: "photo", type: "string", length: 1000, nullable: false)]
+    private string $photo;
+
+    #[ORM\Column(name: "localisation", type: "string", length: 100, nullable: false)]
+    private string $localisation;
+
+    #[ORM\Column(name: "siteweb", type: "string", length: 1000, nullable: false)]
+    private string $siteweb;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    public function getDate(): ?\DateTime
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTime $date): self
+    {
+        $this->date = $date;
+        return $this;
+    }
+
+    public function getFrais(): ?float
+    {
+        return $this->frais;
+    }
+
+    public function setFrais(float $frais): self
+    {
+        $this->frais = $frais;
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
+    public function getLocalisation(): ?string
+    {
+        return $this->localisation;
+    }
+
+    public function setLocalisation(string $localisation): self
+    {
+        $this->localisation = $localisation;
+        return $this;
+    }
+
+    public function getSiteweb(): ?string
+    {
+        return $this->siteweb;
+    }
+
+    public function setSiteweb(string $siteweb): self
+    {
+        $this->siteweb = $siteweb;
+        return $this;
+    }
+}
