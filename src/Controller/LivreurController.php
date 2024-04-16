@@ -96,4 +96,5 @@ class LivreurController extends AbstractController
 
         return $this->redirectToRoute('app_livreur_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }

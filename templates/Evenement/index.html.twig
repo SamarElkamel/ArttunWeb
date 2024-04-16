@@ -1,49 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}évenement index{% endblock %}
+{% block title %}Events{% endblock %}
 
 {% block body %}
-    <h1>évenement index</h1>
 
-    <div class="container-fluid"> 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Frais</th>
-                <th>Photo</th>
-                <th>Localisation</th>
-                <th>Siteweb</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for _venement in _venements %}
-            <tr>
-                <td>{{ _venement.id }}</td>
-                <td>{{ _venement.libelle }}</td>
-                <td>{{ _venement.description }}</td>
-                <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>
-                <td>{{ _venement.frais }}</td>
-                <td>{{ _venement.photo }}</td>
-                <td>{{ _venement.localisation }}</td>
-                <td>{{ _venement.siteweb }}</td>
-                <td>
-                    <a href="{{ path('app__venement_show', {'id': _venement.id}) }}">show</a>
-                    <a href="{{ path('app__venement_edit', {'id': _venement.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="card mb-4" id="stat_card">
+  <div class="card-widget-separator-wrapper">
+    <div class="card-body card-widget-separator">
+      <div class="row gx-4">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title mb-2">Total Reservations</h6>
+              <h4 class="card-text mb-2">50 Reservations</h4>
+              <div class="avatar">
+                <span class="avatar-initial rounded bg-label-secondary">
+                  <i class="fas fa-calendar-alt"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title mb-2">Upcoming Events</h6>
+              <h4 class="card-text mb-2">5 Events</h4>
+              <div class="avatar">
+                <span class="avatar-initial rounded bg-label-secondary">
+                  <i class="bx bx-laptop bx-sm"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title mb-2">Total Clients Expenses</h6>
+              <h4 class="card-text mb-2">1000 DT</h4>
+              <div class="avatar">
+                <span class="avatar-initial rounded bg-label-secondary">
+                  <i class="bx bx-wallet bx-sm"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title mb-2">Total Events</h6>
+              <h4 class="card-text mb-2">60 Events</h4>
+              <div class="avatar">
+                <span class="avatar-initial rounded bg-label-secondary">
+                  <i class="bx bx-laptop bx-sm"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <a href="{{ path('app__venement_new') }}">Create new</a>
 {% endblock %}

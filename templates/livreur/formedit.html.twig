@@ -79,6 +79,8 @@
                         <span class="input-group-text"><i class="bx bxs-image bx-flashing"></i></span>
                         {{ form_widget(form.photo, {'attr': {'class': 'form-control', 'onchange': 'previewPhoto(this)'}}) }}
                     </div>
+                                        <span class="error-message">{{ form_errors(form.photo) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+
                 </div>
                 <button type="submit" class="btn btn-primary">Modifier</button>
                 <a href="{{ path('app_livreur_index') }}" class="btn btn-primary">Retour</a>

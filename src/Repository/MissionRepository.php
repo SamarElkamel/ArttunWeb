@@ -45,4 +45,13 @@ class MissionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function countByEtat($etat)
+{
+    return $this->createQueryBuilder('m')
+        ->select('COUNT(m)')
+        ->andWhere('m.etat = :etat')
+        ->setParameter('etat', $etat)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
 }

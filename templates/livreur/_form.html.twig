@@ -87,6 +87,8 @@
                         <span class="input-group-text"><i class="bx bxs-image bx-flashing"></i></span>
                         {{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}
                     </div>
+                                        <span class="error-message">{{ form_errors(form.photo) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+
                 </div>
 
                 {# Submit button #}
