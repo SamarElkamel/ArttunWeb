@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\EvenementRepository;
 use App\Entity\Evenement;
+use App\Entity\Reservation;
 use App\Form\EvenementType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,9 +17,37 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 class EvenementController extends AbstractController
 {
     #[Route('/', name: 'app__venement_index', methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository): Response
+    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager): Response
     {
+
+
+        $reservationCount = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
+        ->select('COUNT(r.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+    $totalPrice = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
+        ->select('SUM(r.totalprix)')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+        $totalEvents = $entityManager->getRepository(Evenement::class)->createQueryBuilder('e')
+        ->select('COUNT(e.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+       $upcomingEvents = $entityManager->getRepository(Evenement::class)->createQueryBuilder('e')
+        ->select('COUNT(e.id)')
+        ->where('e.date > :currentDate')
+        ->setParameter('currentDate', new \DateTime())
+        ->getQuery()
+        ->getSingleScalarResult();
+        
         return $this->render('Evenement/index.html.twig', [
+            'reservationCount' => $reservationCount,
+            'totalPrice' => $totalPrice,
+            'totalEvents' => $totalEvents,
+            'upcomingEvents' => $upcomingEvents,
             '_venements' => $evenementRepository->findAll(),
         ]);
     }
@@ -87,4 +116,8 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+  
+
 }

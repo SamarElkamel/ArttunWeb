@@ -29,11 +29,13 @@ class ReservationController extends AbstractController
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository): Response
     {
+       
         $evenementId = $request->query->get('id'); 
         $evenement = $evenementRepository->find($evenementId);
        // $eventId = $request->request->get('eventId');
         $reservation = new Reservation();
       //  $event = $evenementRepository->find($eventId );
+      if ($request->isMethod('POST')) {
         $user = $entityManager->getRepository(User::class)->find(44);
         $numberOfGuests = $request->request->get('guests');
         $totalPrice = $request->request->get('totalPrice');
@@ -48,7 +50,10 @@ class ReservationController extends AbstractController
         $entityManager->persist($reservation);
         $entityManager->flush();
 
+        return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+        
 
+        }
         
 
         return $this->renderForm('reservation/new.html.twig', [
