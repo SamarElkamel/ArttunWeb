@@ -160,7 +160,7 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
-                        <form id="editForm" method="post" action="/back/user/crud/edit">
+                        <form id="editForm" onsubmit="return validateform()" method="post">
                             <!-- Input field for ID -->
                             <input type="hidden" id="idfield" name="idfield" value="">
 
@@ -272,7 +272,7 @@
             var nom = document.getElementById('nomfield').value;
             var prenom = document.getElementById('prenomfield').value;
             var mail = document.getElementById('mailfield').value;
-            var password = document.getElementById('passowrdfield').value;
+            var password = document.getElementById('passwordfield').value;
 
             // Check if fields are empty
             if (nom.trim() === '' || prenom.trim() === '' || mail.trim() === '' || password.trim() === '') {
@@ -288,7 +288,7 @@
             }
 
             // Prevent the default form submission
-            return false;
+            return true;
         }
     </script>
 

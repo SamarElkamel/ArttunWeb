@@ -4,10 +4,11 @@ namespace App\Entity\user;
 
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
@@ -124,10 +125,39 @@ class User
         return $this;
     }
 
-
     public function __toString(): string
-{
-    return $this->nom . ' ' . $this->prenom;
-}
+    {
+        return $this->nom . ' ' . $this->prenom;
+    }
 
+    // Implementing UserInterface methods
+    public function getRoles(): array
+    {
+        // Return an array of user roles, for example:
+        // return ['ROLE_USER'];
+        return [$this->type];
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->mdp;
+    }
+
+    public function getSalt(): ?string
+    {
+        // Return salt (if you use bcrypt or other modern password hashing methods, you don't need this)
+        return null;
+    }
+
+    public function getUsername(): ?string
+    {
+        // Return the unique identifier for the user
+        // For example, return email if it's unique
+        return $this->adresseMail;
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+    }
 }

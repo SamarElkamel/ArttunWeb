@@ -253,7 +253,7 @@
         </form>
     </div>
     <div class="form-container sign-in">
-        <form>
+        <form method="post"">
             <h1>Sign In</h1>
             <div class="social-icons">
                 <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -261,11 +261,24 @@
                 <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
                 <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
             </div>
+
             <span>or use your email password</span>
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Password">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input name="adresseMail" type="email" value="{{ last_username }}" placeholder="Email">
+            <input name="password" type="password" placeholder="Password">
             <a href="#">Forget Your Password?</a>
-            <button>Sign In</button>
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+            <button type="submit">Sign In</button>
+            {% if error %}
+                <div class="alert alert-danger" style="width: 160px;
+  font-size: 14px;
+  margin-top: 10px;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
         </form>
     </div>
     <div class="toggle-container">
