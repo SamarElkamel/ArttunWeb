@@ -4,51 +4,64 @@ namespace App\Form\user;
 
 use App\Entity\user\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', null, [
-                'attr' => ['placeholder' => 'Placeholder'],
-                'label' => 'First Name',
+            ->add('nom', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Nom',
+                    'id' => 'first_name'
+                ],
+                'label' => false,
                 'row_attr' => ['class' => 'row'],
-                'label_attr' => ['class' => 'active'],
-                'attr' => ['id' => 'first_name']
             ])
-            ->add('prenom', null, [
-                'label' => 'Last Name',
+            ->add('prenom', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Prenom',
+                    'id' => 'last_name'
+                ],
+                'label' => false,
                 'row_attr' => ['class' => 'row'],
-                'label_attr' => ['class' => 'active'],
-                'attr' => ['id' => 'last_name']
             ])
-            ->add('type', null, [
-                'disabled' => true,
-                'label' => 'Disabled',
+            ->add('adresseMail', EmailType::class, [
+                'attr' => [
+                    'placeholder' => 'Email',
+                    'id' => 'email'
+                ],
+                'label' => false,
                 'row_attr' => ['class' => 'row'],
-                'label_attr' => ['class' => 'active'],
-                'attr' => ['id' => 'disabled']
             ])
-            ->add('mdp', null, [
-                'label' => 'Password',
+            ->add('mdp', PasswordType::class, [
+                'attr' => [
+                    'placeholder' => 'Password',
+                    'id' => 'password'
+                ],
+                'label' => false,
                 'row_attr' => ['class' => 'row'],
-                'label_attr' => ['class' => 'active'],
-                'attr' => ['id' => 'password']
             ])
-            ->add('adresseMail', null, [
-                'label' => 'Email',
+            ->add('confirmPassword', PasswordType::class, [
+                'attr' => [
+                    'placeholder' => 'Confirm Password',
+                ],
+                'label' => false,
                 'row_attr' => ['class' => 'row'],
-                'label_attr' => ['class' => 'active'],
-                'attr' => ['id' => 'email']
             ])
-            ->add('photo', null, [
-                'label' => 'Photo',
+            ->add('photo', FileType::class, [
+                'label' => false,
                 'row_attr' => ['class' => 'row'],
-                'label_attr' => ['class' => 'active'],
-                'attr' => ['id' => 'photo']
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Sign Up',
             ]);
 
     }
