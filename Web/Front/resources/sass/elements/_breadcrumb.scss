@@ -1,0 +1,46 @@
+.ps-breadcrumb {
+    margin-bottom: 5px;
+    .breadcrumb {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        li {
+            font-family: $font-1st;
+            font-size: 16px;
+            color: #e75e4e;
+            text-transform: uppercase;
+            &:before {
+                //content:"\f101";
+                font-family: FontAwesome;
+            }
+            &:first-child {
+                &:before {
+                    display: none;
+                }
+            }
+        }
+        a {
+            font-family: $font-1st;
+            font-size: 16px;
+            color: #b3b3b3;
+            text-transform: uppercase;
+            &:hover {
+                color: $color-1st;
+            }
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+    @include media("<md") {
+        position: relative;
+        .breadcrumb {
+            li {
+                font-size: 12px;
+            }
+            a {
+                font-size: 12px;
+            }
+        }
+    }
+}

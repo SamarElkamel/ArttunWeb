@@ -1,0 +1,111 @@
+.ps-shop-filter {
+    margin-top: 70px;
+    margin-bottom: 45px;
+    .form-group {
+        width: 100%;
+        @include clearfix;
+        label {
+            float: left;
+            margin-bottom: 0;
+            margin-right: 25px;
+            font-family: $font-1st;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 45px;
+            text-transform: uppercase;
+            color: #505050;
+        }
+        .ps-select {
+            float: left;
+            display: inline-block;
+            min-width: 170px;
+            background-color: #fff;
+            border-color: #dedede;
+            text-transform: uppercase;
+            @include border-radius(40px);
+        }
+    }
+    @include media("<md") {
+        .form-group {
+            label {
+                display: none;
+                float: none;
+                font-size: 12px;
+                line-height: 30px;
+            }
+            .ps-select {
+                width: 100%;
+                float: none;
+            }
+        }
+    }
+    @include media("<sm") {
+        .col-xs-12 {
+            width: 50%;
+            &:last-child() {
+                width: 100%;
+            }
+        }
+        .ps-select {
+            width: 100%;
+        }
+    }
+    @media (max-width: 640px) {
+        .col-xs-12 {
+            width: 100%;
+        }
+
+        .ps-shop-switch {
+            float: right;
+        }
+    }
+}
+
+.ps-shop-switch {
+    display: inline-block;
+    float: right;
+    @include clearfix;
+    li {
+        float: left;
+        a {
+            display: block;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border: solid 1px #d9d9d9;
+            i {
+                @include center();
+                font-size: 16px;
+            }
+        }
+        &:first-child {
+            a {
+                border-right: 0;
+            }
+        }
+        &:hover, &.active {
+            a {
+                color: $color-2nd;
+            }
+        }
+    }
+    @include media("<sm") {
+        width: 100px;
+        li {
+
+        }
+    }
+}
+
+.ps-shop-features {
+    @include media("<sm") {
+        .col-xs-12 {
+            width: 50%;
+        }
+    }
+    @include media("<xs") {
+        .col-xs-12 {
+            width: 100%;
+        }
+    }
+}

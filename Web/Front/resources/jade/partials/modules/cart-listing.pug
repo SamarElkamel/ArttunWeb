@@ -1,0 +1,50 @@
+block module
+    include ../../data/list
+
+    .ps-section--cart.pt-100.pb-100
+        .container
+            .ps-cart-listing
+                p.hidden-lg: i Slide right to view
+                .table-responsive
+                    table.table
+                        thead
+                            tr
+                                th All Products
+                                th Price
+                                th Quantity
+                                th Total
+                                th
+                        tbody
+                            each val in widget_best_seller
+                                tr
+                                    td
+                                        .ps-product--cart
+                                            img(src=val.imagepath alt="")
+                                            a(href='product-detail.html') #{val.title}
+                                    td $150.00
+                                    td
+                                        .form-group--number
+                                            button.minus: span -
+                                            input(type="text" class="form-control" value="1")
+                                            button.plus: span +
+                                    td
+                                        span.total-row 150$
+                                    td()
+                                        .ps-cart-listing__remove
+                .ps-cart__process
+                    .row
+                        +column({cols: [8, 8, 6, 12]})
+                            .form-group.form-group--icon.ps-cart__promotion
+                                .icon-wrap
+                                    i.fa.fa-angle-right
+                                    input.form-control(type="text" placeholder="promotion code")
+                            .form-groupform-order
+                                button.ps-cart__shopping Continue Shopping
+                        +column({cols: [4, 4, 6, 12]})
+                            .ps-cart__total
+                                p Total Price: <span>2599$</span>
+                                button.ps-btn.ps-btn--sm.ps-btn--fullwidth Process to checkout
+
+
+
+

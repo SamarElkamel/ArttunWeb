@@ -1,0 +1,41 @@
+block listProduct
+    include ../../data/product
+    section.ps-section.ps-section--list-product.pt-40.pb-80
+        .container
+            .row
+                +column({cols: [6, 6, 12, 12]})
+                    .ps-section__header
+                        h3.ps-section__title.ps-section__title--left HOT CAKE
+                    .ps-section__content
+                        each val in list_product_1
+                            .ps-product--list
+                                .ps-product__thumbnail
+                                    a(href='product-detail.html').ps-product__overlay
+                                    img(src=val.imagepath alt="")
+                                .ps-product__content
+                                    h4.ps-product__title
+                                        a(href='product-detail.html') #{val.title}
+                                    p #{val.description}
+                                    p.ps-product__price
+                                        del #{val.originPrice}
+                                        | #{val.salePrice}
+                                    a(href='cart.html').ps-btn.ps-btn--xs Order now
+                                        i.fa.fa-angle-right
+                +column({cols: [6, 6, 12, 12]})
+                    .ps-section__header
+                        h3.ps-section__title.ps-section__title--left New CAKE
+                    .ps-section__content
+                        each val in list_product_2
+                            .ps-product--list
+                                .ps-product__thumbnail
+                                    a(href='product-detail.html').ps-product__overlay
+                                    img(src=val.imagepath alt="")
+                                .ps-product__content
+                                    h4.ps-product__title
+                                        a(href='product-detail.html') #{val.title}
+                                    p #{val.description}
+                                    p.ps-product__price
+                                        del #{val.originPrice}
+                                        | #{val.salePrice}
+                                    a(href='cart.html').ps-btn.ps-btn--xs Order now
+                                        i.fa.fa-angle-right

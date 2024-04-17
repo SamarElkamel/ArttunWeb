@@ -1,0 +1,103 @@
+
+/*------------------------------------*\
+    #Skrollr plugin
+\*------------------------------------*/
+
+#skrollr-body {
+    height: 100%;
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+}
+
+.skrollr-parallax {
+    position: fixed;
+    z-index: 1;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.no-skrollr .skrollr-parallax {
+    display: none !important;
+}
+
+.skrollr-parallax__image {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.skrollr-parallax__image.skrollable-between {
+    display: block;
+}
+
+
+
+
+/*------------------------------------*\
+    #Parallax-section
+\*------------------------------------*/
+
+.parallax {
+    position: relative;
+    display: table;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+    background: #ccc center no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+/* When Skrollr plugin is active remove bg image and reset bg property */
+.skrollr .parallax {
+    background: transparent !important; /* !important override inline style */
+}
+
+
+/**
+ * Parallax-section body centered
+ */
+.parallax__body {
+    /* centering */
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+
+/**
+ * Parallax-section title
+ */
+.parallax__title {
+    font-size: 60px;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+
+/**
+ * Parallax-section background images
+ */
+
+.parallax--img-cat1 {
+    background-image: url(http://lorempixel.com/1600/1400/cats/1);
+}
+
+.parallax--img-cat2 {
+    background-image: url(http://lorempixel.com/1600/1400/cats/2);
+}
+

@@ -1,0 +1,38 @@
+extends ../master
+
+block title
+    title Bakery | Homepage 2
+
+block page_header
+    - var currentPage = 'homepage'
+    include ../utils/mixins
+    include ../common/common-element
+    include ../partials/modules/search
+    include ../partials/header-2
+block page_content
+
+    - var bannerType = 2;
+    include ../partials/section/revolution-slider
+    - var testimonialType = 2;
+    include ../partials/section/special
+    include ../partials/section/home-testimonial
+    include ../partials/section/offer-2
+    - var testimonialType = 1;
+    include ../partials/section/home-testimonial
+    include ../partials/section/blog-and-new
+    include ../partials/section/partner
+    include ../partials/section/contact
+    include ../partials/section/subscribe
+
+    include ../partials/footer
+    include ../partials/modules/product-quickview
+    include ../partials/modules/subscribe-popup
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,45 @@
+block module
+    include ../../data/blog
+    .ps-section--page-reverse
+        .container
+            .row
+                +column({cols: [9, 9, 12, 12]})
+                    .pt-80.pb-80
+                        each val in blog_listing
+                            .ps-blog-listing
+                                .ps-post
+                                    .ps-post__thumbnail
+                                        a(href='blog-detail.html').ps-post__overlay
+                                        img(src=val alt="")
+                                    .ps-post__header
+                                        a(href='blog-detail.html').ps-post__title Barbecue Party Tips For A Truly Amazing Event
+                                        .ps-post__meta
+                                            span
+                                                i.fa.fa-calendar-check-o
+                                                | November 25, 2017
+                                            span
+                                                i.fa.fa-comment-o
+                                                | 24 Comments
+                                            span.tags
+                                                i.fa.fa-tags
+                                                a(href='blog-listing.html') Travel
+                                                a(href='blog-listing.html') Summer
+                                                a(href='blog-listing.html') Women
+                                    .ps-post__content
+                                        p No matter how far along you are in your sophistication as an amateur astronomer, there is always one fundamental moment that we all go back to. That is that very first moment that we went out where you could really see the cosmos well and you took in the night sky.
+                                    footer.ps-post__footer
+                                        a(href='blog-detail.html').ps-btn.ps-btn--sm.ps-post__morelink Read more
+                                        .ps-post__action
+                                            a(href='#').like Like
+                                                i.fa.fa-heart
+                                                span: i 2
+                                            a(href='#').facebook
+                                                i.fa.fa-facebook
+                                                | Share
+                                            a(href='#').twitter
+                                                i.fa.fa-twitter
+                                                | Tweet
+                        +pagination
+                +column({cols: [3, 3, 12, 12]})
+                    - var sidebarType = "right";
+                    include  sidebar

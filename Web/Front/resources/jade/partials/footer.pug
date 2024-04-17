@@ -1,0 +1,46 @@
+block footer
+    include ../data/footer
+    footer.ps-footer
+        .container
+            .row
+                +column({cols: [3, 3, 6, 12]})
+                    .ps-widget.ps-widget--footer.ps-widget--payment
+                        .ps-widget__header
+                            h3.ps-widget__title PAYMENTS ACCEPTED
+                        .ps-widget__content
+                            ul
+                                each val in payment_method
+                                    li
+                                        a(href='#')
+                                            img(src=val.imagepath alt="")
+
+                +column({cols: [3, 3, 6, 12]})
+                    .ps-widget.ps-widget--footer.ps-widget--worktime
+                        .ps-widget__header
+                            h3.ps-widget__title WORK TIME
+                        .ps-widget__content
+                            p
+                                strong Monday - Friday
+                                |  8:00 am - 8:30 pm
+                            p
+                                strong Satuday - Sunday
+                                | 10:00 am - 16:30 pm
+
+                +column({cols: [3, 3, 6, 12]})
+                    .ps-widget.ps-widget--footer.ps-widget--order
+                        .ps-widget__header
+                            h3.ps-widget__title ORDERS AND RETURNS
+                        .ps-widget__content
+                            +singleList("ps-list--line", order_and_return)
+
+                +column({cols: [3, 3, 6, 12]})
+                    .ps-widget.ps-widget--footer.ps-widget--connect
+                        .ps-widget__header
+                            h3.ps-widget__title CONNECT US
+                        .ps-widget__content
+                            +singleList("ps-widget__social", connect)
+                            a(href='#')
+                                img(src="images/app.jpg" alt="")
+                            p @2017 Design by
+                                a(href='#')  Alena Studio
+                                | .

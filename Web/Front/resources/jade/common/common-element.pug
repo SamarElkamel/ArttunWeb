@@ -1,0 +1,128 @@
+mixin cart()
+    .ps-cart
+        a(href='#').ps-cart__toggle
+            span
+                i 20
+            i.ps-icon--shopping-cart
+        .ps-cart__listing
+            .ps-cart__content
+                .ps-cart-item
+                    a(href='#').ps-cart-item__close
+                    .ps-cart-item__thumbnail
+                        a(href='product-detail.html')
+                        img(src="images/cake/img-cake-1.jpg" alt="")
+                    .ps-cart-item__content
+                        a(href='product-detail.html').ps-cart-item__title Amazin’ Glazin’
+                        p
+                            span Quantity:
+                                i 12
+                            span Total:
+                                i £176
+                .ps-cart-item
+                    a(href='#').ps-cart-item__close
+                    .ps-cart-item__thumbnail
+                        a(href='product-detail.html')
+                        img(src="images/cake/img-cake-2.jpg" alt="")
+                    .ps-cart-item__content
+                        a(href='product-detail.html').ps-cart-item__title The Crusty Croissant
+                        p
+                            span Quantity:
+                                i 12
+                            span Total:
+                                i £176
+                .ps-cart-item
+                    a(href='#').ps-cart-item__close
+                    .ps-cart-item__thumbnail
+                        a(href='product-detail.html')
+                        img(src="images/cake/img-cake-3.jpg" alt="")
+                    .ps-cart-item__content
+                        a(href='product-detail.html').ps-cart-item__title The Rolling Pin
+                        p
+                            span Quantity:
+                                i 12
+                            span Total:
+                                i £176
+            .ps-cart__total
+                p Number of items:
+                    span 36
+                p Item Total:
+                    span £528.00
+            .ps-cart__footer
+                a(href='cart.html').ps-btn.ps-btn--view-bag View bag
+
+mixin pagination()
+    .ps-pagination
+        ul.pagination
+            li
+                a(href="#")
+                    i.fa.fa-arrow-left
+            li.active
+                a(href="#") 1
+            li
+                a(href="#") 2
+            li
+                a(href="#") 3
+            li
+                a(href="#") 4
+            li
+                a(href="#")
+                    i.fa.fa-arrow-right
+
+mixin shop_featured()
+    .ps-shop-features
+        .row
+            +column({cols: [4, 4, 6, 12]})
+                img(src="images/product-banner/012x.jpg" alt="").mb-30
+            +column({cols: [8, 8, 6, 12]})
+                img(src="images/product-banner/022x.jpg" alt="").mb-30
+
+mixin shop_filter()
+    .ps-shop-filter
+        .row
+            +column({cols: [5, 4, 4, 12]})
+                .form-group
+                    label Short by:
+                    select.ps-select(data-placeholder="Popupar product")
+                        option(value="01") Popular products
+                        option(value="01") Item 01
+                        option(value="02") Item 02
+                        option(value="03") Item 03
+            +column({cols: [5, 4, 4, 12]})
+                .form-group
+                    label Show:
+                    select.ps-select(data-placeholder="Show:")
+                        option(value="01") SHOW
+                        option(value="02") Item 02
+                        option(value="03") Item 03
+            +column({cols: [2, 4, 4, 12]})
+                ul.ps-shop-switch
+                    li.active: a(href="product-listing.html"): i.fa.fa-th
+                    li: a(href="product-grid.html"): i.fa.fa-list
+
+mixin form-input(label, required=true, extraClass, type='text', inputClass='form-control')
+    .form-group(class=extraClass)
+        label #{label}
+            if (required == true)
+                span *
+        input(type=type, class=inputClass)
+
+mixin author-box(imagepath)
+    .ps-author-box(class=extraClass)
+        .ps-author-box__thumbnail
+            img(src=imagepath alt="")
+        .ps-author-box__content
+            h4 MARK GREY
+            p.postion Web Designer
+            p The development of the mass spectrometer allowed the mass of atoms to be measured with increased accuracy. The device uses
+
+mixin comment-box(imagepath)
+    .ps-comment-box(class=extraClass)
+        .ps-comment-box__thumbnail
+            img(src=imagepath alt="")
+        .ps-comment-box__content
+            h4 MARK GREY
+                span 15 minutes ago
+            p The development of the mass spectrometer allowed the mass of atoms to be measured with increased accuracy. The device uses
+            a(href='#')
+                i.fa.fa-angle-right
+                | Replay

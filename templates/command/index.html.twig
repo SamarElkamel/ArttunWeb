@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Command index{% endblock %}
+
+{% block body %}
+    <h1>Command index</h1>
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Date</th>
+                <th>Prix</th>
+                <th>nom client</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for command in commands %}
+            <tr>
+                <td>{{ command.id }}</td>
+                <td>{{ command.reference }}</td>
+                <td>{{ command.date ? command.date|date('Y-m-d') : '' }}</td>
+                <td>{{ command.prix }}</td>
+                <td>{{command.idclient.nom}}</td>
+                <td>
+                   
+                        <form action="{{ path('app_command_delete', {'id': command.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this item?')">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ command.id) }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% block stylesheets %}
+  <style>
+ /* Container styles */
+.table-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.table th {
+    background: linear-gradient(to bottom, #f7f7f7, #e0e0e0);
+    text-align: left;
+    font-weight: bold;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Button styles */
+.table button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.table button:hover {
+    background-color: #ff3333;
+}
+
+/* Create new link styles */
+.create-new-link {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 28px;
+    border-radius: 40px;
+    background-color: #007bff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.create-new-link:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+</style>
+ {% endblock %}
+{% endblock %}

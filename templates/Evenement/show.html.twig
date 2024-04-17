@@ -1,0 +1,72 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Events{% endblock %}
+
+{% block body %}
+
+ <img src="{{ asset(_venement.photo) }}" class="event-photo">
+
+    <table class="table">
+        <tbody>
+    
+            <tr>
+                
+                <td>{{ _venement.libelle }}</td>
+            </tr>
+            <tr>
+             
+                <td>{{ _venement.description }}</td>
+            </tr>
+            <tr>
+                
+                <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                
+                <td>{{ _venement.frais }} DT</td>
+            </tr>
+         
+       
+    </td>
+                
+            </tr>
+            <tr>
+              
+                <td>{{ _venement.localisation }}</td>
+            </tr>
+            <tr>
+               
+                <td>{{ _venement.siteweb }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+{% block stylesheets %}
+  <style>
+
+ .event-photo {
+            width: 100%;
+            height:400px ;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+   #back-button {
+  display: inline-block;
+  margin : 10px 0 20px 10px 
+}
+
+h1 {
+  text-align: center;
+}
+
+
+  </style>
+ {% endblock %}
+
+
+{% endblock %}

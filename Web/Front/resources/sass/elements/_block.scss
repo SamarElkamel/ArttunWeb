@@ -1,0 +1,209 @@
+.ps-author-box {
+    margin-bottom: 40px;
+    @include clearfix;
+    &__thumbnail {
+        width: 100px;
+        float: left;
+        img {
+            width: 80px;
+            @include border-radius(50%);
+        }
+    }
+    &__content {
+        float: left;
+        padding: 20px;
+        width: calc(100% - 100px);
+        background-color: #f5f3f0;
+        @include border-radius(4px);
+        h4 {
+            font-family: $font-2nd;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: #29203c;
+        }
+        p {
+            font-family: $font-1st;
+            font-size: 14px;
+            line-height: 1.57em;
+            color: #4e3939;
+            &.postion {
+                margin-bottom: 15px;
+                font-family: $font-1st;
+                font-size: 12px;
+                line-height: 1em;
+                color: #989898;
+                text-transform: uppercase;
+            }
+        }
+    }
+    @include media("<sm") {
+        &__thumbnail {
+            float: none;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        &__content {
+            float: none;
+            width: 100%;
+        }
+    }
+}
+
+.ps-comment-box {
+    margin-bottom: 30px;
+    @include clearfix;
+    &__thumbnail {
+        width: 100px;
+        float: left;
+        img {
+            width: 80px;
+            @include border-radius(50%);
+        }
+    }
+    &__content {
+        float: left;
+        padding: 20px;
+        width: calc(100% - 100px);
+        background-color: #f5f3f0;
+        @include border-radius(0 30px 0 30px);
+        @include clearfix;
+        h4 {
+            font-family: $font-2nd;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: #29203c;
+            span {
+                margin-left: 20px;
+                font-family: $font-1st;
+                font-size: 14px;
+                color: #989898;
+            }
+        }
+        p {
+            font-family: $font-1st;
+            font-size: 14px;
+            line-height: 1.57em;
+            color: #4e3939;
+            &.postion {
+                margin-bottom: 15px;
+                font-family: $font-1st;
+                font-size: 12px;
+                line-height: 1em;
+                color: #989898;
+                text-transform: uppercase;
+            }
+        }
+        a {
+            float: right;
+            margin-right: 30px;
+            font-family: $font-1st;
+            font-size: 14px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: #e75e4e;
+            i {
+                margin-right: 5px;
+            }
+            &:hover {
+                color: #303030;
+            }
+        }
+    }
+    &__thumbnail {
+        float: none;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    &__content {
+        float: none;
+        width: 100%;
+    }
+}
+
+.ps-comment__replay {
+    margin-left: 100px;
+    @include media("<sm") {
+        margin-left: 0;
+    }
+}
+
+.ps-review-box {
+    @include clearfix;
+    margin-bottom: 40px;
+    &__thumbnail {
+        width: 100px;
+        float: left;
+        img {
+            width: 80px;
+            @include border-radius(50%);
+        }
+    }
+    &__content {
+        float: left;
+        padding: 20px;
+        width: calc(100% - 100px);
+        background-color: #f5f3f0;
+        @include border-radius(5px);
+    }
+    header {
+        .br-wrapper {
+            display: inline-block;
+        }
+        p {
+            display: inline-block;
+            font-family: $font-1st;
+            font-size: 14px;
+            color: #4e3939;
+            a {
+                color: $color-2nd;
+                &:hover {
+                    color: #000;
+                }
+            }
+        }
+    }
+    @include media("<sm") {
+        &__thumbnail {
+            float: none;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        &__content {
+            float: none;
+            width: 100%;
+        }
+    }
+}
+
+.ps-offer {
+    position: relative;
+    .ps-offer__overlay {
+        @include max-area();
+    }
+    img {
+        width: 100%;
+        @include transition(all .4s ease);
+    }
+    &:hover {
+        img {
+            opacity: .8;
+        }
+    }
+}
+
+.ps-col-tiny {
+    @include media("<sm") {
+        .col-xs-12 {
+            width: 50%;
+        }
+    }
+    @include media("<xs") {
+        .col-xs-12 {
+            width: 100%;
+        }
+    }
+}
+
+.page-wrap {
+    @include transition(all .4s ease);
+}

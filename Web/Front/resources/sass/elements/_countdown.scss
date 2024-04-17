@@ -1,0 +1,92 @@
+.ps-countdown {
+    h4 {
+        margin-bottom: 20px;
+        font-family: $font-2nd;
+        font-size: 26px;
+        color: #000000;
+    }
+    p {
+        font-family: $font-1st;
+        font-size: 30px;
+        line-height: 0.93;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.8);
+        text-transform: uppercase;
+        span {
+            font-size: 48px;
+            color: rgba(78, 57, 57, 0.8);
+        }
+    }
+    @include media("<md") {
+        text-align: center;
+        img {
+            max-width: 100%;
+        }
+        header {
+            margin-top: 30px;
+            p {
+                line-height: 1.5em;
+            }
+        }
+    }
+}
+
+.ps-countdown__time {
+    margin-bottom: 60px;
+    list-style: none;
+    display: inline-block;
+    display: block;
+    text-align: center;
+    @include clearfix;
+    li {
+        padding-right: 10px;
+        margin-right: 10px;
+        display: inline-block;
+        font-family: $font-2nd;
+        font-size: 50px;
+        text-align: center;
+        color: rgba(78, 57, 57, 0.8);
+        vertical-align: top;
+        span {
+            font-family: $font-2nd;
+            font-size: 50px;
+            text-align: center;
+            color: rgba(78, 57, 57, 0.8);
+        }
+        p {
+            display: block;
+            font-family: $font-1st;
+            font-size: 18px;
+            color: #716161;
+            text-transform: uppercase;
+        }
+    }
+
+    @include media("<lg") {
+        width: auto;
+        li {
+            font-size: 50px;
+        }
+    }
+    @include media("<md") {
+        margin-bottom: 30px;
+
+        li, li > span {
+            font-size: 50px;
+        }
+    }
+    @include media("<sm") {
+        li, li > span {
+            font-size: 20px;
+        }
+    }
+    @include media("<xs") {
+        li, li > span {
+            margin-right: 0;
+            font-size: 14px;
+            p {
+                font-size: 12px;
+            }
+        }
+    }
+}

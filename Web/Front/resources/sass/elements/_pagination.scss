@@ -1,0 +1,73 @@
+.ps-pagination {
+    @include clearfix;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+    .pagination {
+        margin: 0;
+        display: inline-block;
+        li {
+            > a {
+                padding: 0 17px;
+                position: relative;
+                margin-right: 15px;
+                font-weight: 400;
+                font-size: 14px;
+                color: #666;
+                line-height: 43px;
+                border: solid 1px #d9d9d9;
+                background-color: transparent;
+                @include border-radius(50%);
+                &:after {
+                    content: '';
+                    @include center;
+                    width: 45px;
+                    height: 45px;
+                    z-index: -1;
+                    background-color: #fff;
+                    border: 1px solid #e9e9e9;
+                    @include transition(all .4s ease);
+                    display: none;
+                }
+                &:hover {
+                    color: #fff;
+                    background-color: transparent;
+                    border-color: #fff;
+                    @include linear-gradient(to right, #ee7560, #ff5858);
+                    &:after {
+                        border-color: $color-1st;
+                        background-color: $color-1st;
+                    }
+                }
+            }
+            &.active {
+                > a {
+                    color: #fff;
+                    background-color: transparent;
+                    border-color: #fff;
+                    @include linear-gradient(to right, #ee7560, #ff5858);
+                    &:after {
+                        border-color: $color-1st;
+                        background-color: $color-1st;
+                    }
+                }
+            }
+        }
+        @include media("<sm") {
+            li > a {
+                line-height: 30px;
+                padding: 0 10px;
+                border: none;
+                background: none;
+                &:after {
+                    border: none;
+
+                }
+            }
+            li.active > a {
+                color: $color-1st;
+                background: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,71 @@
+.video-player {
+    .ytplayer-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        cursor: pointer;
+        iframe, object, embed, video {
+            position: absolute;
+            top: auto !important;
+            left: auto !important;
+            bottom: 0;
+            right: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .yt-thumbnail {
+            position: absolute !important;
+            left: 0;
+            top: 0;
+            width: 100%;
+            overflow: hidden;
+            z-index: 2000;
+            &:after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 40%;
+                left: 0; bottom: 0;
+                z-index: 2001;
+            }
+        }
+        .mb_YTPBar:hover .buttonBar {
+        }
+        .mb_YTPBar .mb_YTPseekbar {
+        }
+    }
+    .toggle-play {
+        position: absolute !important;
+        bottom: 20px; left: 20px;
+        z-index: 2001;
+        border: 0;
+        font-weight: 700;
+        color: #fff;
+        background-color: transparent;
+        opacity: 1;
+        visibility: visible;
+        @include transition;
+        .fa {
+            display: inline-block;
+            vertical-align: middle;
+            width: 28px;
+            height: 28px;
+            line-height: 26px;
+            color: #fff;
+            border: 1px solid #fff;
+            background-color: rgba(0, 0, 0, .4);
+            margin-right: 5px;
+            font-size: 10px;
+        }
+        &.play {
+            opacity: 0;
+            visibility: hidden;
+        }
+        &.pinned {
+            ~ .yt-thumbnail {
+                display: none;
+            }
+        }
+    }
+}

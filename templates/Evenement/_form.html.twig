@@ -1,0 +1,123 @@
+{# basic_form_template.twig #}
+
+<div class="text-center"> 
+<div class="col-md-6 d-inline-block">
+<div class="card mb-3"> 
+ <br>
+<div class="card-header d-flex justify-content-between align-items-center">
+ </div>
+<div class="card-body">
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+      <div class="mb-3 text-start">
+        {{ form_label(form.libelle , 'Title') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.libelle, {'attr': {'class': 'form-control' ,'placeholder': 'Enter Title'}}) }}
+        </div>
+        {{ form_errors(form.libelle) }}
+        </div>
+       
+         <div class="mb-3 text-start">
+        {{ form_label(form.description, 'Description') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+         {{ form_widget(form.description, {'attr': {'class': 'form-control', 'style': 'height: 150px;', 'placeholder': 'Enter description...'}}) }}
+          </div>
+         {{ form_errors(form.description) }}
+         </div>
+    
+
+     <div class="mb-3 text-start">
+        {{ form_label(form.date, 'Date') }}
+        </div>
+        <div class="mb-3 text-center">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.date, {'attr': {'type': 'date'}}) }}
+        </div>
+        {{ form_errors(form.date) }}
+        </div>
+ 
+    
+       <div class="mb-3 text-start">
+        {{ form_label(form.frais, 'Costs') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.frais, {'attr': {'class': 'form-control' , 'placeholder': 'Enter Cost'}}) }}
+        </div>
+        {{ form_errors(form.frais) }}
+        </div>
+
+        <div class="mb-3 text-start">
+        {{ form_label(form.localisation, 'Location') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.localisation, {'attr': {'class': 'form-control' ,'placeholder': 'Enter location'}}) }}
+        </div>
+        {{ form_errors(form.localisation) }}
+        </div>
+
+          <div class="mb-3 text-start">
+        {{ form_label(form.siteweb, 'Website') }}
+       </div>
+        <div class="mb-3">
+        <div class="input-group input-group-merge">
+        {{ form_widget(form.siteweb, {'attr': {'class': 'form-control' , 'placeholder': 'Enter website'}}) }}
+        </div>
+        {{ form_errors(form.siteweb) }}
+        </div>
+
+      <div class="mb-3">
+   <div class="mb-3 text-start">
+    {{ form_label(form.photo, 'photo') }}
+    <div>
+        {% if form.photo.vars.value %}
+               <img src="{{ asset(form.photo.vars.value) }}" alt="Current Photo" style="max-width: 250px; display: inline-block;">
+        {% else %}
+            <p>No photo uploaded.</p>
+        {% endif %}
+        <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload Photo</button>
+           <div class="input-group input-group-merge">
+        {{ form_widget(form.photo, {'attr': {'style': 'display: none;'}}) }}
+        </div>
+        <input type="file" id="photo" style="display: none;" accept="image/*" />
+    </div>
+
+
+    
+<div class="text-center">
+    <button class="btn btn-primary" id="save">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}
+
+{% block stylesheets %}
+  <style>
+ #save{
+    margin : 20px 0 0 0 ; 
+ }
+
+ .form-control {
+        margin: 0 60px 10px 60px; 
+    }
+
+   </style>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#uploadButton').click(function() {
+            $('#photo').click();
+        });
+
+        $('#photo').change(function() {
+            var fileName = $(this).val().split('\\').pop();
+            $('#uploadButton').text(fileName);
+             var formData = new FormData($('#event_form')[0]);
+             formData.append('photo', $(this)[0].files[0]);
+        });
+    });
+</script>
+
+ {% endblock %}

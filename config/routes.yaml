@@ -1,0 +1,22 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+front_office_home:
+    path: /
+    controller: App\Controller\FrontOfficeController::index
+
+add_to_panier:
+    path: /add-to-panier/{ref}
+    controller: App\Controller\PanierController::addToPanier
+
+app_panier_delete:
+    path: /panier/{id}/delete
+    controller: App\Controller\PanierController::delete
+    methods: ['POST']
+    # config/routes.yaml
+
+checkout_process:
+    path: /checkout
+    controller: App\Controller\PanierController::checkoutProcess
+

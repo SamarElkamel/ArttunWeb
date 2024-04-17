@@ -1,0 +1,65 @@
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1000000;
+    @include transition(all 1s ease);
+    &:before {
+        content: '';
+        @include center();
+        height: 0;
+        width: 0;
+        box-sizing: border-box;
+        border: 0 solid #FE665C;
+        @include border-radius(50%);
+        @include animation(loader-figure 1.15s infinite cubic-bezier(0.215, 0.61, 0.355, 1));
+    }
+    &.active {
+        @include hidden;
+        @include transition-delay(.5s);
+        &:before {
+            @include hidden;
+            @include transition-delay(.5s);
+        }
+    }
+}
+
+@include keyframes(loader-figure) {
+    0% {
+        height: 0;
+        width: 0;
+        background-color: $color-1st;
+    }
+    29% {
+        background-color: $color-2nd;
+    }
+    30% {
+        height: 50px;
+        width: 50px;
+        background-color: transparent;
+        border-width: 1em;
+        opacity: 1;
+    }
+    100% {
+        height: 50px;
+        width: 50px;
+        border-width: 0;
+        opacity: 0;
+        background-color: transparent;
+    }
+}
+
+@include keyframes(loader-label) {
+    0% {
+        opacity: 0.25;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.25;
+    }
+}

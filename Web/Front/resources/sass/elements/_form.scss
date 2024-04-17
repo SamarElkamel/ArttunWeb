@@ -1,0 +1,108 @@
+.form-control {
+    padding: 0 20px;
+    background-color: #f1f1f1;
+    height: 50px;
+    font-family: $font-1st;
+    font-size: 14px;
+    border-color: #f1f1f1;
+    opacity: 1;
+    @include border-radius(4px);
+    @include transition(all .4s ease);
+    @include box-shadow(none);
+    @include placeholder() {
+        color: #606060;
+
+    }
+    &:focus {
+        opacity: 1;
+        outline: none;
+        @include box-shadow(none);
+        border-color: $color-2nd;
+    }
+}
+
+textarea.form-control {
+    height: auto;
+    padding: 15px 20px;
+}
+
+.ps-select.nice-select {
+    padding: 0 20px;
+    border-color: #f1f1f1;
+    background-color: #f1f1f1;
+    @include border-radius(4px);
+    .current {
+        font-family: $font-1st;
+        font-size: 14px;
+        text-transform: none;
+        color: #606060 !important;
+    }
+}
+
+.form-group--number {
+    display: inline-block;
+    .input-group-btn {
+        display: inline-block;
+    }
+    input.form-control {
+        position: relative;
+        top: -2px;
+        margin-right: -4px;
+        display: inline-block;
+        width: 130px;
+        height: 40px;
+        text-align: center;
+        @include border-radius(0);
+        &:focus {
+            border-color: #f1f1f1;
+        }
+    }
+    button {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        border: none;
+        background-color: #000;
+        font-family: $font-1st;
+        color: #fff;
+        font-size: 20px;
+        @include transition(all .4s ease);
+        &:hover {
+            background-color: $color-2nd;
+        }
+        &.minus {
+            float: left;
+            @include border-radius(40px 0 0 40px);
+        }
+        &.plus {
+            @include border-radius(0 40px 40px 0);
+        }
+    }
+}
+
+.form-group {
+    label {
+        margin-bottom: 10px;
+        font-family: $font-1st;
+        font-size: 14px;
+        line-height: 1.57em;
+        font-weight: 400;
+        color: #000000;
+        span {
+            margin-left: 3px;
+            color: $color-1st;
+        }
+    }
+}
+
+.form-group--icon {
+    .icon-wrap {
+        position: relative;
+        i {
+            @include vertical-align();
+            right: 15px;
+            font-size: 16px;
+            color: #6d6d6d;
+        }
+    }
+}

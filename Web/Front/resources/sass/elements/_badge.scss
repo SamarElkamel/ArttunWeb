@@ -1,0 +1,35 @@
+.ps-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    z-index: 1000;
+    background: url('../images/background/badge-2.png') no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    span {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include transform(translate(-50%, -50%) rotate(-15deg));
+        font-family: $font-1st;
+        font-size: 16px;
+        color: #fff;
+    }
+}
+.ps-badge--new {
+    right: 0;
+    left: auto;
+    background: url('../images/background/badge-1.png') no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+.ps-badge--large {
+    width: 90px;
+    height: 90px;
+    span {
+        font-size: 24px;
+    }
+}

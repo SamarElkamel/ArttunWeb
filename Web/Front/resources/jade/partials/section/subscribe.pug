@@ -1,0 +1,18 @@
+block subscribe
+    section.ps-section.ps-section--subscribe.pt-80.pb-80
+        .container
+            .ps-subscribe
+                .row
+                    +column({cols: [5, 5, 12, 12]})
+                        h4 ABOUT US
+                        p Te pri oblique ullamcorper, magna persequeris has eu. Mei prompta dolores examad debet suavitate. Pri te vocibus electram. Eu eleifend rationibus vis, at.
+                        p.text-uppercase.ps-subscribe__highlight 240 CENTRAL PARK, LONDON, OR 10019
+                    +column({cols: [2, 2, 12, 12]})
+                        a(href='index.html').ps-subscribe__logo
+                            img(src="images/logo-1.png" alt="")
+                    +column({cols: [5, 5, 12, 12]})
+                        h4 SUBSCRIBE EMAIL
+                        p Give us your email, and we shall send regular updates for new stuff and events.
+                        form.ps-subscribe__form(method="post" action="_action")
+                            input.form-control(type="text" placeholder="Type your email...")
+                            button.ps-btn.ps-btn--sm Subscribe

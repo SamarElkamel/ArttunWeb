@@ -1,0 +1,57 @@
+block module
+
+    .ps-section--checkout.pt-80.pb-80
+        .container
+            form.ps-checkout(action="index.html"  method="post")
+                .row
+                    +column({cols: [8, 8, 12, 12]})
+                        .ps-checkout__billing
+                            h3 Billing Detail
+                            +form-input("First Name", required)
+                            +form-input("Last Name", required)
+                            +form-input("Company Name", required)
+                            +form-input("Email Address", required, '' ,type='email')
+                            +form-input("Company Name", required)
+                            +form-input("Phone", required)
+                            +form-input("Address", required)
+                            .form-group
+                                .checkbox-inline
+                                    input(type="checkbox")
+                                    | Create an account?
+                            h3  Addition information
+                            .form-group
+                                label Order Notes
+                                textarea.form-control(rows='5' placeholder='Notes about your order, e.g. special notes for delivery.')
+                    +column({cols: [4, 4, 12, 12]})
+                        .ps-checkout__order
+                            h3 Your Order
+                            table.table
+                                thead
+                                    tr
+                                        th.text-uppercase Product
+                                        th.text-uppercase Total
+                                tbody
+                                    tr
+                                        td HABITANT x1
+                                        td $300.00
+                                    tr
+                                        td Card Subtitle
+                                        td $300.00
+                                    tr
+                                        td Order Total
+                                        td $300.00
+                            h3 Payment Method
+                            .form-group
+                                .radio
+                                    label
+                                        input(type="radio" name="payment" value="0")
+                                        | Cheque Payment
+                                p Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.
+                                .radio
+                                    label
+                                        input(type="radio" name="payment" value="1")
+                                        | PAYPAL
+                                    .card-list
+                            button.ps-btn.ps-btn--sm Place Order
+
+

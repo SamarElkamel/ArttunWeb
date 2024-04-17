@@ -1,0 +1,33 @@
+block blog
+    section.ps-section.ps-section--news.pt-100.pb-100
+        .container
+            .ps-section__header.text-center
+                h4.ps-section__top Our Story
+                h3.ps-section__title.ps-section__title--full BLOG & NEWS
+            .ps-section__content
+                .row
+                    +column({cols: [6, 6, 12, 12]})
+                        .ps-new.ps-new--large
+                            img(src="images/new/new-large.jpg" alt="")
+                            .ps-new__container
+                                header.ps-new__header
+                                    p by
+                                        a(href='#')  Athony
+                                        |  / February 12, 2017
+                                    a(href='blog-detail.html').ps-new__title Sweet Bakery by <br> Joni William
+                                .ps-new__content
+                                    p(data-number-line="2") Fond his say old meet cold find come <br> whom. The sir park sake bred.
+                                    a(href='blog-detail.html').ps-btn.ps-btn--sm Read more
+                    +column({cols: [6, 6, 12, 12]})
+                        - for (var i = 1; i < 3; i ++)
+                            .ps-new
+                                img(src="images/new/new-small-"+i+".jpg" alt="")
+                                .ps-new__container
+                                    header.ps-new__header
+                                        p by
+                                            a(href='#')  Athony
+                                            |  / February 12, 2017
+                                        a(href='blog-detail.html').ps-new__title Where I Learning Cook Cupcakes ?
+                                    .ps-new__content
+                                        p(data-number-line="2") No comfort do written conduct at prevent manners on. Celebrated contrasted discretion him sympath
+                                        a(href='blog-detail.html').ps-btn.ps-btn--sm Read more

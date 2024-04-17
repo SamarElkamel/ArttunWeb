@@ -1,0 +1,53 @@
+.owl-slider--best-seller {
+    position: relative;
+    .owl-nav {
+        position: absolute;
+        top: 150px;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 0;
+        @include clearfix;
+    }
+    .owl-prev, .owl-next {
+        position: relative;
+        background-color: #000;
+        width: 44px;
+        height: 44px;
+        @include border-radius(50%);
+        @include transition(all .4s ease);
+        i {
+            @include center();
+            color: #fff;
+            font-size: 18px;
+            z-index: 10;
+        }
+        &:after {
+            content: '';
+            @include max-area();
+            @include linear-gradient(90deg, #ee7560, #ff5858);
+            @include hidden;
+            @include transition(all .4s ease);
+            z-index: 1;
+            @include border-radius(50%);
+        }
+        &:hover {
+            background-color: transparent;
+            &:after {
+                @include show;
+            }
+        }
+    }
+    .owl-prev {
+        float: left;
+        @include transform(translate(-80px, -50%));
+    }
+    .owl-next {
+        float: right;
+        @include transform(translate(80px, -50%));
+        i {
+            margin-left: 1px;
+        }
+    }
+
+}

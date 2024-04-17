@@ -1,0 +1,199 @@
+
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Events{% endblock %}
+
+{% block body %}
+
+<div class="card mb-4" id="stat_card">
+  <div class="card-widget-separator-wrapper">
+    <div class="card-body card-widget-separator">
+      <div class="row gy-4 gy-sm-1">
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+            <div>
+              <h6 class="mb-2">Total Reservations</h6>
+              <h4 class="mb-2">50 Reservations</h4>
+            </div>
+            <div class="avatar me-sm-4">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="fas fa-calendar-alt"></i>
+              </span>
+            </div>
+          </div>
+          <hr class="d-none d-sm-block d-lg-none me-4">
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+            <div>
+              <h6 class="mb-2">Upcoming Events </h6>
+              <h4 class="mb-2">5 Events</h4>
+            </div>
+            <div class="avatar me-lg-4">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="bx bx-laptop bx-sm"></i>
+              </span>
+            </div>
+          </div>
+          <hr class="d-none d-sm-block d-lg-none">
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+            <div>
+              <h6 class="mb-2">Total Clients Expences</h6>
+              <h4 class="mb-2">1000 DT</h4>
+            </div>
+            <div class="avatar me-sm-4">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="bx bx-wallet bx-sm"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="mb-2">Total Events</h6>
+              <h4 class="mb-2">60 Events</h4>
+            </div>
+            <div class="avatar">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="bx bx-laptop bx-sm"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="card" id="Table">
+<div class="card-header" >
+<h5 class="card-title">Filter</h5>
+<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+<div class="col-md-4 product_status"><select id="ProductStatus" class="form-select text-capitalize"><option value="">Status</option><option value="Scheduled">Upcoming Events</option><option value="Publish">Old Events</option></select></div>
+</div>
+</div>
+<div class="card-datatable table-responsive" >
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+<div class="card-header d-flex border-top rounded-0 flex-wrap py-md-0">
+<div class="me-5 ms-n2 pe-5">
+<div id="DataTables_Table_0_filter" class="dataTables_filter">
+<label>
+
+<input type="search" class="form-control" placeholder="Search Event" aria-controls="DataTables_Table_0" id="head_card">
+</label>
+</div>
+</div>
+<div class="d-flex justify-content-start justify-content-md-end align-items-baseline">
+<div class="dt-action-buttons d-flex align-items-start align-items-md-center justify-content-sm-center mb-3 mb-sm-0"><div class="dataTables_length mt-0 mt-md-3 me-3" id="DataTables_Table_0_length"><label>
+</label>
+
+</div><div class="dt-buttons d-flex flex-wrap" id="head_card"> 
+<button class="dt-button buttons-collection dropdown-toggle btn btn-label-secondary me-3" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="bx bx-export me-1"></i>Export</span><span class="dt-down-arrow">▼</span></button> 
+<button class="dt-button add-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" id="Add_but"><span>
+<a href="{{ path('app__venement_new') }}" id="addButton">
+    <i class="fas fa-plus"></i> Add new event</a>
+    <div class="container-fluid">
+
+ </div>
+ </div>
+ </div>
+ </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Costs</th>
+                <th>Photo</th>
+                <th>Location</th>
+                <th>Website</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for _venement in _venements %}
+            <tr>
+                <td>{{ _venement.libelle }}</td>
+                <td>{{ _venement.description }}</td>
+                <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>
+                <td>{{ _venement.frais }}</td>
+                <td> <img src="{{ asset(_venement.photo) }}" class="event-photo"></td>
+                <td>{{ _venement.localisation }}</td>
+                <td>{{ _venement.siteweb }}</td>
+             <td>
+   
+    <div>
+        <a href="{{ path('app__venement_edit', {'id': _venement.id}) }}" class="action-link">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+         {{ include('Evenement/_delete_form.html.twig') }}
+    </div>
+    <div>
+    
+    </div>
+</td>
+   
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+{% block stylesheets %}
+  <style>
+  .event-photo {
+    width: 250px;
+    height: 250px;
+  }
+
+  #addButton {
+  color:white ;
+}
+ 
+ #Add_but
+  {
+    margin-right : 0 ;
+     float: right; 
+  }
+
+h1 {
+  text-align: center;
+  margin:20px 0 0 0 ;
+}
+
+.action-link {
+    display: block; 
+    margin-bottom: 5px; 
+}
+
+#stat_card
+{
+    margin : 50px 50px 50px 50px ;
+}
+
+#Table
+{
+    margin : 10px 50px 50px 50px ;
+}
+
+#head_card
+ {
+    margin-top : 10px ; 
+    margin-bottom:10px;
+ }
+
+  </style>
+ {% endblock %}
+  
+{% endblock %}
