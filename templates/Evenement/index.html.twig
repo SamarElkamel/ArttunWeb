@@ -97,7 +97,7 @@
 </label>
 
 </div><div class="dt-buttons d-flex flex-wrap" id="head_card"> 
-<button class="dt-button buttons-collection dropdown-toggle btn btn-label-secondary me-3" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="bx bx-export me-1"></i>Export</span><span class="dt-down-arrow">▼</span></button> 
+
 <button class="dt-button add-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" id="Add_but"><span>
 <a href="{{ path('app__venement_new') }}" id="addButton">
     <i class="fas fa-plus"></i> Add new event</a>
@@ -115,6 +115,7 @@
                 <th>Photo</th>
                 <th>Location</th>
                 <th>Website</th>
+                <th>Total Participation</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -128,6 +129,13 @@
                 <td> <img src="{{ asset('/uploads/' ~ _venement.photo) }}" class="event-photo"></td>
                 <td>{{ _venement.localisation }}</td>
                 <td>{{ _venement.siteweb }}</td>
+                <td>  {% set totalParticipation = 0 %}
+                     {% for reservation in reservations %}
+                      {% if reservation.idEvenement == _venement %}
+                        {% set totalParticipation = totalParticipation + reservation.nbinvite + 1 %}
+                    {% endif %}
+                {% endfor %}
+                {{ totalParticipation }}</td>
              <td>
    
     <div>

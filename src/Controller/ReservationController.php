@@ -32,6 +32,7 @@ class ReservationController extends AbstractController
        
         $evenementId = $request->query->get('id'); 
         $evenement = $evenementRepository->find($evenementId);
+        
        // $eventId = $request->request->get('eventId');
         $reservation = new Reservation();
       //  $event = $evenementRepository->find($eventId );
