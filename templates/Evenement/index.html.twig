@@ -74,7 +74,11 @@
 <div class="card-header" >
 <h5 class="card-title">Filter</h5>
 <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
-<div class="col-md-4 product_status"><select id="ProductStatus" class="form-select text-capitalize"><option value="">Status</option><option value="Scheduled">Upcoming Events</option><option value="Publish">Old Events</option></select></div>
+<div class="col-md-4 product_status">
+<select id="ProductStatus" class="form-select text-capitalize">
+<option value="">Status</option>
+<option value="upcoming">Upcoming Events
+</option><option value="old">Old Events</option></select></div>
 </div>
 </div>
 <div class="card-datatable table-responsive" >
@@ -84,7 +88,7 @@
 <div id="DataTables_Table_0_filter" class="dataTables_filter">
 <label>
 
-<input type="search" class="form-control" placeholder="Search Event" aria-controls="DataTables_Table_0" id="head_card">
+<input type="search" id="event_search" class="form-control" placeholder="Search Event" aria-controls="DataTables_Table_0" id="head_card">
 </label>
 </div>
 </div>
@@ -191,6 +195,76 @@ h1 {
  }
 
   </style>
+ {% endblock %}
+
+ {% block javascripts %}
+ <script>
+   document.addEventListener('DOMContentLoaded', function () {
+  function search(keyword) {
+            var tableRows = document.querySelectorAll('.table tbody tr');
+            var searchInput = keyword.trim().toLowerCase();
+
+            tableRows.forEach(function (row) {
+                var cells = row.querySelectorAll('td');
+                var found = false;
+
+                cells.forEach(function (cell) {
+                    if (cell.textContent.trim().toLowerCase().includes(searchInput)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+       
+        var searchInput = document.getElementById('event_search');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function () {
+                var searchText = this.value;
+                search(searchText);
+            });
+        }
+    ;
+      });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    var filterSelect = document.getElementById('ProductStatus');
+    var tableRows = document.querySelectorAll('.table tbody tr');
+
+    filterSelect.addEventListener('change', function () {
+        var selectedValue = this.value;
+
+        var currentDate = new Date(); 
+
+        tableRows.forEach(function (row) {
+            var dateCell = row.querySelector('td:nth-child(3)'); 
+            if (dateCell) {
+                var eventDate = new Date(dateCell.textContent.trim()); 
+                eventDate.setHours(0, 0, 0, 0); 
+
+                if (selectedValue === 'old' && eventDate < currentDate) {
+                    row.style.display = '';
+                } else if (selectedValue === 'upcoming' && eventDate >= currentDate) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
+});
+
+
+
+
+    </script>
  {% endblock %}
   
 {% endblock %}
