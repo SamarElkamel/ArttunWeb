@@ -4,11 +4,15 @@ namespace App\Entity\user;
 
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @method string getUserIdentifier()
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface
+class User implements UserInterface,TwoFactorInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
@@ -46,6 +50,8 @@ class User implements UserInterface
     #[Assert\Length(min: 8, minMessage: "Password must be at least {{ limit }} characters long.")]
     #[ORM\Column(name: "mdp", type: "string", length: 300, nullable: false)]
     private string $mdp;
+
+    private $authcode;
 
     public function getId(): ?int
     {
@@ -169,5 +175,32 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
+    }
+
+    public function isEmailAuthEnabled(): bool
+    {
+        return true;
+    }
+
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->adresseMail;
+    }
+
+    public function getEmailAuthCode(): ?string
+    {
+        $this->authcode="0000";
+        return $this->authcode;
+    }
+
+    public function setEmailAuthCode(string $authCode): void
+    {
+        // TODO: Implement setEmailAuthCode() method.
+        $this->authcode=$authCode;
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }
