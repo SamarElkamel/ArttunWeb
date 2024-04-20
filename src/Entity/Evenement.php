@@ -33,7 +33,7 @@ class Evenement
     #[ORM\Column(name: "frais", type: "float", precision: 10, scale: 0, nullable: false)]
     private float $frais;
 
-   
+
     #[ORM\Column(name: "photo", type: "string", length: 1000, nullable: false)]
     private string $photo;
 
@@ -44,6 +44,7 @@ class Evenement
     #[Assert\NotBlank(message: "Please enter the event website.")]
     #[ORM\Column(name: "siteweb", type: "string", length: 1000, nullable: false)]
     private string $siteweb;
+
 
     public function getId(): ?int
     {

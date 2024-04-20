@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\EvenementRepository;
+use App\Repository\ReservationRepository;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
 use App\Form\EvenementType;
@@ -17,16 +18,16 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 class EvenementController extends AbstractController
 {
     #[Route('/', name: 'app__venement_index', methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager): Response
+    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository): Response
     {
-
+        $reservations = $reservationRepository->findAll();
 
         $reservationCount = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
         ->select('COUNT(r.id)')
         ->getQuery()
         ->getSingleScalarResult();
 
-    $totalPrice = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
+        $totalPrice = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
         ->select('SUM(r.totalprix)')
         ->getQuery()
         ->getSingleScalarResult();
@@ -43,12 +44,14 @@ class EvenementController extends AbstractController
         ->getQuery()
         ->getSingleScalarResult();
         
+        
         return $this->render('Evenement/index.html.twig', [
             'reservationCount' => $reservationCount,
             'totalPrice' => $totalPrice,
             'totalEvents' => $totalEvents,
             'upcomingEvents' => $upcomingEvents,
             '_venements' => $evenementRepository->findAll(),
+            'reservations' => $reservations,
         ]);
     }
 
@@ -93,17 +96,26 @@ class EvenementController extends AbstractController
     {
         $form = $this->createForm(EvenementType::class, $Evenement);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $photo = $form->get('photo')->getData();
+    
+            if ($photo) {
+                $fichier = md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('upload_directory'), $fichier);
+                $Evenement->setPhoto($fichier);
+            }
+    
+            $entityManager->persist($Evenement);
             $entityManager->flush();
-
             return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->renderForm('Evenement/edit.html.twig', [
-            '_venement' => $Evenement,
-            'form' => $form,
-        ]);
+        
+    return $this->renderForm('Evenement/edit.html.twig', [
+        '_venement' => $Evenement,
+        'form' => $form,
+    ]);
+        
+     
     }
 
     #[Route('/{id}', name: 'app__venement_delete', methods: ['POST'])]
