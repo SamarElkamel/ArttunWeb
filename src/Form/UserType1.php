@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\user\User;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -11,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use function Sodium\add;
 
 class UserType1 extends AbstractType
 {
@@ -44,6 +44,7 @@ class UserType1 extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Adresse Mail',
+                    'style' =>'margin-left: 26px;'
                 ],
             ])
             ->add('id', HiddenType::class, [
@@ -65,7 +66,9 @@ class UserType1 extends AbstractType
                     'placeholder' => 'Photo',
                 ],
             ])
-            ->add('submit', SubmitType::class, [
+            ->add('captcha', CaptchaType::class,['label'=>false,'attr'=>['placeholder'=>'Enter The Code']])
+
+        ->add('submit', SubmitType::class, [
                 'label' => 'Submit',
                 'attr' => [
                     'class' => 'btn-primary',
