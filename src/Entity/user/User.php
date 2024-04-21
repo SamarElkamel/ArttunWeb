@@ -14,10 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface,TwoFactorInterface
 {
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private ?string $googleAuthenticatorSecret;
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: "id", type: "integer", nullable: false)]
@@ -183,7 +179,7 @@ class User implements UserInterface,TwoFactorInterface
 
     public function isEmailAuthEnabled(): bool
     {
-        return true;
+        return false;
     }
 
     public function getEmailAuthRecipient(): string
@@ -209,23 +205,5 @@ class User implements UserInterface,TwoFactorInterface
     {
         // TODO: Implement @method string getUserIdentifier()
     }
-    public function isGoogleAuthenticatorEnabled(): bool
-    {
-        return null !== $this->googleAuthenticatorSecret;
-    }
 
-    public function getGoogleAuthenticatorUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function getGoogleAuthenticatorSecret(): ?string
-    {
-        return $this->googleAuthenticatorSecret;
-    }
-
-    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
-    {
-        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
-    }
 }

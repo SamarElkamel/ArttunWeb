@@ -39,6 +39,11 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
         //check if user matches user in database logic
         $user = $this->usererpo->findOneBy(['adresseMail' => $adresseMail]);
         if($user!=null && $user->getMdp()==$password) {
+            $request->getSession()->set('name',$user->getNom());
+            $request->getSession()->set('prenom',$user->getPrenom());
+            $request->getSession()->set('type',$user->getType());
+            $request->getSession()->set('photo',$user->getPhoto());
+
             return new SelfValidatingPassport(new UserBadge($adresseMail), []);
         }
         return new Passport(
