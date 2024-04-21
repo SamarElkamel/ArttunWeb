@@ -56,7 +56,11 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        if($request->get('type')=="admin")
         return new RedirectResponse($this->urlGenerator->generate('app_user_crud'));
+        else
+            return new RedirectResponse($this->urlGenerator->generate('app_front_office'));
+
     }
 
     protected function getLoginUrl(Request $request): string

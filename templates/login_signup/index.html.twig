@@ -244,7 +244,7 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <input name="adresseMail" type="email" value="{{ last_username }}" placeholder="Email">
             <input name="password" type="password" placeholder="Password">
-            <a href="#">Forget Your Password?</a>
+            <a href="{{ path('app_forgot_password_request') }}">Forget Your Password?</a>
             <button type="submit">Sign In</button>
             {% if error %}
                 <div class="alert alert-danger" style="width: 160px;
@@ -253,6 +253,7 @@
             {% endif %}
 
         </form>
+
     </div>
     <div class="toggle-container">
         <div class="toggle">
