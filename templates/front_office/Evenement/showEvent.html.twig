@@ -10,6 +10,7 @@
 		<div class="h1 text-center text-dark" id="pageHeaderTitle">Events</div>
 
         {% for _venement in _venements %}
+		{% if _venement.date|date('Y-m-d') > "now"|date('Y-m-d') %}
 		<article class="postcard light blue">
 			<a class="postcard__img_link" href="#">
 				<img src="{{ asset('/uploads/' ~ _venement.photo) }}"  class="postcard__img">
@@ -37,6 +38,7 @@
 				</ul>
 			</div>
 		</article>
+		  {% endif %}
         {% endfor %}
 	</div>
 </section>
