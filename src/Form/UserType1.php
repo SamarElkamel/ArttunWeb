@@ -18,6 +18,13 @@ class UserType1 extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('id', null, [
+                'hidden' => true,
+                'attr' => [
+                    'id' => 'idfield',
+                    'placeholder' => 'Nom',
+                ],
+            ])
             ->add('nom', null, [
                 'label' => false,
                 'attr' => [

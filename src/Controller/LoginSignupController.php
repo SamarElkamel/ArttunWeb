@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -43,7 +42,7 @@ class LoginSignupController extends AbstractController
         }
     }*/
 #[Route('/signup', name: 'app_signup')]
-public function signup(PasswordHasherInterface $asher,ManagerRegistry $repository ,Request $request):Response{
+public function signup(ManagerRegistry $repository ,Request $request):Response{
     $user = new User();
     $em=$repository->getManager();
     $form = $this->createForm(UserType1::class,$user);
@@ -51,7 +50,6 @@ public function signup(PasswordHasherInterface $asher,ManagerRegistry $repositor
     if($form->isSubmitted() && $form->isValid() ){
             $user->setAdresse(52);
         $user->setPhoto("52");
-        $user->setMdp($asher->hash($user->getMdp()));
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute("app_user_crud");

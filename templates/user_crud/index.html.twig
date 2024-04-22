@@ -170,13 +170,12 @@
         <!-- Footer -->
         <!-- Footer-->
         <!-- Input field for ID -->
-        <input type="hidden" id="idfield" name="idfield" value="">
 
         {{  form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
         {{ form_end(form) }}
         <script>
             function fillForm(id, nom, prenom, type, photo, adresseMail, mdp) {
-                document.getElementById('idfield').value = id;
+                document.getElementById('user_type1_id').value = id;
                 document.getElementById('user_type1_nom').value = nom;
                 document.getElementById('user_type1_prenom').value = prenom;
                 document.getElementById('user_type1_type').value = type;

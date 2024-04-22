@@ -14,16 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserCrudController extends AbstractController
 {
     #[Route('/back/user/crud', name: 'app_user_crud')]
-    public function index(EntityManagerInterface $entityManager,UserRepository $userrepo,Request $request): Response
+    public function index(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
     {
-        $userrepo = $entityManager->getRepository(User::class);
-        $users = $userrepo->findAll();
-        $userCount = $userrepo->count([]);
-
-        // If there is an ID parameter in the request, fetch the user by ID
-        $userId = $request->get('idfield');
-        $user = $userId ? $userrepo->find($userId) : new User();
-
+        $users = $userRepository->findAll();
+        $userCount = count($users);
+        $user = new User();
         // Create the form and pass the User object to it
         $form = $this->createForm(UserType1::class, $user);
 
@@ -31,7 +26,9 @@ class UserCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Flush the changes to the database
+            // Persist changes to the database
+            $user->setPhoto("23");
+            $entityManager->persist($user);
             $entityManager->flush();
 
             // Redirect to prevent form resubmission

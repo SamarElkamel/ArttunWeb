@@ -127,13 +127,7 @@ private   Logger $logger;
             // A password reset token should be used only once, remove it.
             $this->resetPasswordHelper->removeResetRequest($token);
 
-            // Encode(hash) the plain password, and set it.
-            $encodedPassword = $passwordHasher->hashPassword(
-                $user,
-                $form->get('plainPassword')->getData()
-            );
-
-            $user->setMdp($encodedPassword);
+            $user->setMdp($form->get('plainPassword')->getData());
             $this->entityManager->flush();
 
             // The session is cleaned up after the password has been changed.
