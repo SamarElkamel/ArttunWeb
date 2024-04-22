@@ -5,6 +5,8 @@ namespace App\Entity\user;
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,7 +30,7 @@ class User implements UserInterface,TwoFactorInterface
     #[Assert\Length(max: 50, maxMessage: "Last name cannot be longer than {{ limit }} characters.")]
     #[ORM\Column(name: "prenom", type: "string", length: 50, nullable: false)]
     private string $prenom;
-
+    private PasswordHasherInterface $hasher;
     #[Assert\NotBlank(message: "Please enter the user's type.")]
     #[Assert\Length(max: 50, maxMessage: "Type cannot be longer than {{ limit }} characters.")]
     #[ORM\Column(name: "type", type: "string", length: 50, nullable: false)]
@@ -137,7 +139,7 @@ class User implements UserInterface,TwoFactorInterface
 
     public function setMdp(string $mdp): self
     {
-        $this->mdp = $mdp;
+        $this->mdp =$mdp;
         return $this;
     }
 
