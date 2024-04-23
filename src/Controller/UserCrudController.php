@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\user\User;
-use App\Form\UserType1;
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,33 +15,49 @@ class UserCrudController extends AbstractController
     #[Route('/back/user/crud', name: 'app_user_crud')]
     public function index(EntityManagerInterface $entityManager,UserRepository $userrepo,Request $request): Response
     {
-        $userrepo = $entityManager->getRepository(User::class);
+        $user = new User();
+
         $users = $userrepo->findAll();
         $userCount = $userrepo->count([]);
+        if ($request->isMethod('POST')) {
+            $id = $request->request->get('idfield');
+            $nom = $request->request->get('nomfield');
+            $prenom = $request->request->get('prenomfield');
+            $mail = $request->request->get('mailfield');
+            $password = $request->request->get('passwordfield');
+            $fileName = $request->request->get('filefield');
+            $type = $request->request->get('type');
+            $user = $entityManager->getRepository(User::class)->find($id);
+            $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        // If there is an ID parameter in the request, fetch the user by ID
-        $userId = $request->get('idfield');
-        $user = $userId ? $userrepo->find($userId) : new User();
+            // Check if the file is a picture
+            $isPicture = false;
+            if ($fileExtension !== '') {
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                $isPicture = in_array(strtolower($fileExtension), $allowedExtensions);
+            }
 
-        // Create the form and pass the User object to it
-        $form = $this->createForm(UserType1::class, $user);
-
-        // Handle the form submission
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Flush the changes to the database
+            if (!$user) {
+                throw $this->createNotFoundException('User not found');
+            }
+            $file =
+                // Update user properties
+                $user->setNom($nom);
+            $user->setPrenom($prenom);
+            $user->setAdresseMail($mail);
+            $user->setMdp($password);
+            if ($type = "2")
+                $user->setType("client");
+            if ($type = "1")
+                $user->setType("admin");
+            $user->setPhoto($fileName);
+            // Persist changes to the database
             $entityManager->flush();
-
-            // Redirect to prevent form resubmission
-            return $this->redirectToRoute('app_user_crud');
         }
-
         return $this->render('user_crud/index.html.twig', [
             'users' => $users,
             'count' => $userCount,
             'controller_name' => 'UserCrudController',
-            'form' => $form->createView(),
         ]);
     }
     #[Route('/back/user/crud/delete{id}', name: 'app_user_crud_delete')]

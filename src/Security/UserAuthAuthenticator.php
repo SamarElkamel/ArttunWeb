@@ -39,11 +39,6 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
         //check if user matches user in database logic
         $user = $this->usererpo->findOneBy(['adresseMail' => $adresseMail]);
         if($user!=null && $user->getMdp()==$password) {
-            $request->getSession()->set('name',$user->getNom());
-            $request->getSession()->set('prenom',$user->getPrenom());
-            $request->getSession()->set('type',$user->getType());
-            $request->getSession()->set('photo',$user->getPhoto());
-
             return new SelfValidatingPassport(new UserBadge($adresseMail), []);
         }
         return new Passport(
@@ -56,11 +51,7 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if($request->get('type')=="admin")
         return new RedirectResponse($this->urlGenerator->generate('app_user_crud'));
-        else
-            return new RedirectResponse($this->urlGenerator->generate('app_front_office'));
-
     }
 
     protected function getLoginUrl(Request $request): string

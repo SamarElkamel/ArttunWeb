@@ -4,15 +4,11 @@ namespace App\Entity\user;
 
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @method string getUserIdentifier()
- */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface,TwoFactorInterface
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
@@ -20,38 +16,32 @@ class User implements UserInterface,TwoFactorInterface
     private int $id;
 
     #[Assert\NotBlank(message: "Please enter the user's first name.")]
-    #[Assert\Length(max: 50, maxMessage: "First name cannot be longer than {{ limit }} characters.")]
     #[ORM\Column(name: "nom", type: "string", length: 50, nullable: false)]
     private string $nom;
 
     #[Assert\NotBlank(message: "Please enter the user's last name.")]
-    #[Assert\Length(max: 50, maxMessage: "Last name cannot be longer than {{ limit }} characters.")]
     #[ORM\Column(name: "prenom", type: "string", length: 50, nullable: false)]
     private string $prenom;
 
     #[Assert\NotBlank(message: "Please enter the user's type.")]
-    #[Assert\Length(max: 50, maxMessage: "Type cannot be longer than {{ limit }} characters.")]
     #[ORM\Column(name: "type", type: "string", length: 50, nullable: false)]
     private string $type;
 
     #[ORM\Column(name: "photo", type: "string", length: 100, nullable: true)]
     private ?string $photo;
 
+    #[Assert\NotBlank(message: "Please enter the user's address.")]
     #[ORM\Column(name: "adresse", type: "integer", nullable: false)]
     private int $adresse;
 
     #[Assert\NotBlank(message: "Please enter the user's email address.")]
     #[Assert\Email(message: "Please enter a valid email address.")]
-    #[Assert\Length(max: 100, maxMessage: "Email cannot be longer than {{ limit }} characters.")]
     #[ORM\Column(name: "adresse_mail", type: "string", length: 100, nullable: false)]
     private string $adresseMail;
 
     #[Assert\NotBlank(message: "Please enter the user's password.")]
-    #[Assert\Length(min: 8, minMessage: "Password must be at least {{ limit }} characters long.")]
     #[ORM\Column(name: "mdp", type: "string", length: 300, nullable: false)]
     private string $mdp;
-
-    private $authcode;
 
     public function getId(): ?int
     {
@@ -113,12 +103,6 @@ class User implements UserInterface,TwoFactorInterface
         return $this;
     }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
-
     public function getAdresseMail(): ?string
     {
         return $this->adresseMail;
@@ -176,34 +160,4 @@ class User implements UserInterface,TwoFactorInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
     }
-
-    public function isEmailAuthEnabled(): bool
-    {
-        return false;
-    }
-
-    public function getEmailAuthRecipient(): string
-    {
-        return $this->adresseMail;
-    }
-
-    public function getEmailAuthCode(): ?string
-    {
-        if (null === $this->authcode) {
-            throw new \LogicException('The email authentication code was not set');
-        }
-        return $this->authcode;
-    }
-
-    public function setEmailAuthCode(string $authCode): void
-    {
-        // TODO: Implement setEmailAuthCode() method.
-        $this->authcode=$authCode;
-    }
-
-    public function __call(string $name, array $arguments)
-    {
-        // TODO: Implement @method string getUserIdentifier()
-    }
-
 }

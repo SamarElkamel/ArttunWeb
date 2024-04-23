@@ -108,22 +108,19 @@
 <div class="main-menu  d-none d-lg-block">
   <div class="card-stor">
                                 <nav>
-                                    {% if app.session.get('name') is not null %}
                                     <ul id="navigation">
-
+                                       
                                         <li>
-                                           <p style="color: black">{{ app.session.get('name') }}</p>
+                                           <img src="/assets/img/icons/user/profile.png" alt="User Icon">
                                             <ul class="submenu">
                                                 <li><a href="#">My Profile</a></li>
                                                 <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
                                                 <li><a href="#">Log Out</a></li>
                                             </ul>
                                         </li>
-                                        {% endif %}
-
+                                     
                                     </ul>
                                 </nav>
-
                             </div> 
                             </div>
 

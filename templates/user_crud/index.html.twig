@@ -3,23 +3,6 @@
 {% block header %}{% endblock %}
 
 {% block body %}
-    <style>form{
-            margin: 50px;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-        input{
-            background-color: #eee;
-            border: none;
-            margin: 8px 0;
-            padding: 10px 15px;
-            font-size: 13px;
-            border-radius: 8px;
-            width: 100%;
-            outline: none;
-        }
-    </style>
     <div class="content-wrapper">
 
         <!-- Content -->
@@ -151,7 +134,7 @@
                                 <td>{{ c.photo }}</td>
                                 <td>{{ c.adresseMail }}</td>
                                 <td>{{ c.mdp }}</td>
-                                <td><button onclick="fillForm('{{ c.id }}', '{{ c.nom }}', '{{ c.prenom }}', '{{ c.type }}', '{{ c.photo }}', '{{ c.adresseMail }}', '{{ c.mdp }}')" class="settings" title="Settings" data-toggle="tooltip"><i class="bi bi-pen"></i></button>
+                                <td><button onclick="showoverlay('{{ c.id }}', '{{ c.nom }}', '{{ c.prenom }}', '{{ c.type }}', '{{ c.photo }}', '{{ c.adresseMail }}', '{{ c.mdp }}')" class="settings" title="Settings" data-toggle="tooltip"><i class="bi bi-pen"></i></button>
                                     <a href="{{ path('app_user_crud_delete', {'id': c.id}) }}"><button  class="delete" title="Delete" data-toggle="tooltip"><i class="bi bi-trash-fill"></i></button></a>
                                 </td>
                             </tr>
@@ -161,6 +144,74 @@
                     </table>
                 </div>
 
+                <div id="overlay"  style="  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+  z-index: 999;display: none; /* ensures the overlay stays on top */">
+                    <div class="card mb-4" style="position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* ensures the centered div stays on top of the overlay */
+  background-color: #fff; /* background color of the centered div */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
+                        <form id="editForm" onsubmit="return validateform()" method="post">
+                            <!-- Input field for ID -->
+                            <input type="hidden" id="idfield" name="idfield" value="">
+
+                            <!-- Close button -->
+                            <i class="fa-solid fa-xmark" onclick="hideoverlay()" size="32" style="position: absolute; right: 60px;"></i>
+
+                            <!-- Card header -->
+                            <h5 class="card-header">Edit User</h5>
+
+                            <!-- Card body -->
+                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                <!-- Input fields for user details -->
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon11">@</span>
+                                    <input type="text" id="nomfield"  name="nomfield" class="form-control" placeholder="Nom" aria-label="Nom" aria-describedby="basic-addon11">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon11">@</span>
+                                    <input type="text" id="prenomfield" name="prenomfield" class="form-control" placeholder="Prenom" aria-label="Prenom" aria-describedby="basic-addon11">
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-group-text" for="passowrdfield">Password</label>
+                                    <input id="passwordfield"  name="passwordfield" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-default-password">
+                                    <span class="input-group-text cursor-pointer" id="basic-default-password"><i class="bx bx-hide"></i></span>
+                                </div>
+
+                                <div class="input-group input-group-merge">
+                                    <input id="mailfield" name="mailfield" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon33">
+                                    <span class="input-group-text" id="basic-addon33">@example.com</span>
+                                </div>
+
+                                <select id="type" name="type" class="form-select">
+                                    <option selected>Choose Type ... </option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Client</option>
+                                </select>
+
+                                <div class="input-group">
+                                    <input id="filefield" name="filefield" type="file" class="form-control" id="inputGroupFile02">
+                                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                </div>
+
+
+                                <!-- Submit button -->
+                                <button style="margin: 20px" type="submit" class="btn rounded-pill btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
             </div>
 
 
@@ -169,23 +220,6 @@
 
         <!-- Footer -->
         <!-- Footer-->
-        <!-- Input field for ID -->
-        <input type="hidden" id="idfield" name="idfield" value="">
-
-        {{  form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
-        {{ form_end(form) }}
-        <script>
-            function fillForm(id, nom, prenom, type, photo, adresseMail, mdp) {
-                document.getElementById('idfield').value = id;
-                document.getElementById('user_type1_nom').value = nom;
-                document.getElementById('user_type1_prenom').value = prenom;
-                document.getElementById('user_type1_type').value = type;
-                //document.getElementById('user_type1_photo').value = photo;
-                document.getElementById('user_type1_adresseMail').value = adresseMail;
-                document.getElementById('user_type1_mdp').value = mdp;
-            }
-
-        </script>
         <footer class="content-footer footer bg-footer-theme">
             <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                 <div class="mb-2 mb-md-0">
@@ -197,15 +231,65 @@
                     <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
                     <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/laravel-introduction.html" target="_blank" class="footer-link me-4">Documentation</a>
                     <a href="https://themeselection.com/support/" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>
-
-
                 </div>
             </div>
         </footer>
         <!--/ Footer-->
         <!-- / Footer -->
         <h1 id="idfield" style="display: none">5</h1>
-
         <div class="content-backdrop fade"></div>
     </div>
+    <script>
+        function hideoverlay() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+        function showoverlay(id, nom, prenom, type, photo, adresseMail, mdp) {
+            // Fill in the form with the information from the row
+            document.getElementById('idfield').value = id;
+            document.getElementById('nomfield').value = nom;
+            document.getElementById('prenomfield').value = prenom;
+            //document.getElementById('typeField').value = type;
+            // Get the current value of the input field with id 'type'
+            var currentValue = document.getElementById('type').value;
+
+            /*switch (currentValue) {
+                case 'client':
+                    document.getElementById('type').value = 2;
+                    break;
+                case 'admin':
+                    document.getElementById('type').value = 1;
+                    break;
+            }*/
+            //document.getElementById('filefield').value = photo;
+            document.getElementById('mailfield').value = adresseMail;
+            document.getElementById('passwordfield').value = mdp;
+
+            // Show the overlay
+            document.getElementById('overlay').style.display = 'block';
+
+        }
+        function  validateform(){
+            var nom = document.getElementById('nomfield').value;
+            var prenom = document.getElementById('prenomfield').value;
+            var mail = document.getElementById('mailfield').value;
+            var password = document.getElementById('passwordfield').value;
+
+            // Check if fields are empty
+            if (nom.trim() === '' || prenom.trim() === '' || mail.trim() === '' || password.trim() === '') {
+                alert('Please fill in all fields.');
+                return false;
+            }
+
+            // Check email format using regular expression
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(mail)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            // Prevent the default form submission
+            return true;
+        }
+    </script>
+
 {% endblock %}
