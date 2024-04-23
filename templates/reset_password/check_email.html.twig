@@ -8,9 +8,23 @@
         If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
         This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
     </p>
-    <h1>Hi!</h1>
-
-    <p>To reset your password, please visit the following link:</p>
-
-    <p><a href="{{ url('app_reset_password', {'token': app.session.get('token')}) }}">Reset Password</a></p>
 {% endblock %}
+{% block script %}
+<script type="text/javascript">
+    function password(){
+    emailjs.init('cbRFuNoX18FNF6MD9');
+    emailjs.send('service_8ohxftw', 'template_36oh744', {
+        subject: "Password Reset",
+        message: "{{ url('app_reset_password', {'token': app.session.get('token')}) }}",
+        to: "{{ app.session.get('to') }}",
+    }).then(() => {
+    }, (err) => {
+        alert(JSON.stringify(err));
+    });
+    }
+    window.onload = function() {
+        password();
+    };
+</script>
+{% endblock %}
+
