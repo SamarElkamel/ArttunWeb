@@ -181,7 +181,7 @@ class User implements UserInterface,TwoFactorInterface
 
     public function isEmailAuthEnabled(): bool
     {
-        return false;
+        return true;
     }
 
     public function getEmailAuthRecipient(): string
@@ -191,21 +191,34 @@ class User implements UserInterface,TwoFactorInterface
 
     public function getEmailAuthCode(): ?string
     {
-        if (null === $this->authcode) {
-            throw new \LogicException('The email authentication code was not set');
-        }
-        return $this->authcode;
+        return $_SESSION["code"]; // Using square brackets to access session variable
     }
 
     public function setEmailAuthCode(string $authCode): void
     {
-        // TODO: Implement setEmailAuthCode() method.
-        $this->authcode=$authCode;
+        $_SESSION["code"] = $authCode; // Using square brackets to set session variable
+        $this->setAuthcode($authCode);
     }
 
     public function __call(string $name, array $arguments)
     {
         // TODO: Implement @method string getUserIdentifier()
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthcode()
+    {
+        return $this->authcode;
+    }
+
+    /**
+     * @param mixed $authcode
+     */
+    public function setAuthcode($authcode): void
+    {
+        $this->authcode = $authcode;
     }
 
 }
