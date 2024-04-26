@@ -237,7 +237,7 @@
 
 
                         </li>
-                </li>
+                    </li>
                 <li class="menu-item ">
                     <a href="app/academy/dashboard.html" class="menu-link" >
                         <div>Delivery</div>
@@ -619,15 +619,12 @@
                         <!--/ Notification -->
 
                         <!-- User -->
-                        {# Check if the user's name exists in the session #}
-                        {% if app.session.get('name') is not null %}
                             {# Retrieve user's name and avatar from session #}
                             {% set username = app.session.get('name') %}
-                            {% set avatarSrc = app.session.get('avatar') is not null ? app.session.get('avatar') : '/assets/img/avatars/default.png' %}
-
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
+                                        <img alt="avatar" src="../public/uploads/{{ app.session.get("photo") }}">
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -636,6 +633,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
+                                                        <img alt="avatar" src="../public/uploads/{{ app.session.get("photo") }}">
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -671,14 +669,6 @@
                                     </li>
                                 </ul>
                             </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/login">
-                                    <i class="bx bx-log-in me-2"></i>
-                                    <span class="align-middle">Login</span>
-                                </a>
-                            </li>
-                        {% endif %}
                         <!--/ User -->
                     </ul>
                 </div>

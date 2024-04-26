@@ -53,7 +53,7 @@ class User implements UserInterface,TwoFactorInterface
     #[ORM\Column(name: "mdp", type: "string", length: 300, nullable: false)]
     private string $mdp;
 
-    private $authcode;
+    public string $AuthCode ="";
 
     public function getId(): ?int
     {
@@ -191,34 +191,17 @@ class User implements UserInterface,TwoFactorInterface
 
     public function getEmailAuthCode(): ?string
     {
-        return $_SESSION["code"]; // Using square brackets to access session variable
+        return $this->AuthCode; // Using square brackets to access session variable
     }
 
     public function setEmailAuthCode(string $authCode): void
     {
-        $_SESSION["code"] = $authCode; // Using square brackets to set session variable
-        $this->setAuthcode($authCode);
+        $this->AuthCode=$authCode;
     }
 
     public function __call(string $name, array $arguments)
     {
         // TODO: Implement @method string getUserIdentifier()
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthcode()
-    {
-        return $this->authcode;
-    }
-
-    /**
-     * @param mixed $authcode
-     */
-    public function setAuthcode($authcode): void
-    {
-        $this->authcode = $authcode;
     }
 
 }

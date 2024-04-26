@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class UserType1 extends AbstractType
 {
@@ -21,7 +22,6 @@ class UserType1 extends AbstractType
             ->add('id', null, [
                 'hidden' => true,
                 'attr' => [
-                    'id' => 'idfield',
                     'placeholder' => 'Nom',
                 ],
             ])
@@ -72,6 +72,17 @@ class UserType1 extends AbstractType
                 'attr' => [
                     'placeholder' => 'Photo',
                 ],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/jpg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid document',
+                    ])
+            ],
             ])
             ->add('captcha', CaptchaType::class,['label'=>false,'attr'=>['placeholder'=>'Enter The Code']])
 

@@ -110,7 +110,9 @@
                                 <nav>
                                     {% if app.session.get('name') is not null %}
                                     <ul id="navigation">
-
+                                        <li>
+                                            <img alt="avatar" src="../public/uploads/{{ app.session.get("photo") }}">
+                                        </li>
                                         <li>
                                            <p style="color: black">{{ app.session.get('name') }}</p>
                                             <ul class="submenu">

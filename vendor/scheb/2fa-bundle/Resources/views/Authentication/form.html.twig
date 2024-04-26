@@ -4,7 +4,6 @@ especially when you're using different route names than the ones used here.
 #}
 
 {# Authentication errors #}
-<div style="margin: 180px">
 {% if authenticationError %}
     <div style="margin-bottom: 10px; color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: .75rem 1.25rem; border: 1px solid transparent; border-radius: .25rem;">
         {{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}
@@ -26,7 +25,6 @@ especially when you're using different route names than the ones used here.
 <div style="margin-bottom: 20px;">
     <label for="_auth_code" style="margin-bottom: 5px;">{{ "auth_code"|trans({}, 'SchebTwoFactorBundle') }} {{ twoFactorProvider }}:</label>
     <input id="_auth_code" type="text" name="{{ authCodeParameterName }}" style="padding: 5px; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 3px;" autocomplete="one-time-code" autofocus>
-    <p>{{ app.session.get("authCode") }}</p>
 </div>
 
 <form action="{{ checkPathUrl ? checkPathUrl: path(checkPathRoute) }}" method="post">
@@ -46,7 +44,7 @@ especially when you're using different route names than the ones used here.
 
 {# The logout link gives the user a way out if they can't complete two-factor authentication #}
 <p style="margin-top: 20px;"><a href="{{ logoutPath }}">{{ "cancel"|trans({}, 'SchebTwoFactorBundle') }}</a></p>
-<p>{{ app.session.get("code") }}</p>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
     function password() {
@@ -69,4 +67,3 @@ especially when you're using different route names than the ones used here.
         password();
     };
 </script>
-</div>
