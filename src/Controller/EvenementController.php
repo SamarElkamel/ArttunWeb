@@ -7,19 +7,29 @@ use App\Repository\ReservationRepository;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
 use App\Form\EvenementType;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use BaconQrCode\Renderer\Image\Png;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
+use BaconQrCode\Renderer\Image\ImageBackEndInterface;
+
+
+
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
     #[Route('/', name: 'app__venement_index', methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository): Response
+    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository ,  Request $request): Response
     {
+      
+    
         $reservations = $reservationRepository->findAll();
 
         $reservationCount = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
@@ -43,6 +53,8 @@ class EvenementController extends AbstractController
         ->setParameter('currentDate', new \DateTime())
         ->getQuery()
         ->getSingleScalarResult();
+
+        
         
         
         return $this->render('Evenement/index.html.twig', [
@@ -84,11 +96,30 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app__venement_show', methods: ['GET'])]
-    public function show(Evenement $Evenement): Response
-    {
+    public function show(Evenement $Evenement ): Response
+    {    
+        $url = $Evenement->getSiteweb();
+        $qrCode = $this->generateQRCode($url);
+    
+      
+    
+
         return $this->render('Evenement/show.html.twig', [
             '_venement' => $Evenement,
+            'qrCode' => $qrCode,
         ]);
+    }
+
+    private function generateQRCode($url)
+    {
+        $renderer = new ImageRenderer( new RendererStyle(200), new SvgImageBackEnd()
+        );
+        $writer = new Writer($renderer);
+        $qrCode = $writer->writeString($url);
+        $qrCodeBase64 = base64_encode($qrCode);
+
+    return $qrCodeBase64;
+      
     }
 
     #[Route('/{id}/edit', name: 'app__venement_edit', methods: ['GET', 'POST'])]
@@ -128,6 +159,10 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);
     }
+
+   
+
+  
 
 
 }

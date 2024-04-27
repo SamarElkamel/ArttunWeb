@@ -27,9 +27,18 @@
                                         &nbsp &nbsp &nbsp &nbsp
                                         <p>{{ _venement.localisation }}</p>
                                     </div>
-                                    <div class="media">
-                                        <label>site web</label>
-                                        <p>{{ _venement.siteweb }}</p>
+                                    <div >
+                                  
+                                        <a href={{ _venement.siteweb }} class="website" <label>Cliquer pour consulter le site Web</label></a>
+                                
+                                         </a>
+                                         <div qrCode>
+                                         <label > ou Scanner</label>
+                                        
+                                        <img src="data:image/svg+xml;base64,{{ qrCode }}" alt="QR Code">
+                                        </div>
+
+                                    
                                     </div>
                                 </div>
                             
@@ -47,20 +56,20 @@
 
                    
         <div class="counter-item">
-            <span class="days"></span>
-            <span class="counter-label">Days</span>
+            <span class="days" id="counter1"></span>
+            <span class="counter-label" id="count">Days</span>
         </div>
         <div class="counter-item">
-            <span class="hours"></span>
-            <span class="counter-label">Hours</span>
+            <span class="hours" id="counter1"></span>
+            <span class="counter-label" id="count">Hours</span>
         </div>
         <div class="counter-item">
-            <span class="minutes"></span>
-            <span class="counter-label">Minutes</span>
+            <span class="minutes" id="counter1"></span>
+            <span class="counter-label" id="count">Minutes</span>
         </div>
-        <div class="counter-item">
-            <span class="seconds"></span>
-            <span class="counter-label">Seconds</span>
+        <div class="counter-item" id="counter1">
+            <span class="seconds"  id="counter1"></span>
+            <span class="counter-label" id="count">Seconds</span>
         </div>
     </div>
 
@@ -70,6 +79,40 @@
 
 {% block stylesheets %}
   <style>
+
+  .qrCode
+   {
+    margin-left : 40px ;
+   }
+
+
+.website
+{
+   color:#9F78FF;
+  font-weight: bold;
+  font-size: 15px;  
+
+
+}
+
+#website
+{
+   color:#9F78FF;
+ 
+
+
+}
+
+
+#count
+ {
+  font-size : 14px ;
+ }
+
+ #counter1
+ {
+   font-size : 60px ;
+ }
 
 .counter-container {
     background:white ;
@@ -89,11 +132,11 @@
     display: block;
     font-size: 26px;
     font-weight: bold;
-    color: #20247b;
+    color: black;
 }
 
-.counter-label {
-    font-size: 14px;
+.counter-item.counter-label {
+    font-size: 4px;
     color: #6F8BA4;
 }
 
@@ -106,8 +149,8 @@
         font-size: 24px;
     }
 
-    .counter-label {
-        font-size: 12px;
+    .counter-item.counter-label {
+        font-size: 4px;
     }
 }
 
@@ -165,7 +208,7 @@ img {
 }
 .about-text p mark {
   font-weight: 600;
-  color: #20247b;
+  color: black;
 }
 
 .about-list {
@@ -175,7 +218,7 @@ img {
   padding: 5px 0;
 }
 .about-list label {
-  color: #20247b;
+  color: black;
   font-weight: 600;
   width: 88px;
   margin: 0;
@@ -189,7 +232,7 @@ img {
   right: 11px;
   width: 1px;
   height: 12px;
-  background: #20247b;
+  background: black;
   -moz-transform: rotate(15deg);
   -o-transform: rotate(15deg);
   -ms-transform: rotate(15deg);
@@ -221,7 +264,7 @@ img {
 }
 .about-section .counter .count {
   font-weight: 700;
-  color: #20247b;
+  color: black;
   margin: 0 0 5px;
 }
 .about-section .counter p {
@@ -241,7 +284,7 @@ mark {
     color: #fc5356;
 }
 .dark-color {
-    color: #20247b;
+    color: black;
 }
 
 .cloader {
@@ -391,15 +434,16 @@ mark {
   let minutes = Math.floor((dateDiff % (1000 * 60 * 60)) / (1000 * 60));
   let seconds = Math.floor((dateDiff % (1000 * 60)) / 1000);
 
-  document.querySelector(".days").innerHTML = days < 10 ? `0${days}` : days;
-  document.querySelector(".hours").innerHTML = hours < 10 ? `0${hours}` : hours;
-  document.querySelector(".minutes").innerHTML = minutes < 10 ? `0${minutes}` : minutes;
+  document.querySelector(".days").innerHTML = days < 10 ? `0${days}` : days ;
+  document.querySelector(".hours").innerHTML = hours < 10 ? `0${hours}`+ ":" : hours + ":" ;
+  document.querySelector(".minutes").innerHTML = minutes < 10 ? `0${minutes}` + ":": minutes + ":";
   document.querySelector(".seconds").innerHTML = seconds < 10 ? `0${seconds}` : seconds;
 
   if (dateDiff < 0) {
     clearInterval(counter);
   }
 }, 1000);
+
  </script>
 
 {% endblock %}
