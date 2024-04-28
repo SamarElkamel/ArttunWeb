@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\user\User;
+use App\Repository\LivreurRepository;
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,10 +26,12 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
     private $usererpo;
+    private $livrepo;
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator,UserRepository $userrepo)
+    public function __construct(LivreurRepository $livrepos,private UrlGeneratorInterface $urlGenerator,UserRepository $userrepo)
     {
         $this->usererpo = $userrepo;
+        $this->livrepo = $livrepos;
     }
 
     public function authenticate(Request $request): Passport
@@ -38,11 +41,20 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
         $request->getSession()->set(Security::LAST_USERNAME, $adresseMail);
         //check if user matches user in database logic
         $user = $this->usererpo->findOneBy(['adresseMail' => $adresseMail]);
+        $livreur = $this->livrepo->findOneBy(['mail' => $adresseMail]);
         if($user!=null && $user->getMdp()==$password) {
             $request->getSession()->set('name',$user->getNom());
             $request->getSession()->set('prenom',$user->getPrenom());
             $request->getSession()->set('type',$user->getType());
             $request->getSession()->set('photo',$user->getPhoto());
+
+            return new SelfValidatingPassport(new UserBadge($adresseMail), []);
+        }
+        if($livreur!=null && $livreur->getMdp()==$password) {
+            $request->getSession()->set('name',$livreur->getNom());
+            $request->getSession()->set('prenom',$livreur->getPrenom());
+            $request->getSession()->set('mail',$livreur->getMail());
+            $request->getSession()->set('photo',$livreur->getPhoto());
 
             return new SelfValidatingPassport(new UserBadge($adresseMail), []);
         }
@@ -57,11 +69,12 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         $roles = $token->getRoleNames();
+        if($request->getSession()->get("mail")!=null && $request->getSession()->get("mail")!="") {//redirect to livreur
+        }
         if (in_array('ROLE_ADMIN', $roles)) {
         return new RedirectResponse($this->urlGenerator->generate('app_user_crud'));}
         else
             return new RedirectResponse($this->urlGenerator->generate('app_front_office'));
-
     }
 
     protected function getLoginUrl(Request $request): string
