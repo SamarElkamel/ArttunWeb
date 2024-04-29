@@ -1,13 +1,14 @@
 <?php
 namespace App\Controller;
-
+use App\Entity\Produit;
 use App\Entity\CategorieProduit;
 use App\Form\CategorieProduitType;
-use App\Repository\CategorieProduitRepository;
+use App\Repository\CategorieProduitRepository;  
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/categorie')]
 class CategorieProduitController extends AbstractController
@@ -19,6 +20,21 @@ class CategorieProduitController extends AbstractController
             'categorie_produits' => $categorieProduitRepository->findAll(),
         ]);
     }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+   
+
 
     #[Route('/new', name: 'app_categorie_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response

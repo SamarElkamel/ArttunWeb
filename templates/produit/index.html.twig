@@ -5,32 +5,20 @@
 {% block body %}
 
 <div class="card mb-4" id="stat_card">
-  <div class="card-widget-separator-wrapper">
-    <div class="card-body card-widget-separator">
-      <div class="row gy-4 gy-sm-1">
-        <div class="col-sm-6 col-lg-3">
-          <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-            <div>
-              <h6 class="mb-2">Total Produits</h6>
-              <h4 class="mb-2">{{ produits|length }} Produits</h4>
-            </div>
-            <div class="avatar me-sm-4">
-              <span class="avatar-initial rounded bg-label-secondary">
-                <i class="fas fa-shopping-cart"></i>
-              </span>
-            </div>
-          </div>
-          <hr class="d-none d-sm-block d-lg-none me-4">
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Vos statistiques -->
 </div>
+
 <a href="{{ path('app_produit_new') }}" class="btn btn-primary">Create new</a>
+<a href="{{ path('app_produit_export_pdf') }}" class="btn btn-primary">Export to PDF</a>
+
+<a href="{{ path('app_produit_stat') }}" class="btn btn-danger">Stat</a>
+
 <div class="card" id="Table">
     <table class="table">
+        <!-- Entête de tableau -->
         <thead>
             <tr>
+                <!-- Vos en-têtes de colonnes -->
                 <th>Ref</th>
                 <th>Nom</th>
                 <th>Description</th>
@@ -41,7 +29,8 @@
             </tr>
         </thead>
         <tbody>
-        {% for produit in produits %}
+            {% for produit in pagerfanta.getCurrentPageResults() %}
+            
             <tr>
                 <td>{{ produit.ref }}</td>
                 <td>{{ produit.nom }}</td>
@@ -57,19 +46,76 @@
                 </td>
                 <td>
                    <a href="{{ path('app_produit_show', {'ref': produit.ref}) }}" class="btn btn-primary">Show</a>
-    </a>
-                    <a href="{{ path('app_produit_edit', {'ref': produit.ref}) }}">
+                   <a href="{{ path('app_produit_edit', {'ref': produit.ref}) }}">
                         <i class="fas fa-edit"></i> 
                     </a>
                 </td>
+            
             </tr>
-        {% else %}
+            {% else %}
             <tr>
                 <td colspan="7">No records found</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if pagerfanta.hasPreviousPage %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_produit_index', {'page': 1}) }}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        
+        {% for page in 1..pagerfanta.getNbPages() %}
+            <li class="page-item {% if page == pagerfanta.getCurrentPage() %}active{% endif %}">
+                <a class="page-link" href="{{ path('app_produit_index', {'page': page}) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+        
+        {% if pagerfanta.hasNextPage %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_produit_index', {'page': pagerfanta.getNbPages()}) }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
 </div>
+
+<script>
+// Votre script de filtrage
+</script>
+
+{% endblock %}
+{% block script %}
+
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+  var filter, table, tr, td, i, txtValue;
+  filter = this.value.toUpperCase();
+  table = document.querySelector(".table");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1]; // Change index to match the column where product names are displayed
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+});
+</script>
+
 
 {% endblock %}
