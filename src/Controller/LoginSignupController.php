@@ -37,8 +37,6 @@ public function signup(ManagerRegistry $repository ,Request $request):Response{
             $photo->move($this->getParameter('upload_directory'), $fichier);
             $user->setPhoto($fichier);
         }
-        if($user->getType()=="admin") $user->setType("ROLE_ADMIN");
-            $user->setAdresse(52);
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute("app_user_crud");

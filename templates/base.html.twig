@@ -624,7 +624,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img alt="avatar" src="../public/uploads/{{ app.session.get("photo") }}">
+                                        <img alt="avatar" src="{{ asset('/uploads/' ~ app.session.get('photo')) }}">
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -633,8 +633,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img alt="avatar" src="../public/uploads/{{ app.session.get("photo") }}">
-                                                    </div>
+                                                        <img alt="avatar" src="{{ asset('/uploads/' ~ app.session.get('photo')) }}">                                                    </div>
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-medium d-block">{{ username }}</span>

@@ -107,26 +107,25 @@
 
 <div class="main-menu  d-none d-lg-block">
   <div class="card-stor">
-                                <nav>
-                                    {% if app.session.get('name') is not null %}
-                                    <ul id="navigation">
-                                        <li>
-                                            <img alt="avatar" src="../public/uploads/{{ app.session.get("photo") }}">
-                                        </li>
-                                        <li>
-                                           <p style="color: black">{{ app.session.get('name') }}</p>
-                                            <ul class="submenu">
-                                                <li><a href="#">My Profile</a></li>
-                                                <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
-                                                <li><a href="#">Log Out</a></li>
-                                            </ul>
-                                        </li>
-                                        {% endif %}
+      <nav>
+          {% if app.session.get('name') is not null %}
+              <ul id="navigation">
+                  <li>
+                      <img alt="avatar" src="{{ asset('/uploads/' ~ app.session.get('photo')) }}">
+                  </li>
+                  <li>
+                      <p style="color: black">{{ app.session.get('name') }}</p>
+                      <ul style="right:-60px;left:auto" class="submenu">
+                          <li><a href="#">My Profile</a></li>
+                          <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
+                          <li><a href="#">Log Out</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          {% endif %}
+      </nav>
 
-                                    </ul>
-                                </nav>
-
-                            </div> 
+  </div>
                             </div>
 
 

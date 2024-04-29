@@ -153,7 +153,12 @@ class User implements UserInterface,TwoFactorInterface
     {
         // Return an array of user roles, for example:
         // return ['ROLE_USER'];
-        return [$this->type];
+        if($this->type=="admin")
+        return ["ROLE_ADMIN"];
+        else if($this->type=="client")
+            return ["ROLE_CLIENT"];
+        else
+            return ["ROLE_LIVREUR"];
     }
 
     public function getPassword(): ?string
@@ -204,4 +209,25 @@ class User implements UserInterface,TwoFactorInterface
         // TODO: Implement @method string getUserIdentifier()
     }
 
+    private ?string $googleAuthenticatorSecret;
+
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return null !== $this->googleAuthenticatorSecret;
+    }
+
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function getGoogleAuthenticatorSecret(): ?string
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+    }
 }

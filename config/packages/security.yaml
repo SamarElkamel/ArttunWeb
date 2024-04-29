@@ -9,7 +9,7 @@ security:
                 property: adresseMail
     encoders:
         App\Entity\user\User:
-            algorithm: auto
+            algorithm: sha512
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

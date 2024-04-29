@@ -7,14 +7,16 @@ use App\Form\UserType1;
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserCrudController extends AbstractController
 {
     #[Route('/back/user/crud', name: 'app_user_crud')]
-    public function index(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
+    public function index(EntityManagerInterface $entityManager,Container $container, UserRepository $userRepository, Request $request,PasswordHasherInterface $encoder): Response
     {
         $users = $userRepository->findAll();
         $userCount = count($users);
@@ -26,8 +28,14 @@ class UserCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Persist changes to the database
-            $user->setPhoto("23");
+            $photo = $form['photo']->getData();
+            if ($photo) {
+                $fichier = md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('upload_directory'), $fichier);
+                $user->setPhoto($fichier);
+            }
+            $user->setMdp($encoder->hash($user->getMdp()));
+
             $entityManager->persist($user);
             $entityManager->flush();
 

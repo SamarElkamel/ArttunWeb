@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\user\User;
+use App\Repository\user\AdresseRepostiory;
+use Doctrine\DBAL\Types\TextType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
+use Symfony\Component\DomCrawler\Field\TextareaFormField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -12,10 +15,25 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Constraints\File;
 
 class UserType1 extends AbstractType
 {
+    private $addressChoices=[];
+    public function __construct(AdresseRepostiory $adresseRepository)
+    {
+        $adresses = $adresseRepository->findAll();
+        $this->addressChoices = [];
+        foreach ($adresses as $address) {
+            $name = (String)$address;
+            $id=$address->getId();
+            $this->addressChoices["$id"] = $name; // Assuming 'name' is the property representing the address name
+        }
+        //dd($this->addressChoices);
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -84,7 +102,14 @@ class UserType1 extends AbstractType
                     ])
             ],
             ])
-            ->add('captcha', CaptchaType::class,['label'=>false,'attr'=>['placeholder'=>'Enter The Code']])
+            ->add('adresse', ChoiceType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Address',
+                ],
+                'choices' => array_map('strval', array_flip($this->addressChoices)),
+            ])
+            //->add('captcha', CaptchaType::class,['label'=>false,'attr'=>['placeholder'=>'Enter The Code']])
 
         ->add('submit', SubmitType::class, [
                 'label' => 'Submit',
