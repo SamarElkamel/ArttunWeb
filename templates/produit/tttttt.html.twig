@@ -1,0 +1,10 @@
+<h1>CategorieProduit index</h1>
+
+   <label for="categorieProduit">Choisir une catégorie :</label>
+<select name="categorieProduit" id="categorieProduit">
+    {% for categorie_produit in categorie_produits %}
+        <option value="{{ categorie_produit.id }}">{{ categorie_produit.libelle }}</option>
+    {% else %}
+        <option disabled>Aucune catégorie disponible</option>
+    {% endfor %}
+</select>

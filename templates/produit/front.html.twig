@@ -5,13 +5,24 @@
 {% block body %}
     <section class="section-products">
         <div class="container">
+    
+        <div class="me-5 ms-n2 pe-5">
+    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+        <label>
+            <input type="search" class=" search-input" placeholder="Search Produit" aria-controls="DataTables_Table_0" id="searchInput">
+        </label>
+
             <div class="row justify-content-center text-center">
+
                 <div class="col-md-8 col-lg-6">
                     <div class="header">
                         <h3>Liste des Produits</h3>
                     </div>
                 </div>
             </div>
+
+
+
             <div class="row">
                 {% for produit in produits %}
                     <div class="col-md-6 col-lg-4 col-xl-3">
@@ -31,11 +42,11 @@
                                 {% else %}
                                     <p>Aucune image disponible</p>
                                 {% endif %}
-                                <p>Description : {{ produit.description }}</p>
-                                <p>Catégorie : {{ produit.categorieProduit.libelle }}</p>
+                                <p> {{ produit.description }}</p>
+                               <p>Catégorie : {{ produit.categorieProduit.libelle }}</p>
                                 <p>Prix : {{ produit.prix }}</p>
-                                
-                                
+
+
                             </div>
                         </div>
                     </div>
@@ -43,7 +54,59 @@
             </div>
         </div>
     </section>
-    <a href="{{ path('app_produit_new') }}">Créer nouveau</a>
+
+    <script>
+    // Attend que le document soit chargé
+    document.addEventListener("DOMContentLoaded", function() {
+        // Sélectionne l'élément de champ de recherche
+        var searchInput = document.getElementById("searchInput");
+
+        // Ajoute un écouteur d'événements pour l'événement de saisie de texte
+        searchInput.addEventListener("input", function() {
+            // Récupère le texte saisi dans le champ de recherche
+            var searchText = searchInput.value.toLowerCase();
+
+            // Sélectionne tous les éléments de produit
+            var products = document.querySelectorAll(".single-product");
+
+            // Parcourt tous les produits
+            products.forEach(function(product) {
+                // Récupère le nom du produit dans chaque élément de produit
+                var productName = product.querySelector(".product-title").innerText.toLowerCase();
+
+                // Vérifie si le nom du produit contient le texte de recherche
+                if (productName.includes(searchText)) {
+                    // Affiche le produit si le texte de recherche est trouvé dans le nom du produit
+                    product.style.display = "block";
+                } else {
+                    // Masque le produit si le texte de recherche n'est pas trouvé dans le nom du produit
+                    product.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var categorieSelect = document.getElementById("categorieProduit");
+        var products = document.querySelectorAll(".productItem");
+
+        categorieSelect.addEventListener("change", function() {
+            var categorieId = categorieSelect.value;
+
+            products.forEach(function(product) {
+                var produitCategorieId = product.getAttribute("data-categorie-id");
+
+                if (categorieId === produitCategorieId || categorieId === "") {
+                    product.style.display = "block";
+                } else {
+                    product.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock %}
 
 {% block stylesheets %}
@@ -78,7 +141,9 @@ a:hover {
 .section-products .header {
     margin-bottom: 50px;
 }
-
+ .search-input {
+        width: 400px; /* Ajoutez la largeur désirée ici */
+    }
 .section-products .header h3 {
     font-size: 1rem;
     color: #fe302f;

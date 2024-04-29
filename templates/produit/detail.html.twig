@@ -1,0 +1,10 @@
+{% for produit in produits %}
+    <div>
+        <h2>{{ produit.nom }}</h2>
+        <!-- Afficher l'image du code QR pour ce produit -->
+        <img src="{{ qrcodes[produit.ref] }}" alt="Code QR pour {{ produit.nom }}">
+    </div>
+{% endfor %}
+
+
+

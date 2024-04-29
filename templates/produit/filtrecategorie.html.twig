@@ -1,0 +1,31 @@
+<div id="listeProduits">
+    {% include 'produit/filtrecategorie.html.twig' with {'produits': produits} %}
+</div>
+
+
+
+{% for produit in produits %}
+    <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="single-product">
+            <div class="part-1">
+                <ul>
+                    <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                    <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                    <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                    <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                </ul>
+            </div>
+            <div class="part-2">
+                <h3 class="product-title">{{ produit.nom }}</h3>
+                {% if produit.image %}
+                    <img src="{{ asset('uploads/' ~ produit.image) }}" alt="Product Image" style="max-width: 200px; max-height: 120px;">
+                {% else %}
+                    <p>Aucune image disponible</p>
+                {% endif %}
+                <p> {{ produit.description }}</p>
+                <p>Catégorie : {{ produit.categorieProduit.libelle }}</p>
+                <p>Prix : {{ produit.prix }}</p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
