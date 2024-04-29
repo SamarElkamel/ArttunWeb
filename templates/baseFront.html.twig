@@ -107,21 +107,25 @@
 
 <div class="main-menu  d-none d-lg-block">
   <div class="card-stor">
-                                <nav>
-                                    <ul id="navigation">
-                                       
-                                        <li>
-                                           <img src="/assets/img/icons/user/profile.png" alt="User Icon">
-                                            <ul class="submenu">
-                                                <li><a href="#">My Profile</a></li>
-                                                <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
-                                                <li><a href="#">Log Out</a></li>
-                                            </ul>
-                                        </li>
-                                     
-                                    </ul>
-                                </nav>
-                            </div> 
+      <nav>
+          {% if app.session.get('name') is not null %}
+              <ul id="navigation">
+                  <li>
+                      <img alt="avatar" src="{{ asset('/uploads/' ~ app.session.get('photo')) }}">
+                  </li>
+                  <li>
+                      <p style="color: black">{{ app.session.get('name') }}</p>
+                      <ul style="right:-60px;left:auto" class="submenu">
+                          <li><a href="#">My Profile</a></li>
+                          <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
+                          <li><a href="#">Log Out</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          {% endif %}
+      </nav>
+
+  </div>
                             </div>
 
 
@@ -240,6 +244,7 @@
 
 <!-- JS here -->
 <!-- Jquery, Popper, Bootstrap -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="/assets/Front/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="/assets/Front/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="/assets/Front/js/popper.min.js"></script>

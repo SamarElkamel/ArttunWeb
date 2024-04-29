@@ -6,52 +6,36 @@ use App\Entity\user\User;
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserCrudController extends AbstractController
 {
     #[Route('/back/user/crud', name: 'app_user_crud')]
-    public function index(EntityManagerInterface $entityManager,UserRepository $userrepo,Request $request): Response
+    public function index(EntityManagerInterface $entityManager,Container $container, UserRepository $userRepository, Request $request,PasswordHasherInterface $encoder): Response
     {
+        $users = $userRepository->findAll();
+        $userCount = count($users);
         $user = new User();
+        // Create the form and pass the User object to it
+        $form = $this->createForm(UserType1::class, $user);
 
-        $users = $userrepo->findAll();
-        $userCount = $userrepo->count([]);
-        if ($request->isMethod('POST')) {
-            $id = $request->request->get('idfield');
-            $nom = $request->request->get('nomfield');
-            $prenom = $request->request->get('prenomfield');
-            $mail = $request->request->get('mailfield');
-            $password = $request->request->get('passwordfield');
-            $fileName = $request->request->get('filefield');
-            $type = $request->request->get('type');
-            $user = $entityManager->getRepository(User::class)->find($id);
-            $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+        // Handle the form submission
+        $form->handleRequest($request);
 
-            // Check if the file is a picture
-            $isPicture = false;
-            if ($fileExtension !== '') {
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                $isPicture = in_array(strtolower($fileExtension), $allowedExtensions);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $photo = $form['photo']->getData();
+            if ($photo) {
+                $fichier = md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('upload_directory'), $fichier);
+                $user->setPhoto($fichier);
             }
+            $user->setMdp($encoder->hash($user->getMdp()));
 
-            if (!$user) {
-                throw $this->createNotFoundException('User not found');
-            }
-            $file =
-                // Update user properties
-                $user->setNom($nom);
-            $user->setPrenom($prenom);
-            $user->setAdresseMail($mail);
-            $user->setMdp($password);
-            if ($type = "2")
-                $user->setType("client");
-            if ($type = "1")
-                $user->setType("admin");
-            $user->setPhoto($fileName);
-            // Persist changes to the database
+            $entityManager->persist($user);
             $entityManager->flush();
         }
         return $this->render('user_crud/index.html.twig', [

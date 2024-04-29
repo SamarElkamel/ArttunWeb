@@ -4,6 +4,9 @@ namespace App\Entity\user;
 
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,7 +25,7 @@ class User implements UserInterface
     #[Assert\NotBlank(message: "Please enter the user's last name.")]
     #[ORM\Column(name: "prenom", type: "string", length: 50, nullable: false)]
     private string $prenom;
-
+    private PasswordHasherInterface $hasher;
     #[Assert\NotBlank(message: "Please enter the user's type.")]
     #[ORM\Column(name: "type", type: "string", length: 50, nullable: false)]
     private string $type;
@@ -42,6 +45,8 @@ class User implements UserInterface
     #[Assert\NotBlank(message: "Please enter the user's password.")]
     #[ORM\Column(name: "mdp", type: "string", length: 300, nullable: false)]
     private string $mdp;
+
+    public string $AuthCode ="";
 
     public function getId(): ?int
     {
@@ -121,7 +126,7 @@ class User implements UserInterface
 
     public function setMdp(string $mdp): self
     {
-        $this->mdp = $mdp;
+        $this->mdp =$mdp;
         return $this;
     }
 
@@ -135,7 +140,12 @@ class User implements UserInterface
     {
         // Return an array of user roles, for example:
         // return ['ROLE_USER'];
-        return [$this->type];
+        if($this->type=="admin")
+        return ["ROLE_ADMIN"];
+        else if($this->type=="client")
+            return ["ROLE_CLIENT"];
+        else
+            return ["ROLE_LIVREUR"];
     }
 
     public function getPassword(): ?string
@@ -159,5 +169,52 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
+    }
+
+    public function isEmailAuthEnabled(): bool
+    {
+        return true;
+    }
+
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->adresseMail;
+    }
+
+    public function getEmailAuthCode(): ?string
+    {
+        return $this->AuthCode; // Using square brackets to access session variable
+    }
+
+    public function setEmailAuthCode(string $authCode): void
+    {
+        $this->AuthCode=$authCode;
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
+    }
+
+    private ?string $googleAuthenticatorSecret;
+
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return null !== $this->googleAuthenticatorSecret;
+    }
+
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function getGoogleAuthenticatorSecret(): ?string
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
 }
