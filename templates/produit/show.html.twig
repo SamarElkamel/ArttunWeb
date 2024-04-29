@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block body %}
+    <h1>Product Details</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Reference</th>
+                <td>{{ produit.ref }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ produit.nom }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ produit.prix }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ produit.categorieProduit.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('uploads/' ~ produit.image) }}" alt="Product Image" style="max-width: 100px; max-height: 100px;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produit_index') }}">Back to List</a>
+    <a href="{{ path('app_produit_edit', {'ref': produit.ref}) }}">Edit</a>
+
+    {{ include('produit/_delete_form.html.twig') }}
+{% endblock %}
