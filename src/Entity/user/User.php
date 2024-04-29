@@ -203,10 +203,10 @@ class User implements UserInterface
         return null !== $this->googleAuthenticatorSecret;
     }
 
-    public function getGoogleAuthenticatorUsername(): string
+   /* public function getGoogleAuthenticatorUsername(): string
     {
         return $this->username;
-    }
+    }*/
 
     public function getGoogleAuthenticatorSecret(): ?string
     {

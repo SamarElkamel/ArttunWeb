@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\user\User;
+use App\Form\UserType1;
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,4 +41,6 @@ public function signup(ManagerRegistry $repository ,Request $request):Response{
             $em->flush();
             return $this->redirectToRoute("app_user_crud");
     }
+    return $this->render('login_signup/signup.html.twig',['form'=>$form->createView()]);
+}
 }
