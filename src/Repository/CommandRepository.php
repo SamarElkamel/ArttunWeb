@@ -20,6 +20,26 @@ class CommandRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Command::class);
     }
+    
+    public function findReferencesOfOrderedProducts(): array
+    {
+        // Query to select distinct product identities from commands
+        $query = $this->createQueryBuilder('c')
+            ->select('IDENTITY(c.id_produit) as product_id')
+            ->distinct()
+            ->getQuery();
+    
+        // Execute the query and fetch the results
+        $results = $query->getResult();
+    
+        // Extract the product identities from the results
+        $references = array_map(function($result) {
+            return $result['product_id'];
+        }, $results);
+    
+        return $references;
+    }
+    
 
 //    /**
 //     * @return Command[] Returns an array of Command objects

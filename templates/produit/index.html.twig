@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                 <th></th>
+                <th></th>
                 <th>Ref</th>
                 <th>Nom</th>
                 <th>Prix</th>
@@ -18,28 +18,50 @@
             </tr>
         </thead>
         <tbody>
-        {% for produit in produits %}
+            {% for produit in produits %}
             <tr>
-              <td><img src="{{ asset(produit.image) }}" alt="Product Image"></td>
+                <td><img src="{{ asset(produit.image) }}" alt="Product Image"></td>
                 <td>{{ produit.ref }}</td>
                 <td>{{ produit.nom }}</td>
                 <td>{{ produit.prix }}</td>
                 <td>{{ produit.description }}</td>
                 <td>{{ produit.idCategorie }}</td>
                 <td>
-                    
-                
-                    <a href="{{ path('add_to_panier', {'ref': produit.ref}) }}"class="checkout-button">Add to Panier</a> 
+                    <a href="{{ path('add_to_panier', {'ref': produit.ref}) }}" class="checkout-button" onclick="addToCart(this)">Add to Panier</a>
                     
                 </td>
             </tr>
-        {% else %}
+              {% for flash_message in app.session.flashbag.get('success') %}
+    <div class="alert alert-success" role="alert">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+
+{% for flash_message in app.session.flashbag.get('error') %}
+    <div class="alert alert-danger" role="alert">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+            {% else %}
             <tr>
                 <td colspan="7">no records found</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
+
+
+
+
+{% block javascripts %}
+<script>
+    
+</script>
+
+
+
+
+
 
   {% block stylesheets %}
 
@@ -355,6 +377,6 @@ td img {
 
 
     </style>
-   
+{% endblock %}
 {% endblock %}
 {% endblock %}

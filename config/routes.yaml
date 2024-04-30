@@ -20,3 +20,13 @@ checkout_process:
     path: /checkout
     controller: App\Controller\PanierController::checkoutProcess
 
+success_url:
+    path: /success-url
+    controller: App\Controller\PanierController::successUrl
+    methods: ['GET']
+
+cancel_url:
+    path: /cancel-url
+    controller: App\Controller\PanierController::cancelUrl
+    methods: ['GET']
+

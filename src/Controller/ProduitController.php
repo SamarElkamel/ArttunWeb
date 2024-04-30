@@ -10,17 +10,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CommandRepository;
 
 #[Route('/produit')]
 class ProduitController extends AbstractController
 {
+
+   
+
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(ProduitRepository $produitRepository, CommandRepository $commandRepository): Response
     {
+        // Retrieve all products
+        $produits = $produitRepository->findAll();
+    
+        // Retrieve the references of ordered products
+        $referencesCommandees = $commandRepository->findReferencesOfOrderedProducts();
+    
+        // Filter the products to display only those that haven't been ordered
+        $produitsNonCommandes = array_filter($produits, function($produit) use ($referencesCommandees) {
+            // Check if the product reference exists in the ordered product references
+            return !in_array($produit->getRef(), $referencesCommandees);
+        });
+    
+        // Return the view with the filtered products
         return $this->render('produit/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produitsNonCommandes,
         ]);
     }
+    
+
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
