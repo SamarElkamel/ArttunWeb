@@ -54,10 +54,10 @@
                             <div class="d-flex align-items-start justify-content-between">
                                 <div class="content-left">
                                     <span>Paid Users</span>
-                                    <div class="d-flex align-items-end mt-2">
+                                    <a href="/stat"><div class="d-flex align-items-end mt-2">
                                         <h4 class="mb-0 me-2"></h4>
-                                        <small class="text-success">(+18%)</small>
-                                    </div>
+                                        <small class="text-success">check statistique</small>
+                                        </div></a>
                                     <p class="mb-0">Last week analytics </p>
                                 </div>
                                 <div class="avatar">
@@ -75,10 +75,10 @@
                             <div class="d-flex align-items-start justify-content-between">
                                 <div class="content-left">
                                     <span>Active Users</span>
-                                    <div class="d-flex align-items-end mt-2">
+                                   <a href="/stat"> <div class="d-flex align-items-end mt-2">
                                         <h4 class="mb-0 me-2"></h4>
-                                        <small class="text-danger">(-14%)</small>
-                                    </div>
+                                        <small class="text-danger">check statistique</small>
+                                       </div> </a>
                                     <p class="mb-0">Last week analytics</p>
                                 </div>
                                 <div class="avatar">
@@ -96,10 +96,11 @@
                             <div class="d-flex align-items-start justify-content-between">
                                 <div class="content-left">
                                     <span>Pending Users</span>
-                                    <div class="d-flex align-items-end mt-2">
+                                    <a href="/stat"><div class="d-flex align-items-end mt-2">
                                         <h4 class="mb-0 me-2"></h4>
-                                        <small class="text-success">(+42%)</small>
+                                        <small class="text-success">check statistique</small>
                                     </div>
+                                    </a>
                                     <p class="mb-0">Last week analytics</p>
                                 </div>
                                 <div class="avatar">
@@ -122,11 +123,10 @@
                         <div class="col-md-4 user_plan"></div>
                         <div class="col-md-4 user_status"></div>
                     </div>
-                    <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label style="margin-right:30px"><input style="padding-right: 150px" type="search" class="form-control" placeholder="Search.." aria-controls="DataTables_Table_0"></label>
+                    <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label style="margin-right:30px"><input style="padding-right: 150px" id="searchInput" type="search" class="form-control" placeholder="Search.." aria-controls="DataTables_Table_0"></label>
                         </div>
                     </div>
                 </div>
-
                 <div class="card-datatable table-responsive">
                     <table class="datatables-users table border-top">
                         <thead>
@@ -183,6 +183,35 @@
                 document.getElementById('user_type1_adresseMail').value = adresseMail;
                 document.getElementById('user_type1_mdp').value = mdp;
             }
+        document.addEventListener('DOMContentLoaded', function () {
+                // Get the table body element
+                const tableBody = document.querySelector('.datatables-users tbody');
+
+                // Function to filter table rows
+                function filterTable(event) {
+                const searchText = event.target.value.toLowerCase();
+                const rows = tableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let found = false;
+                cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(searchText)) {
+                found = true;
+            }
+            });
+                if (found) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+            });
+            }
+
+                // Add event listener to search input
+                const searchInput = document.getElementById('searchInput');
+                searchInput.addEventListener('input', filterTable);
+            });
+
 
         </script>
         <footer class="content-footer footer bg-footer-theme">

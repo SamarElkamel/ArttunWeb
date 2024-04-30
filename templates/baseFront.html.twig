@@ -106,7 +106,7 @@
 </div>
 
 <div class="main-menu  d-none d-lg-block">
-  <div class="card-stor">
+  <div style="padding: 10px 20px 4px 20px;" class="card-stor">
       <nav>
           {% if app.session.get('name') is not null %}
               <ul id="navigation">
@@ -122,8 +122,11 @@
                       </ul>
                   </li>
               </ul>
+          {% else %}
+                      <a href="/login"> <p style="color: black">Login</p></a>
           {% endif %}
       </nav>
+
 
   </div>
                             </div>
