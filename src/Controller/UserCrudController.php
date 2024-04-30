@@ -98,6 +98,12 @@ class UserCrudController extends AbstractController
             'livreurCount' => $livreurCount,
         ]);
     }
+    #[Route('/profile', name: 'app_profile_user')]
+    public function profile(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request/*,PasswordHasherInterface $encoder*/): Response
+    {
+        return $this->render('user_crud/profile.html.twig', [
+        ]);
+    }
     #[Route('/back/user/crud/delete{id}', name: 'app_user_crud_delete')]
     public function delete(EntityManagerInterface $entityManager, Request $request,$id){
         $userRepository = $entityManager->getRepository(User::class);
