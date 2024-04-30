@@ -5,20 +5,35 @@ namespace App\Controller;
 use App\Entity\Mission;
 use App\Entity\Commandes;
 use App\Controller\CommandesController;
+use App\Entity\Livreur;
 
 use App\Repository\MissionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Twilio\Rest\Client;
+
 #[Route('/mission')]
 class MissionController extends AbstractController
 {
     #[Route('/', name: 'app_mission_index', methods: ['GET'])]
-    public function index(MissionRepository $missionRepository): Response
+    public function index(Request $request, MissionRepository $missionRepository): Response
     {
+        $etat = $request->query->get('etat');
+
+        // Récupérer toutes les missions attribuées au livreur avec l'ID 75
+        $filteredMissions = $missionRepository->findBy(['livreur' => 75]);
+
+        // Si l'état est spécifié, filtrer les missions en fonction de l'état également
+        if ($etat) {
+            $filteredMissions = array_filter($filteredMissions, function($mission) use ($etat) {
+                return $mission->getEtat() === $etat;
+            });
+        }
+
         return $this->render('mission/index.html.twig', [
-            'missions' => $missionRepository->findAll(),
+            'missions' => $filteredMissions,
         ]);
     }
 
@@ -46,6 +61,36 @@ class MissionController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($mission);
         $entityManager->flush();
+// Integrate Twilio API to send confirmation message
+// Your Twilio credentials
+$accountSid = 'ACbc5608278bb28c4de0cde4b73f954e65';
+$authToken = 'a3baa74bec138d281804d2dabf8fd706';
+$twilioNumber = '+17079992405';
+
+// Initialize Twilio client
+$client = new Client($accountSid, $authToken);
+
+// Replace 'recipient_number' with the actual recipient's phone number
+$recipientNumber = '+21628482349';
+
+// Get the mission ID
+$missionId = $mission->getIdMission();
+
+// Compose the message including the mission ID
+$messageBody = 'Your delivery for mission ID: ' . $missionId . ' has been successfully confirmed.';
+
+// Send the message
+$message = $client->messages->create(
+    $recipientNumber,
+    [
+        'from' => $twilioNumber,
+        'body' => $messageBody
+    ]
+);
+
+// Log the message SID to track the delivery status if needed
+echo 'Message SID: ' . $message->sid;
+
     
         // Rediriger l'utilisateur vers la page précédente ou une autre page
         // Dans cet exemple, nous redirigeons simplement l'utilisateur vers la page d'accueil
@@ -66,6 +111,18 @@ class MissionController extends AbstractController
             $mission = new Mission();
             $mission->setEtat('non livré');
     
+            // Récupérer le livreur ayant l'ID 75
+            $livreur = $entityManager->getRepository(Livreur::class)->find(75);
+    
+            // Vérifier si le livreur existe
+            if ($livreur) {
+                // Associer la mission au livreur récupéré
+                $mission->setLivreur($livreur);
+            } else {
+                // Gérer le cas où le livreur avec l'ID 75 n'existe pas
+                // Vous pouvez afficher un message d'erreur ou prendre une autre action appropriée
+            }
+    
             // Enregistrer la mission dans la base de données
             $entityManager->persist($mission);
             $entityManager->flush();
@@ -77,8 +134,8 @@ class MissionController extends AbstractController
     
                 // Vérifier si la commande existe
                 if ($commande) {
-                    // Set the mission ID on the command entity
-                    $commande->setIdMission($mission->getIdMission());
+                    // Définir l'ID de la mission sur la commande
+                    $commande->setMission($mission);
     
                     // Mettre à jour la commande dans la base de données
                     $entityManager->persist($commande);

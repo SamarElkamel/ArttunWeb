@@ -77,19 +77,15 @@
 
                 </div>
 
-                {# Text above Picture field #}
-                <div class="mb-3 text-start">
-                    <label class="form-label">Photo</label>
-                </div>
-                {# Picture field #}
-                <div class="mb-3">
-                    <div class="input-group input-group-merge">
-                        <span class="input-group-text"><i class="bx bxs-image bx-flashing"></i></span>
+              {# Text above Picture field #}
+<div class="mb-3">
+    <div class="input-group input-group-merge">
+        <span class="input-group-text"><i class="bx bxs-image bx-flashing"></i></span>
                         {{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}
-                    </div>
-                                        <span class="error-message">{{ form_errors(form.photo) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+    </div>
+    <span class="error-message">{{ form_errors(form.photo) }}</span> {# Afficher les erreurs sous le champ "mdp" avec la classe "error-message" #}
+</div>
 
-                </div>
 
                 {# Submit button #}
                 <button type="submit" class="btn btn-primary">Ajouter</button>

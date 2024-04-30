@@ -54,4 +54,15 @@ public function countByEtat($etat)
         ->getQuery()
         ->getSingleScalarResult();
 }
+public function findByEtat($etat)
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.etat = :etat') 
+        ->setParameter('etat', $etat) 
+        ->getQuery()
+        ->getResult();
 }
+
+}
+
+

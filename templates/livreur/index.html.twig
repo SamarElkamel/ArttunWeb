@@ -3,6 +3,25 @@
 
 {% block body %}
 <br>
+<a href="https://github.com/SamarElkamel/ArttunWeb">
+  <div class="button-icon">
+    <div class="icon">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M12 0.296997C5.37 0.296997 0 5.67 0 12.297C0 17.6 3.438 22.097 8.205 23.682C8.805 23.795 9.025 23.424 9.025 23.105C9.025 22.82 9.015 22.065 9.01 21.065C5.672 21.789 4.968 19.455 4.968 19.455C4.422 18.07 3.633 17.7 3.633 17.7C2.546 16.956 3.717 16.971 3.717 16.971C4.922 17.055 5.555 18.207 5.555 18.207C6.625 20.042 8.364 19.512 9.05 19.205C9.158 18.429 9.467 17.9 9.81 17.6C7.145 17.3 4.344 16.268 4.344 11.67C4.344 10.36 4.809 9.29 5.579 8.45C5.444 8.147 5.039 6.927 5.684 5.274C5.684 5.274 6.689 4.952 8.984 6.504C9.944 6.237 10.964 6.105 11.984 6.099C13.004 6.105 14.024 6.237 14.984 6.504C17.264 4.952 18.269 5.274 18.269 5.274C18.914 6.927 18.509 8.147 18.389 8.45C19.154 9.29 19.619 10.36 19.619 11.67C19.619 16.28 16.814 17.295 14.144 17.59C14.564 17.95 14.954 18.686 14.954 19.81C14.954 21.416 14.939 22.706 14.939 23.096C14.939 23.411 15.149 23.786 15.764 23.666C20.565 22.092 24 17.592 24 12.297C24 5.67 18.627 0.296997 12 0.296997Z"
+          fill="#222229"
+        ></path>
+      </svg>
+    </div>
+    <div class="cube">
+      <span class="side front">hover me</span>
+      <span class="side top">check it on github</span>
+    </div>
+  </div>
+</a>
+
+<br>
+<br>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -16,16 +35,7 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center">
-                    <h5 class="card-title"></h5>
-                    <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
-                        <div class="col-md-4 product_status">
-                            <select id="ProductStatus" class="form-select text-capitalize">
-                                <option value="">TRI</option>
-                                <option value="Scheduled"></option>
-                                <option value="Publish"></option>
-                            </select>
-                        </div>
+                
 
                         <label>
                             <br>
@@ -33,17 +43,83 @@
                                 <div class="row justify-content-start">
                                     <div class="col-auto">
                                         <div class="input-group">
-                                            <input type="search" class="form-control" placeholder="Search Livreur" aria-controls="DataTables_Table_0" id="livreur_search">
-                                            <button class="btn" type="button" style="background-color: transparent; border: none;">
-                                                <i class="bx bx-search" style="color: black;"></i> <!-- Bootstrap Icons search icon -->
-                                            </button>
-                                        </div>
+    <input type="search" class="form-control" placeholder="Search Livreur" aria-controls="DataTables_Table_0" id="livreur_search">
+    <!-- Bouton pour démarrer la recherche vocale -->
+    <button class="btn" type="button" style="background-color: transparent; border: none;" onclick="startSpeechRecognition()">
+        <i class="bx bx-microphone" style="color: black;"></i> <!-- Bootstrap Icons microphone icon -->
+    </button>
+</div>
+<script>
+    // Fonction pour effectuer la recherche dynamique
+    function searchLivreur(keyword) {
+        var tableRows = document.querySelectorAll('.table tbody tr');
+        var searchInput = keyword.trim().toLowerCase();
+
+        tableRows.forEach(function (row) {
+            var cells = row.querySelectorAll('td');
+            var found = false;
+
+            cells.forEach(function (cell) {
+                if (cell.textContent.trim().toLowerCase().includes(searchInput)) {
+                    found = true;
+                }
+            });
+
+            if (found) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    // Fonction pour démarrer la reconnaissance vocale
+    function startSpeechRecognition() {
+        // Démarrer la reconnaissance vocale
+        const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.lang = 'fr-FR'; // Définir la langue de la reconnaissance vocale (facultatif)
+        recognition.start();
+
+        // Écouter les résultats de la reconnaissance vocale
+        recognition.onresult = function(event) {
+            const recognizedText = event.results[0][0].transcript.trim(); // Récupérer le texte reconnu
+            const cleanedText = recognizedText.endsWith('.') ? recognizedText.slice(0, -1) : recognizedText; // Supprimer le dernier caractère s'il s'agit d'un point
+            document.getElementById('livreur_search').value = cleanedText; // Afficher le résultat dans le champ de recherche
+
+            // Appel de la fonction de recherche lorsque du texte est reconnu
+            searchLivreur(cleanedText); 
+        };
+
+        // Gérer les erreurs éventuelles de la reconnaissance vocale
+        recognition.onerror = function(event) {
+            console.error('Erreur de reconnaissance vocale:', event.error);
+        };
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Event listener pour la saisie clavier
+        var searchInput = document.getElementById('livreur_search');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function () {
+                var searchText = this.value;
+                searchLivreur(searchText);
+            });
+        }
+    });
+</script>
+
+
                                         <br>
 
                                     </div>
                                 </div>
                             </div>
                         </label>
+<a href="{{ path('app_livreur_stat')}}" class="nice-button">Statistique</a>
+
+<br>
+<br>
+                                                   
 
                         <table class="table table-borderless table-hover mx-auto" style="color: black; width: 90%; background-color: #white; border-radius: 40px;">
                             <thead class="thead-dark" style="background-color: #white;">
@@ -79,12 +155,72 @@
                                 {% endfor %}
                             </tbody>
                         </table>
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-end">
+        {% if livreurs.currentPageNumber > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_livreur_index', {'page': livreurs.currentPageNumber - 1}) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+            </li>
+        {% endif %}
+        
+        {% for page in 1..livreurs.pageCount %}
+            <li class="page-item {% if page == livreurs.currentPageNumber %}active{% endif %}">
+                <a class="page-link" href="{{ path('app_livreur_index', {'page': page}) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+        
+        {% if livreurs.currentPageNumber < livreurs.pageCount %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_livreur_index', {'page': livreurs.currentPageNumber + 1}) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&raquo;</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
 
                         <div style="text-align: center;">
                             <br>
-                            <a href="{{ path('app_livreur_new')}}" class="btn btn-primary">Ajouter</a>
+                     <div class="light-button d-flex justify-content-center align-items-center">
+    <button class="bt" onclick="redirectToLivreurNew()">
+        <div class="light-holder">
+            <a id="livreurLink"></a>
+            <div class="dot"></div>
+            <div class="light"></div>
+        </div>
+        <div class="button-holder">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8v4.25a.75.75 0 0 1-1.5 0V8H2.75a.75.75 0 0 1 0-1.5H6V2.75A.75.75 0 0 1 6.75 2H8z"/>
+            </svg>
+            <p>Ajouter</p>
+        </div>
+    </button>
+</div>
+
+<script>
+    function redirectToLivreurNew() {
+        var livreurLink = document.getElementById('livreurLink');
+        livreurLink.href = "{{ path('app_livreur_new')}}";
+        livreurLink.click();
+    }
+</script>
+
                         </div>
                         <br>
+                        
                     </div>
                 </div>
             </div>
@@ -92,40 +228,182 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Function to perform the search based on the specified keyword
-        function searchLivreur(keyword) {
-            var tableRows = document.querySelectorAll('.table tbody tr');
-            var searchInput = keyword.trim().toLowerCase();
 
-            tableRows.forEach(function (row) {
-                var cells = row.querySelectorAll('td');
-                var found = false;
 
-                cells.forEach(function (cell) {
-                    if (cell.textContent.trim().toLowerCase().includes(searchInput)) {
-                        found = true;
-                    }
-                });
 
-                if (found) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
 
-        // Event listener for the search input
-        var searchInput = document.getElementById('livreur_search');
-        if (searchInput) {
-            searchInput.addEventListener('keyup', function () {
-                var searchText = this.value;
-                searchLivreur(searchText);
-            });
-        }
-    });
-</script>
+{% block stylesheets %}
+<style>
+button.nice-button, a.nice-button {
+  padding: 0.4em 0.8em; /* Ajuster les valeurs de padding pour réduire la taille */
+  border: 4px solid #007bff;
+  transition: ease-in-out 0.3s;
+  background-color: transparent;
+  color: #007bff;
+  font-weight: bolder;
+  font-size: 16px;
+  max-width: 200px; /* Définir une largeur maximale */
+  text-decoration: none; /* Supprimer la décoration du lien */
+  display: inline-block; /* Assurer le comportement de bloc */
+  text-align: center; /* Centrer le texte */
+}
+
+button.nice-button:hover, a.nice-button:hover {
+  transform: scale(1.2) rotate(10deg);
+  background-color: #007bff;
+  color: white;
+}
+
+
+
+
+
+
+
+.light-button button.bt {
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.light-button button.bt .button-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100px;
+  background-color: #0a0a0a;
+  border-radius: 5px;
+  color: #0f0f0f;
+  font-weight: 700;
+  transition: 300ms;
+  outline: #0f0f0f 2px solid;
+  outline-offset: 20;
+}
+
+.light-button button.bt .button-holder svg {
+  height: 50px;
+  fill: #0f0f0f;
+  transition: 300ms;
+}
+
+.light-button button.bt .light-holder {
+  position: absolute;
+  height: 200px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.light-button button.bt .light-holder .dot {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #0a0a0a;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.light-button button.bt .light-holder .light {
+  position: absolute;
+  top: 0;
+  width: 200px;
+  height: 200px;
+  clip-path: polygon(50% 0%, 25% 100%, 75% 100%);
+  background: transparent;
+}
+
+.light-button button.bt:hover .button-holder svg {
+  fill: rgb(66, 81, 245);
+}
+
+.light-button button.bt:hover .button-holder {
+  color: rgba(66, 81, 245);
+  outline: rgba(66, 81, 245) 2px solid;
+  outline-offset: 2px;
+}
+
+.light-button button.bt:hover .light-holder .light {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(66, 81, 245) 0%,
+    rgba(255, 255, 255, 0) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+
+
+
+
+.button-icon {
+  display: flex;
+  border: 3px #fff solid;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+
+.icon {
+  background-color: #fff;
+  padding: 10px 10px 5px 10px;
+}
+
+.icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.cube {
+  transition: all 0.4s;
+  transform-style: preserve-3d;
+  width: 200px;
+  height: 20px;
+}
+
+.button-icon:hover {
+  border-color: #ff98a2;
+}
+
+.button-icon:hover .cube {
+  transform: rotateX(90deg);
+}
+
+.side {
+  position: absolute;
+  height: 47px;
+  width: 200px;
+  display: flex;
+  font-size: 0.8em;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+
+.top {
+  background: #ff98a2;
+  color: #fff;
+  transform: rotateX(-90deg) translate3d(0, 13.5px, 2em);
+}
+
+.front {
+  background: #222229;
+  color: #fff;
+  transform: translate3d(0, 0, 1em);
+}
+
+</style>
+{% endblock %}
+
 
 {% endblock %}

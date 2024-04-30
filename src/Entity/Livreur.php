@@ -30,7 +30,6 @@ class Livreur
     private ?string $prenom;
 
     #[ORM\Column(name: "photo", type: "string", length: 500, nullable: false)]
-    #[Assert\NotBlank(message: "La photo ne peut pas être vide.")]
 
     private ?string $photo;
 

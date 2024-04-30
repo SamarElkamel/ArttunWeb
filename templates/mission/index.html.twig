@@ -6,16 +6,37 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-body">
-                       
-                       
                         <h1 class="text-center mb-4" style="font-size: 2.5rem; color: #333; font-weight: bold; text-transform: uppercase;">LISTE DES MISSIONS</h1>
-                        <div class="row justify-content-end mb-3"> <!-- Utilisation de justify-content-end pour aligner à droite -->
+                        <div class="row justify-content-between mb-3">
+                            <div class="col-md-4 product_status">
+                   <form method="GET" action="{{ path('app_mission_index') }}" class="row g-3 align-items-center" id="missionFilterForm">
+    <div class="col-auto">
+        <label for="etat" class="col-form-label">Filter by Etat:</label>
+    </div>
+    <div class="col-auto">
+        <select name="etat" id="etat" class="form-select text-capitalize">
+            <option value="">FILTER</option>
+            <option value="livré">LIVRÉ</option>
+            <option value="non livré">NON LIVRÉ</option>
+        </select>
+    </div>
+</form>
+
+<script>
+    // Ajoutez un écouteur d'événements pour détecter les changements de sélection dans le menu déroulant
+    document.getElementById('etat').addEventListener('change', function() {
+        // Soumettre automatiquement le formulaire lorsque la sélection change
+        document.getElementById('missionFilterForm').submit();
+    });
+</script>
+
+                            </div>
                             <div class="col-md-2">
                                 <a href="{{ path('app_commandes_index')}}" class="btn btn-primary">Ajouter</a>
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-borderless table-hover mx-auto" style="color: black; background-color: white; border-radius: 40px;">
+                            <table id="missionTable" class="table table-borderless table-hover mx-auto" style="color: black; background-color: white; border-radius: 40px;">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th class="text-center">Référence</th>
@@ -25,9 +46,9 @@
                                 </thead>
                                 <tbody>
                                     {% for mission in missions %}
-                                        <tr>
+                                        <tr class="missionRow {{ mission.etat|lower }}">
                                             <td class="text-center">{{ mission.idMission }}</td>
-                                            <td class="text-center">
+                                            <td class="text-center mission-status">
                                                 {% if mission.etat == "non livré" %}
                                                     <span class="badge bg-label-danger">{{ mission.etat }}</span>
                                                 {% else %}
@@ -44,10 +65,6 @@
                                                 {% endif %}
                                             </td>
                                         </tr>
-                                    {% else %}
-                                        <tr>
-                                            <td colspan="3" class="text-center">Aucun enregistrement trouvé</td>
-                                        </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -57,4 +74,72 @@
             </div>
         </div>
     </div>
+
+
+
+    {% block stylesheets %}
+<style>
+.button-icon {
+  display: flex;
+  border: 3px #fff solid;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+
+.icon {
+  background-color: #fff;
+  padding: 10px 10px 5px 10px;
+}
+
+.icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.cube {
+  transition: all 0.4s;
+  transform-style: preserve-3d;
+  width: 200px;
+  height: 20px;
+}
+
+.button-icon:hover {
+  border-color: #ff98a2;
+}
+
+.button-icon:hover .cube {
+  transform: rotateX(90deg);
+}
+
+.side {
+  position: absolute;
+  height: 47px;
+  width: 200px;
+  display: flex;
+  font-size: 0.8em;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+
+.top {
+  background: #ff98a2;
+  color: #fff;
+  transform: rotateX(-90deg) translate3d(0, 13.5px, 2em);
+}
+
+.front {
+  background: #222229;
+  color: #fff;
+  transform: translate3d(0, 0, 1em);
+}
+
+
+
+</style>
 {% endblock %}
+{% endblock %}
+
