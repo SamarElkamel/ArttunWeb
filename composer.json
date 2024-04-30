@@ -4,18 +4,15 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "8.*",
+        "php": "8.2.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.18.0",
-        "gregwar/captcha-bundle": "2.2.*",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.25",
-        "scheb/2fa-email": "^6.12",
-        "scheb/2fa-google-authenticator": "^6.12",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "5.4.*",
         "symfony/asset-mapper": "6.3.0",
@@ -26,11 +23,9 @@
         "symfony/flex": "^1.17|^2",
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
-        "symfony/google-mailer": "5.4.*",
         "symfony/http-client": "5.4.*",
         "symfony/intl": "5.4.*",
         "symfony/mailer": "5.4.*",
-        "symfony/mercure-bundle": "*",
         "symfony/mime": "5.4.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/notifier": "5.4.*",
@@ -48,9 +43,9 @@
         "symfony/validator": "5.4.*",
         "symfony/web-link": "5.4.*",
         "symfony/yaml": "5.4.*",
-        "symfonycasts/reset-password-bundle": "^1.21",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+      "ext-http": "*"
     },
     "config": {
         "allow-plugins": {
