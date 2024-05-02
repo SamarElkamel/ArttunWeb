@@ -14,12 +14,4 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
-    Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
-    Knp\DoctrineBehaviors\DoctrineBehaviorsBundle::class => ['all' => true],
-    CMEN\GoogleChartsBundle\CMENGoogleChartsBundle::class => ['all' => true],
-    CalendarBundle\CalendarBundle::class => ['all' => true],
-  //  Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
-   // Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
-  //  SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
-   // Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
 ];
