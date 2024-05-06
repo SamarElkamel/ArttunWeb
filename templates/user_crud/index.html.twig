@@ -124,6 +124,7 @@
                         <div class="col-md-4 user_status"></div>
                     </div>
                     <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label style="margin-right:30px"><input style="padding-right: 150px" id="searchInput" type="search" class="form-control" placeholder="Search.." aria-controls="DataTables_Table_0"></label>
+                            <button id="voiceSearchBtn" class="btn btn-primary" type="button">Voice Search</button>
                         </div>
                     </div>
                 </div>
@@ -183,36 +184,57 @@
                 document.getElementById('user_type1_adresseMail').value = adresseMail;
                 document.getElementById('user_type1_mdp').value = mdp;
             }
-        document.addEventListener('DOMContentLoaded', function () {
-                // Get the table body element
-                const tableBody = document.querySelector('.datatables-users tbody');
-
-                // Function to filter table rows
-                function filterTable(event) {
+            // Define filterTable function in the global scope
+            function filterTable(event) {
                 const searchText = event.target.value.toLowerCase();
+                const tableBody = document.querySelector('.datatables-users tbody');
                 const rows = tableBody.querySelectorAll('tr');
                 rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                let found = false;
-                cells.forEach(cell => {
-                if (cell.textContent.toLowerCase().includes(searchText)) {
-                found = true;
-            }
-            });
-                if (found) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-            });
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(searchText)) {
+                            found = true;
+                        }
+                    });
+                    if (found) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
             }
 
+            // Event listener for DOMContentLoaded
+            document.addEventListener('DOMContentLoaded', function() {
                 // Add event listener to search input
                 const searchInput = document.getElementById('searchInput');
                 searchInput.addEventListener('input', filterTable);
             });
 
+            // Function to handle voice recognition
+            function startVoiceRecognition() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    const recognition = new SpeechRecognition();
+                    recognition.lang = 'en-US'; // Set language to English, you can change it if needed
 
+                    recognition.onresult = function(event) {
+                        const result = event.results[0][0].transcript;
+                        document.getElementById('searchInput').value = result;
+                        filterTable({ target: { value: result } }); // Call filterTable with the voice input result
+                    };
+
+                    recognition.start();
+                } else {
+                    alert("Sorry, your browser doesn't support voice recognition.");
+                }
+            }
+
+            // Add event listener to the voice search button
+            const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+            voiceSearchBtn.addEventListener('click', startVoiceRecognition);
+a
         </script>
         <footer class="content-footer footer bg-footer-theme">
             <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
