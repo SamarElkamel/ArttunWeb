@@ -30,10 +30,9 @@ class Produit
 
     #[ORM\Column(name: "prix", type: "integer", nullable: false)]
     #[Assert\NotBlank(message: "Le prix est obligatoire.")]
-    
     #[Assert\Regex(
-        pattern: '/^\d+$/',
-        message: "La Prix doit être entier."
+        pattern: '/^[0-9]*$/',
+        message: "Le prix doit être un entier."
     )]
     private int $prix;
 

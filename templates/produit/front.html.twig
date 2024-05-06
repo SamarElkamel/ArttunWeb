@@ -5,13 +5,24 @@
 {% block body %}
     <section class="section-products">
         <div class="container">
+    
+        <div class="me-5 ms-n2 pe-5">
+    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+        <label>
+            <input type="search" class=" search-input" placeholder="Search Produit" aria-controls="DataTables_Table_0" id="searchInput">
+        </label>
+
             <div class="row justify-content-center text-center">
+
                 <div class="col-md-8 col-lg-6">
                     <div class="header">
                         <h3>Liste des Produits</h3>
                     </div>
                 </div>
             </div>
+
+
+
             <div class="row">
                 {% for produit in produits %}
                     <div class="col-md-6 col-lg-4 col-xl-3">
@@ -31,196 +42,260 @@
                                 {% else %}
                                     <p>Aucune image disponible</p>
                                 {% endif %}
-                                <p>Description : {{ produit.description }}</p>
-                                <p>Catégorie : {{ produit.categorieProduit.libelle }}</p>
+                                <p> {{ produit.description }}</p>
+                               <p>Catégorie : {{ produit.categorieProduit.libelle }}</p>
                                 <p>Prix : {{ produit.prix }}</p>
-                                
-                                
                             </div>
-                        </div>
-                    </div>
+                  <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                
+                <a class="btn" href="{{ path('add_to_panier', {'ref': produit.ref}) }}" onclick="addToCart(this)"> Shop now</a>
+            </div>
+        </div>
+        </div>
+                    
+                         </div>
+                     </div>
+           
                 {% endfor %}
             </div>
         </div>
     </section>
-    <a href="{{ path('app_produit_new') }}">Créer nouveau</a>
-{% endblock %}
+    
+
+    <script>
+    // Attend que le document soit chargé
+    document.addEventListener("DOMContentLoaded", function() {
+        // Sélectionne l'élément de champ de recherche
+        var searchInput = document.getElementById("searchInput");
+
+        // Ajoute un écouteur d'événements pour l'événement de saisie de texte
+        searchInput.addEventListener("input", function() {
+            // Récupère le texte saisi dans le champ de recherche
+            var searchText = searchInput.value.toLowerCase();
+
+            // Sélectionne tous les éléments de produit
+            var products = document.querySelectorAll(".single-product");
+
+            // Parcourt tous les produits
+            products.forEach(function(product) {
+                // Récupère le nom du produit dans chaque élément de produit
+                var productName = product.querySelector(".product-title").innerText.toLowerCase();
+
+                // Vérifie si le nom du produit contient le texte de recherche
+                if (productName.includes(searchText)) {
+                    // Affiche le produit si le texte de recherche est trouvé dans le nom du produit
+                    product.style.display = "block";
+                } else {
+                    // Masque le produit si le texte de recherche n'est pas trouvé dans le nom du produit
+                    product.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var categorieSelect = document.getElementById("categorieProduit");
+        var products = document.querySelectorAll(".productItem");
+
+        categorieSelect.addEventListener("change", function() {
+            var categorieId = categorieSelect.value;
+
+            products.forEach(function(product) {
+                var produitCategorieId = product.getAttribute("data-categorie-id");
+
+                if (categorieId === produitCategorieId || categorieId === "") {
+                    product.style.display = "block";
+                } else {
+                    product.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+
 
 {% block stylesheets %}
- {{ parent() }}
+
     <style>
-        /* Ajout de styles pour l'animation */
-        .single-product:hover {
-            transform: translateY(-5px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+       /* Button styles */
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-body {
-    font-family: "Poppins", sans-serif;
-    color: #444444;
+
+.btn {
+ padding: 1.1em 2em;
+ background: none;
+ border: 2px solid #fff;
+ font-size: 15px;
+ color: #131313;
+ cursor: pointer;
+ position: relative;
+ overflow: hidden;
+ transition: all 0.3s;
+ border-radius: 12px;
+ background-color: #ecd448;
+ font-weight: bolder;
+ box-shadow: 0 2px 0 2px #000;
+ margin-left: auto; /* Center the button horizontally */
+    margin-right: auto; /* Center the button horizontally */
 }
 
-a,
-a:hover {
-    text-decoration: none;
-    color: inherit;
+.btn:before {
+ content: "";
+ position: absolute;
+ width: 100px;
+ height: 120%;
+ background-color: #ff6700;
+ top: 50%;
+ transform: skewX(30deg) translate(-150%, -50%);
+ transition: all 0.5s;
 }
 
-.section-products {
-    padding: 80px 0 54px;
+.btn:hover {
+ background-color: #4cc9f0;
+ color: #fff;
+ box-shadow: 0 2px 0 2px #0d3b66;
 }
 
-.section-products .header {
-    margin-bottom: 50px;
+.btn:hover::before {
+ transform: skewX(30deg) translate(150%, -50%);
+ transition-delay: 0.1s;
 }
 
-.section-products .header h3 {
-    font-size: 1rem;
-    color: #fe302f;
-    font-weight: 500;
+.btn:active {
+ transform: scale(0.9);
 }
 
-.section-products .header h2 {
-    font-size: 2.2rem;
-    font-weight: 400;
-    color: #444444; 
-}
-
-.section-products .single-product {
-    margin-bottom: 26px;
-}
-
-.section-products .single-product .part-1 {
-    position: relative;
-    height: 290px;
-    max-height: 290px;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.section-products .single-product .part-1::before {
-		position: absolute;
-		content: "";
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: -1;
-		transition: all 0.3s;
-}
-
-.section-products .single-product:hover .part-1::before {
-		transform: scale(1.2,1.2) rotate(5deg);
-}
-
-.section-products #product-1 .part-1::before {
-    background: url("https://i.ibb.co/L8Nrb7p/1.jpg") no-repeat center;
-    background-size: cover;
-		transition: all 0.3s;
-}
-
-.section-products #product-2 .part-1::before {
-    background: url("https://i.ibb.co/cLnZjnS/2.jpg") no-repeat center;
-    background-size: cover;
-}
-
-.section-products #product-3 .part-1::before {
-    background: url("https://i.ibb.co/L8Nrb7p/1.jpg") no-repeat center;
-    background-size: cover;
-}
-
-.section-products #product-4 .part-1::before {
-    background: url("https://i.ibb.co/cLnZjnS/2.jpg") no-repeat center;
-    background-size: cover;
-}
-
-.section-products .single-product .part-1 .discount,
-.section-products .single-product .part-1 .new {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    color: #ffffff;
-    background-color: #fe302f;
-    padding: 2px 8px;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-}
-
-.section-products .single-product .part-1 .new {
-    left: 0;
-    background-color: #444444;
-}
-
-.section-products .single-product .part-1 ul {
-    position: absolute;
-    bottom: -41px;
-    left: 20px;
+/* Reset styles */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+/* Body styles */
+body {
+    font-family: "Poppins", sans-serif;
+    color: #444;
+    background-color: #f8f9fa;
+}
+
+/* Section Products styles */
+.section-products {
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Search input styles */
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Product grid styles */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.single-product {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    flex-basis: calc(33.33% - 20px); /* Three products per line with spacing */
+}
+
+.single-product:hover {
+    transform: translateY(-5px);
+}
+
+.part-1 ul {
     list-style: none;
-    opacity: 0;
-    transition: bottom 0.5s, opacity 0.5s;
+    display: flex;
+    justify-content: space-around;
 }
 
-.section-products .single-product:hover .part-1 ul {
-    bottom: 30px;
-    opacity: 1;
+.part-1 ul li {
+    margin: 0 5px;
 }
 
-.section-products .single-product .part-1 ul li {
-    display: inline-block;
-    margin-right: 4px;
-}
-
-.section-products .single-product .part-1 ul li a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    background-color: #ffffff;
-    color: #444444;
+.part-2 {
     text-align: center;
-    box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
-    transition: color 0.2s;
 }
 
-.section-products .single-product .part-1 ul li a:hover {
+.product-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.product-title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.product-title a:hover {
     color: #fe302f;
 }
 
-.section-products .single-product .part-2 .product-title {
-    font-size: 1rem;
+.product-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
-.section-products .single-product .part-2 h4 {
+.product-description {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.product-info {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* Button styles */
+.btn {
     display: inline-block;
-    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #fe302f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
-.section-products .single-product .part-2 .product-old-price {
-    position: relative;
-    padding: 0 7px;
-    margin-right: 2px;
-    opacity: 0.6;
+.btn:hover {
+    background-color: #d63031;
 }
 
-.section-products .single-product .part-2 .product-old-price::after {
-    position: absolute;
-    content: "";
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #444444;
-    transform: translateY(-50%);
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .single-product {
+        flex-basis: calc(50% - 20px); /* Two products per line with spacing */
+    }
 }
-
 </style>
+{% endblock %}
 {% endblock %}
 
   

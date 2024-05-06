@@ -7,29 +7,19 @@ use App\Repository\ReservationRepository;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
 use App\Form\EvenementType;
-use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
-use CMEN\GoogleChartsBundle\GoogleCharts\Charts\BarChart;
-use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
-
-
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
     #[Route('/', name: 'app__venement_index', methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository ,  Request $request): Response
+    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository): Response
     {
-      
-       
         $reservations = $reservationRepository->findAll();
 
         $reservationCount = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
@@ -53,10 +43,6 @@ class EvenementController extends AbstractController
         ->setParameter('currentDate', new \DateTime())
         ->getQuery()
         ->getSingleScalarResult();
-
-
-
-    
         
         
         return $this->render('Evenement/index.html.twig', [
@@ -97,79 +83,12 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    #[Route('/statistics', name: 'app__statistics' , methods: ['GET'])]
-   
-    public function showCharts(EntityManagerInterface $entityManager, EvenementRepository $evenementRepository): Response
-    {
-       
-        $reservationsByDate = $entityManager->getRepository(Reservation::class)
-            ->createQueryBuilder('r')
-            ->select('r.date as reservationDate, COUNT(r.id) as totalReservations')
-            ->groupBy('reservationDate')
-            ->getQuery()
-            ->getResult();
-    
-   
-        foreach ($reservationsByDate as $key => $reservation) {
-            $date = $reservation['reservationDate'];
-            $formattedDate = $date->format('Y-m-d');
-            $reservationsByDate[$key]['reservationDate'] = $formattedDate;
-        }
-    
-        $expensesByEvent = $entityManager->getRepository(Reservation::class)
-            ->createQueryBuilder('r')
-            ->select('e.libelle as eventName, SUM(r.totalprix) as totalExpenses')
-            ->leftJoin('r.idEvenement', 'e')
-            ->groupBy('eventName')
-            ->getQuery()
-            ->getResult();
-
-            
-    
-        return $this->render('Evenement/statistics.html.twig', [
-            'reservationsByDate' => $reservationsByDate,
-            'expensesByEvent' => $expensesByEvent,
-        ]);
-    }
-    
-
-    #[Route('/calendar', name: "app_booking_calendar", methods: ['GET'])]
-     public function calendar(): Response
-    {
-    $events = $this->getDoctrine()->getRepository(Evenement::class)->findAll();
-
-    return $this->render('Evenement/calander.html.twig', [
-        'events' => $events,
-    ]);
-    }
-
-   
-
     #[Route('/{id}', name: 'app__venement_show', methods: ['GET'])]
-    public function show(Evenement $Evenement ): Response
-    {    
-        $url = $Evenement->getSiteweb();
-        $qrCode = $this->generateQRCode($url);
-    
-      
-    
-
+    public function show(Evenement $Evenement): Response
+    {
         return $this->render('Evenement/show.html.twig', [
             '_venement' => $Evenement,
-            'qrCode' => $qrCode,
         ]);
-    }
-
-    private function generateQRCode($url)
-    {
-        $renderer = new ImageRenderer( new RendererStyle(200), new SvgImageBackEnd()
-        );
-        $writer = new Writer($renderer);
-        $qrCode = $writer->writeString($url);
-        $qrCodeBase64 = base64_encode($qrCode);
-
-    return $qrCodeBase64;
-      
     }
 
     #[Route('/{id}/edit', name: 'app__venement_edit', methods: ['GET', 'POST'])]
@@ -211,7 +130,6 @@ class EvenementController extends AbstractController
     }
 
 
-    
-   
+  
 
-    }
+}

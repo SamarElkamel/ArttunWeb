@@ -90,7 +90,6 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
                 $request->getSession()->set('id',$user->getId());
                 $request->getSession()->set('name',$user->getNom());
                 $request->getSession()->set('prenom',$user->getPrenom());
-                $request->getSession()->set('email',$user->getAdresseMail());
                 $request->getSession()->set('type',$user->getType());
                 $request->getSession()->set('photo',$user->getPhoto());
                 return new SelfValidatingPassport(new UserBadge($adresseMail), []);

@@ -11,9 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-
 
 #[Route('/reservation')]
 class ReservationController extends AbstractController
@@ -29,9 +26,8 @@ class ReservationController extends AbstractController
     ]);
     }
 
-  
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository  ): Response
+    public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository): Response
     {
        
         $evenementId = $request->query->get('id'); 
@@ -50,12 +46,9 @@ class ReservationController extends AbstractController
         $reservation->setNbinvite($numberOfGuests ?? 0);
         $reservation->setTotalPrix($totalPrice ?? 0);
         $reservation->setDate(new \DateTime());
-
-       
-
+        
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($reservation);
-
         $entityManager->flush();
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);

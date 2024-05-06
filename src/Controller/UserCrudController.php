@@ -16,26 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserCrudController extends AbstractController
 {
     #[Route('/back/user/crud', name: 'app_user_crud')]
-    public function index(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request/*,PasswordHasherInterface $encoder*/): Response
+    public function index(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
     {
         $users = $userRepository->findAll();
-        $adminCount = 0;
-        $clientCount = 0;
-        $livreurCount = 0;
-        foreach ($users as $user) {
-            switch ($user->getType()) {
-                case 'admin':
-                    $adminCount++;
-                    break;
-                case 'client':
-                    $clientCount++;
-                    break;
-                case 'livreur':
-                    $livreurCount++;
-                    break;
-                // Add more cases if you have more roles
-            }
-        }
         $userCount = count($users);
         $user = new User();
         // Create the form and pass the User object to it
@@ -51,7 +34,7 @@ class UserCrudController extends AbstractController
                 $photo->move($this->getParameter('upload_directory'), $fichier);
                 $user->setPhoto($fichier);
             }
-            //$user->setMdp($encoder->hash($user->getMdp()));
+            
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -61,47 +44,10 @@ class UserCrudController extends AbstractController
         }
 
         return $this->render('user_crud/index.html.twig', [
-            'adminCount' => $adminCount,
-            'clientCount' => $clientCount,
-            'livreurCount' => $livreurCount,
             'users' => $users,
             'count' => $userCount,
             'controller_name' => 'UserCrudController',
             'form' => $form->createView(),
-        ]);
-    }
-    #[Route('/stat', name: 'app_stat_user')]
-    public function stat(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request/*,PasswordHasherInterface $encoder*/): Response
-    {
-        $users = $userRepository->findAll();
-        $adminCount = 0;
-        $clientCount = 0;
-        $livreurCount = 0;
-        foreach ($users as $user) {
-            switch ($user->getType()) {
-                case 'admin':
-                    $adminCount++;
-                    break;
-                case 'client':
-                    $clientCount++;
-                    break;
-                case 'livreur':
-                    $livreurCount++;
-                    break;
-                // Add more cases if you have more roles
-            }
-        }
-
-        return $this->render('user_crud/stats.html.twig', [
-            'adminCount' => $adminCount,
-            'clientCount' => $clientCount,
-            'livreurCount' => $livreurCount,
-        ]);
-    }
-    #[Route('/profile', name: 'app_profile_user')]
-    public function profile(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request/*,PasswordHasherInterface $encoder*/): Response
-    {
-        return $this->render('user_crud/profile.html.twig', [
         ]);
     }
     #[Route('/back/user/crud/delete{id}', name: 'app_user_crud_delete')]
