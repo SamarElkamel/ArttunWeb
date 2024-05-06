@@ -18,3 +18,13 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+.idea/jsLinters/jshint.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/phpunit.xml
+.idea/shelf/Uncommitted_changes_before_Merge_at_5_6_2024_10_53_AM_\[Changes\]/c85894f979b8451cb92646a56dc6c3d2.png
+.idea/shelf/Uncommitted_changes_before_Merge_at_5_6_2024_10_53_AM_\[Changes\]/shelved.patch
+.idea/shelf/Uncommitted_changes_before_Merge_at_5_6_2024_10_53_AM__Changes_.xml
+.idea/shelf/Uncommitted_changes_before_Update_at_5_6_2024_10_22_AM_\[Changes\]/shelved.patch
+.idea/shelf/Uncommitted_changes_before_Update_at_5_6_2024_10_22_AM__Changes_.xml
+.idea/vcs.xml
+.idea/workspace.xml
