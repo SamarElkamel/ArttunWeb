@@ -6,10 +6,109 @@
 {% block title %}Events{% endblock %}
 
 {% block body %}
-    <h1>Events</h1>
-    <a href="{{ path('app__venement_new') }}" id="add-event-button">
+
+<div class="card mb-4" id="stat_card">
+  <div class="card-widget-separator-wrapper">
+    <div class="card-body card-widget-separator">
+      <div class="row gy-4 gy-sm-1">
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+            <div>
+              <h6 class="mb-2">Total Reservations</h6>
+              <h4 class="mb-2">{{reservationCount}} Reservations</h4>
+            </div>
+            <div class="avatar me-sm-4">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="fas fa-calendar-alt" ></i>
+              </span>
+            </div>
+          </div>
+          <hr class="d-none d-sm-block d-lg-none me-4">
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+            <div>
+              <h6 class="mb-2">Upcoming Events </h6>
+              <h4 class="mb-2">{{upcomingEvents}} Events</h4>
+            </div>
+            <div class="avatar me-lg-4">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="bx bx-laptop bx-sm"></i>
+              </span>
+            </div>
+          </div>
+          <hr class="d-none d-sm-block d-lg-none">
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+            <div>
+              <h6 class="mb-2">Total Clients Expences</h6>
+              <h4 class="mb-2">{{totalPrice}} DT</h4>
+            </div>
+            <div class="avatar me-sm-4">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="bx bx-wallet bx-sm"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="mb-2">Total Events</h6>
+              <h4 class="mb-2">{{totalEvents}} Events</h4>
+            </div>
+            <div class="avatar">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="bx bx-laptop bx-sm"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="card" id="Table">
+<div class="card-header" >
+<h5 class="card-title">Filter</h5>
+<div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+<div class="col-md-4 product_status">
+<select id="ProductStatus" class="form-select text-capitalize">
+<option value="">Status</option>
+<option value="upcoming">Upcoming Events
+</option><option value="old">Old Events</option></select></div>
+</div>
+</div>
+<div class="card-datatable table-responsive" >
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+<div class="card-header d-flex border-top rounded-0 flex-wrap py-md-0">
+<div class="me-5 ms-n2 pe-5">
+<div id="DataTables_Table_0_filter" class="dataTables_filter">
+<label>
+
+<input type="search" id="event_search" class="form-control" placeholder="Search Event" aria-controls="DataTables_Table_0" id="head_card">
+</label>
+</div>
+</div>
+<div class="d-flex justify-content-start justify-content-md-end align-items-baseline">
+<div class="dt-action-buttons d-flex align-items-start align-items-md-center justify-content-sm-center mb-3 mb-sm-0"><div class="dataTables_length mt-0 mt-md-3 me-3" id="DataTables_Table_0_length"><label>
+</label>
+
+</div><div class="dt-buttons d-flex flex-wrap" id="head_card"> 
+
+<button class="dt-button add-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" id="Add_but"><span>
+<a href="{{ path('app__venement_new') }}" id="addButton">
     <i class="fas fa-plus"></i> Add new event</a>
-    <div class="container-fluid"> 
+    
+
+    <div class="container-fluid">
+
+ </div></div></div></div>
+ 
+<a href="{{ path('app__statistics') }}" id="stat" class="dt-button add-new btn btn-primary">  <i class="fas fa-chart-bar"></i>
+ Statistiques</a>
     <table class="table">
         <thead>
             <tr>
@@ -20,6 +119,7 @@
                 <th>Photo</th>
                 <th>Location</th>
                 <th>Website</th>
+                <th>Total Participation</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -30,15 +130,19 @@
                 <td>{{ _venement.description }}</td>
                 <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>
                 <td>{{ _venement.frais }}</td>
-                <td> <img src="{{ asset(_venement.photo) }}" class="event-photo"></td>
+                <td> <img src="{{ asset('/uploads/' ~ _venement.photo) }}" class="event-photo"></td>
                 <td>{{ _venement.localisation }}</td>
                 <td>{{ _venement.siteweb }}</td>
+                <td>  {% set totalParticipation = 0 %}
+                     {% for reservation in reservations %}
+                      {% if reservation.idEvenement == _venement %}
+                        {% set totalParticipation = totalParticipation + reservation.nbinvite + 1 %}
+                    {% endif %}
+                {% endfor %}
+                {{ totalParticipation }}</td>
              <td>
-    <div>
-        <a href="{{ path('app__venement_show', {'id': _venement.id}) }}" class="action-link">
-            <i class="fas fa-eye"></i> Show
-        </a>
-    </div>
+
+     
     <div>
         <a href="{{ path('app__venement_edit', {'id': _venement.id}) }}" class="action-link">
             <i class="fas fa-edit"></i> Edit
@@ -67,13 +171,24 @@
     height: 250px;
   }
 
-  #add-event-button {
-  background-color: white;
-  padding: 10px 20px ; 
-  margin:10px 0px 20px;
-  border-radius: 5px; 
-  display: inline-block;
+  #stat
+  {
+     color : #595cd9 ;
+     background: white ;
+     margin-left:20px;
+     margin-top:10px;
+     height:40px ;
+  }
+  
+  #addButton {
+  color:white ;
 }
+ 
+ #Add_but
+  {
+    margin-right : 0 ;
+     float: right; 
+  }
 
 h1 {
   text-align: center;
@@ -85,8 +200,94 @@ h1 {
     margin-bottom: 5px; 
 }
 
+#stat_card
+{
+    margin : 50px 50px 50px 50px ;
+}
+
+#Table
+{
+    margin : 10px 50px 50px 50px ;
+}
+
+#head_card
+ {
+    margin-top : 10px ; 
+    margin-bottom:10px;
+ }
 
   </style>
+ {% endblock %}
+
+ {% block javascripts %}
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ <script>
+
+   document.addEventListener('DOMContentLoaded', function () {
+  function search(keyword) {
+            var tableRows = document.querySelectorAll('.table tbody tr');
+            var searchInput = keyword.trim().toLowerCase();
+
+            tableRows.forEach(function (row) {
+                var cells = row.querySelectorAll('td');
+                var found = false;
+
+                cells.forEach(function (cell) {
+                    if (cell.textContent.trim().toLowerCase().includes(searchInput)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+       
+        var searchInput = document.getElementById('event_search');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function () {
+                var searchText = this.value;
+                search(searchText);
+            });
+        }
+    ;
+      });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    var filterSelect = document.getElementById('ProductStatus');
+    var tableRows = document.querySelectorAll('.table tbody tr');
+
+    filterSelect.addEventListener('change', function () {
+        var selectedValue = this.value;
+
+        var currentDate = new Date(); 
+
+        tableRows.forEach(function (row) {
+            var dateCell = row.querySelector('td:nth-child(3)'); 
+            if (dateCell) {
+                var eventDate = new Date(dateCell.textContent.trim()); 
+                eventDate.setHours(0, 0, 0, 0); 
+
+                if (selectedValue === 'old' && eventDate < currentDate) {
+                    row.style.display = '';
+                } else if (selectedValue === 'upcoming' && eventDate >= currentDate) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
+});
+
+
+    </script>
+ 
  {% endblock %}
   
 {% endblock %}

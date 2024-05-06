@@ -15,10 +15,12 @@ class Evenement
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: "id", type: "integer", nullable: false)]
     private int $id;
-
+    
+    #[Assert\NotBlank(message: "Please enter the event name.")]
     #[ORM\Column(name: "Libelle", type: "string", length: 50, nullable: false)]
     private string $libelle;
 
+    #[Assert\NotBlank(message: "Please enter a description .")]
     #[ORM\Column(name: "description", type: "string", length: 1000, nullable: false)]
     private string $description;
 
@@ -26,18 +28,23 @@ class Evenement
     #[ORM\Column(name: "date", type: "date", nullable: false)]
     private \DateTime $date;
 
+    #[Assert\NotBlank(message: "Please enter the event costs .")]
     #[Assert\Type(type: "float", message: "Costs must be a numerical value.")]
     #[ORM\Column(name: "frais", type: "float", precision: 10, scale: 0, nullable: false)]
     private float $frais;
 
+
     #[ORM\Column(name: "photo", type: "string", length: 1000, nullable: false)]
     private string $photo;
 
+    #[Assert\NotBlank(message: "Please enter the event localisation.")]
     #[ORM\Column(name: "localisation", type: "string", length: 100, nullable: false)]
     private string $localisation;
 
+    #[Assert\NotBlank(message: "Please enter the event website.")]
     #[ORM\Column(name: "siteweb", type: "string", length: 1000, nullable: false)]
     private string $siteweb;
+
 
     public function getId(): ?int
     {
@@ -120,4 +127,12 @@ class Evenement
         $this->siteweb = $siteweb;
         return $this;
     }
+
+    public function __toString(): string
+{
+    return $this->libelle;
+}
+
+
+
 }

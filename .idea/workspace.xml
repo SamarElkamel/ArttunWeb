@@ -5,12 +5,168 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31e58ecd-df67-4467-b298-8e4de0d5b5df" name="Changes" comment="various upgrades">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/Symfony_08_04_2024__22_32.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/dev/swiftmailer.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/mercure.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/test/swiftmailer.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/css/materialize.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/backgrounds/Cute-Purple-Wallpaper-For-Desktop.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/backgrounds/af0a6888-5bfe-41f9-882f-49f1c65c8e0b-classic-art-van-gogh-starry-night-wallpaper-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/backgrounds/papers.co-ao07-aurora-night-sky-white-purple-nature-art-35-3840x2160-4k-wallpaper.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/backgrounds/white-and-purple-e73vta7f044oapva.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/icons/user/people.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/icons/user/profile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/icons/user/user.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/js/materialize.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/js/materialize.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/js/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/js/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/005574217fccafa4e405e25fef231b9e.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/0312-jpg-661d1b0d1b487.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/033e1ab4cf2fd501ef6deafd538f28b1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/06d9383f594672791533d6483f5a75e3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/0b5402a3554fb3cd12b831ce3dfb1996.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/0e2c4b09ee90938cfd80515a26fb3b69.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/0f7a45da1b9c28c2bbd966e588eec1f8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/1200px-Logo-Club-africain-661d17117b5bd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/1200px-Logo-Club-africain-661d172d93ccc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/15f430f2722dbdda8af06e9e127f700a.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/1fad3b61903b1c42e2e19eec57ae454d.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/302246814_5149434538499813_5384736101749876964_n.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/357c58ec0c1c8c791280744781d832d3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/3760d5b5840b7f778265d2d6677734b8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/3fe4c8e7973edd50c165ced166068d27.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/492e7b8d03bee013091c2b857207b612.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/500cbe8b4bdc8016a2623ceb94f92539.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/501b3f4a773f00010e9edb1200fed418.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/555b7a58d1ad23766f7b3d889cf2c968.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/58f31387fcfc46a93aedfed0ca1cc6c6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/5c36ecafda35c9926231aeeb9fe81782.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/613ec54c5f97c0572406bb243806f3be.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/661c06acc9699.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/661c07a5dc809-661d19e74f415.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/661c07a5dc809.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/6c3f919568e8862cba6bf5d352a50f65.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/738664ab46716bcc5a6cb88504a69e51.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/7c6d9c2d23b0e9be9cf4e162fc4c4f72.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/829ef9006150d79019df88e3aa73fa7c.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/9e882c942f5d8af09835359756d8275d.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/FILT-2021.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/Festival-des-oasis-Tozeur.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/a384071b30c8707e11890e22b4e06172.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/abd85c809d801aeb79d7ad1db1c85530.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/c85894f979b8451cb92646a56dc6c3d2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/ca0c813c48be325742bd80738902c758.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/ccdade47a4441baf85297fa8800619f5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/d008e95db37bd4d9bb0f05cdc9a3362c.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/d2a5d93c20f321596ac3981824f070f7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/d76ac0c8c2a57fec147c9a39065b41d9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/d87ecdefc5c622b8f446e66767308193.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/d982101bd558ef6baa1fecd14d427966.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/e637ce3beb85b5ea2af2a14dffd0b72c.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/e72e004b4ccfb91dcffe91ad39c96b3c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/e9eda388398f8a1ba1ca3ab7ee86489e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/e9f62a1b6f3aea85919c79a2e084717e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/ea1ae86c5bff8a5985453baf6016bf06.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/ead1706e60abceb90834b4b85134ed5b.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/eea34e3e440117f52e324fa070037199.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/f1973de0c6fa4455a4b1717553f7b6de.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/BackController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/CategorieProduitController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ProduitController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/CategorieProduit.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Produit.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/user/Adresses.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ProduitType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ReservationType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/user/UserType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/CategorieProduitRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ProduitRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/symfony.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/Evenement/calander.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/Evenement/statistics.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/back/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/categorie_produit/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/categorie_produit/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/categorie_produit/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/categorie_produit/editcategorie.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/categorie_produit/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/categorie_produit/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/categorie_produit/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/front_office/Evenement/showEvent.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/front_office/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/login_signup/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/formedit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/front.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/produit/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/Controller/ReservationControllerTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArttunWeb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_5_6_2024_10_53_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_5_6_2024_10_53_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_6_2024_10_22_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_6_2024_10_22_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.override.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.override.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/mailer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/mailer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20240426165158.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20240429074832.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/Front/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/Front/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/corea8ac.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/corea8ac.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/red.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/speaker.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EvenementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EvenementController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReclamationController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TypeReclamationController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Evenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Evenement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Reclamation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/TypeReclamation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/EvenementType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/EvenementType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ReclamationType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/TypeReclamationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CategorieProduitType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ReclamationRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ReservationRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TypeReclamationRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/BadWordFilter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Evenement/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Evenement/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Evenement/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Evenement/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Evenement/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Evenement/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Evenement/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Evenement/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/basaFront.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFront.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/afficherRec.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/editfront.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/login.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/reply.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reclamation/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/type_reclamation/Typeform.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/type_reclamation/afficherType.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/type_reclamation/index.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +183,11 @@
     <execution />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Events" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
@@ -186,9 +347,9 @@
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
     </include_path>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2g6tl8I5hMi01STh62RYQQ9QpuL" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -198,7 +359,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Main",
+    "git-widget-placeholder": "Reverting in Main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -207,12 +368,6 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
-      <option name="pathToComposerJson" value="$PROJECT_DIR$/composer.json" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -245,5 +400,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="various upgrades" />
+    <option name="LAST_COMMIT_MESSAGE" value="various upgrades" />
   </component>
 </project>
