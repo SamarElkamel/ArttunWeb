@@ -4,33 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e58ecd-df67-4467-b298-8e4de0d5b5df" name="Changes" comment="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER">
-      <change afterPath="$PROJECT_DIR$/src/Controller/ReclamationController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/TypeReclamationController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Reclamation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/TypeReclamation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/ReclamationType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/ReclamationRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/TypeReclamationRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/BadWordFilter.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/afficherRec.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/editfront.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/login.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/reply.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/show.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/type_reclamation/Typeform.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/type_reclamation/afficherType.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/type_reclamation/index.html.twig" afterDir="false" />
+    <list default="true" id="4e32c0db-cff3-4a40-92f7-965f8937eb00" name="Changes" comment="various upgrades">
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.override.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.override.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,17 +25,50 @@
   </component>
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <executable path="composer" />
+    </execution>
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Events" />
+        <entry key="$PROJECT_DIR$" value="User" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;FanTasy-CriT&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="17ecaead-9dfe-4524-92bd-99cb84d11a2c" />
+        <option name="url" value="https://github.com/SamarElkamel/ArttunWeb.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="G:\xamp\php\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/finder" />
@@ -191,31 +205,22 @@
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/expression-language" />
       <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
-      <path value="$PROJECT_DIR$/vendor/symfony/google-mailer" />
-      <path value="$PROJECT_DIR$/vendor/spomky-labs/otphp" />
-      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
       <path value="$PROJECT_DIR$/vendor/gregwar/captcha" />
-      <path value="$PROJECT_DIR$/vendor/gregwar/captcha-bundle" />
       <path value="$PROJECT_DIR$/vendor/scheb/2fa-bundle" />
       <path value="$PROJECT_DIR$/vendor/scheb/2fa-email" />
-      <path value="$PROJECT_DIR$/vendor/psr/clock" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mercure" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mercure-bundle" />
       <path value="$PROJECT_DIR$/vendor/stella-maris/clock" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
-      <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
-      <path value="$PROJECT_DIR$/vendor/dasprid/enum" />
-      <path value="$PROJECT_DIR$/vendor/bacon/bacon-qr-code" />
-      <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
-      <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
-      <path value="$PROJECT_DIR$/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mercure" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mercure-bundle" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7
+  &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2g6tl8I5hMi01STh62RYQQ9QpuL" />
+  <component name="ProjectId" id="2f6A9yfSWDxq6wRrRq8j9Yj6Ozo" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -224,19 +229,28 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Main",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\FanTasy CriT\PhpstormProjects\ArttunWeb\src\Entity" />
       <recent name="C:\Users\FanTasy CriT\PhpstormProjects\ArttunWeb\src\Repository" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml.dist" scope="XML" use_alternative_configuration_file="true" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -248,22 +262,151 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="31e58ecd-df67-4467-b298-8e4de0d5b5df" name="Changes" comment="various upgrades" />
-      <created>1715030020472</created>
+      <changelist id="4e32c0db-cff3-4a40-92f7-965f8937eb00" name="Changes" comment="" />
+      <created>1713111007255</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1715030020472</updated>
-      <workItem from="1715030023328" duration="2022000" />
+      <updated>1713111007255</updated>
+      <workItem from="1713111009384" duration="9091000" />
+      <workItem from="1713345817029" duration="22263000" />
+      <workItem from="1713454513583" duration="1192000" />
+      <workItem from="1713618104293" duration="10387000" />
+      <workItem from="1713704028803" duration="18822000" />
+      <workItem from="1713810206315" duration="11452000" />
+      <workItem from="1713861562064" duration="8440000" />
+      <workItem from="1713894964700" duration="8875000" />
+      <workItem from="1713952037862" duration="920000" />
+      <workItem from="1714157329161" duration="1187000" />
+      <workItem from="1714160739438" duration="6755000" />
+      <workItem from="1714302814311" duration="1585000" />
+      <workItem from="1714304437618" duration="1125000" />
+      <workItem from="1714305621532" duration="3084000" />
+      <workItem from="1714395856813" duration="19154000" />
+      <workItem from="1714466615205" duration="2193000" />
+      <workItem from="1715012637205" duration="1427000" />
+      <workItem from="1715014106914" duration="834000" />
     </task>
-    <task id="LOCAL-00001" summary="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER">
+    <task id="LOCAL-00001" summary="mini front update">
       <option name="closed" value="true" />
-      <created>1715034805112</created>
+      <created>1713112898749</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1715034805112</updated>
+      <updated>1713112898750</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="signup and form validator working">
+      <option name="closed" value="true" />
+      <created>1713378893922</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1713378893922</updated>
+    </task>
+    <task id="LOCAL-00003" summary="captcha">
+      <option name="closed" value="true" />
+      <created>1713716241577</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713716241577</updated>
+    </task>
+    <task id="LOCAL-00004" summary="session updates">
+      <option name="closed" value="true" />
+      <created>1713718907548</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713718907548</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Forgot Password">
+      <option name="closed" value="true" />
+      <created>1713723393771</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713723393771</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Forgot Password">
+      <option name="closed" value="true" />
+      <created>1713811611312</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1713811611312</updated>
+    </task>
+    <task id="LOCAL-00007" summary="slowly but surely email">
+      <option name="closed" value="true" />
+      <created>1713820888363</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1713820888363</updated>
+    </task>
+    <task id="LOCAL-00008" summary="next emailjs FIX NEW USER WHEN EDITING">
+      <option name="closed" value="true" />
+      <created>1713822924549</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1713822924549</updated>
+    </task>
+    <task id="LOCAL-00009" summary="MAIL working for reset password todo: 2fa mailing&#10;,editing user fix">
+      <option name="closed" value="true" />
+      <created>1713868685868</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1713868685869</updated>
+    </task>
+    <task id="LOCAL-00010" summary="almost done 2fa there is a problem where codeauth cant be set to user and edit problem still persist">
+      <option name="closed" value="true" />
+      <created>1713902852008</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713902852009</updated>
+    </task>
+    <task id="LOCAL-00011" summary="picture upload work + 2fa perma work idk why + session working better + admin changed into ROLE ADMIN might cause problem in future">
+      <option name="closed" value="true" />
+      <created>1714174539457</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1714174539457</updated>
+    </task>
+    <task id="LOCAL-00012" summary="livreur dyal l 9lawi">
+      <option name="closed" value="true" />
+      <created>1714306397467</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1714306397467</updated>
+    </task>
+    <task id="LOCAL-00013" summary="livreur dyal l 9lawi">
+      <option name="closed" value="true" />
+      <created>1714306530255</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1714306530255</updated>
+    </task>
+    <task id="LOCAL-00014" summary="various upgrades">
+      <option name="closed" value="true" />
+      <created>1714422113129</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1714422113129</updated>
+    </task>
+    <task id="LOCAL-00015" summary="various upgrades">
+      <option name="closed" value="true" />
+      <created>1715013164404</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1715013164404</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,15 +417,37 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/User" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="mini front update" />
+    <MESSAGE value="signup and form validator working" />
+    <MESSAGE value="captcha" />
+    <MESSAGE value="session updates" />
+    <MESSAGE value="Forgot Password" />
+    <MESSAGE value="slowly but surely email" />
+    <MESSAGE value="next emailjs FIX NEW USER WHEN EDITING" />
+    <MESSAGE value="MAIL working for reset password todo: 2fa mailing&#10;,editing user fix" />
+    <MESSAGE value="almost done 2fa there is a problem where codeauth cant be set to user and edit problem still persist" />
+    <MESSAGE value="picture upload work + 2fa perma work idk why + session working better + admin changed into ROLE ADMIN might cause problem in future" />
+    <MESSAGE value="livreur dyal l 9lawi" />
     <MESSAGE value="various upgrades" />
-    <MESSAGE value="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER" />
-    <option name="LAST_COMMIT_MESSAGE" value="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER" />
+    <option name="LAST_COMMIT_MESSAGE" value="various upgrades" />
   </component>
 </project>
