@@ -44,8 +44,7 @@ class SymfonyAuthCodeMailer implements AuthCodeMailerInterface
         if (null !== $this->senderAddress) {
             $message->from($this->senderAddress);
         }
+
         $this->mailer->send($message);
-        echo "<script>window.localStorage.setItem('authCode', '" . $authCode . "');</script>";
-        echo "<script>window.localStorage.setItem('to', '" . $user->getEmailAuthRecipient() . "');</script>";
     }
 }

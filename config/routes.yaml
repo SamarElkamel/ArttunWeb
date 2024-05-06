@@ -6,4 +6,3 @@ front_office_home:
     path: /
     controller: App\Controller\FrontOfficeController::index
 
-
