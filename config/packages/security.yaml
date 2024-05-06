@@ -38,5 +38,5 @@ security:
     access_control:
         - { path: ^/back/user/crud, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/produit/index, roles: ROLE_ADMIN }
-        - { path: ^/categorie, roles: ROLE_ADMIN }
+        #- { path: ^/produit/index, roles: ROLE_ADMIN }
+        #- { path: ^/categorie, roles: ROLE_ADMIN }
