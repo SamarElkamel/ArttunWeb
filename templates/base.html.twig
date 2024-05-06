@@ -221,7 +221,7 @@
                         </li>
 
                         <li class="menu-item ">
-                            <a href="#" class="menu-link" >
+                            <a href="/produit" class="menu-link" >
                                 <div>Product</div>
                             </a>
 
@@ -231,13 +231,13 @@
 
 
                         <li class="menu-item ">
-                            <a href="app/academy/dashboard.html" class="menu-link" >
+                            <a href="/categorie/produit" class="menu-link" >
                                 <div>Category</div>
                             </a>
 
 
                         </li>
-                </li>
+                    </li>
                 <li class="menu-item ">
                     <a href="app/academy/dashboard.html" class="menu-link" >
                         <div>Delivery</div>
@@ -375,7 +375,7 @@
                   <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                     <i class="bx bx-pie-chart-alt-2 fs-4"></i>
                   </span>
-                                            <a href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1" class="stretched-link">Dashboard</a>
+                                            <a href="/profile" class="stretched-link">Dashboard</a>
                                             <small class="text-muted mb-0">User Profile</small>
                                         </div>
                                         <div class="dropdown-shortcuts-item col">
@@ -619,59 +619,55 @@
                         <!--/ Notification -->
 
                         <!-- User -->
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                <div class="avatar avatar-online">
-                                    <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" href="pages/profile-user.html">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar avatar-online">
-                                                    <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
+                            {# Retrieve user's name and avatar from session #}
+                            {% set username = app.session.get('name') %}
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img alt="avatar" src="{{ asset('/uploads/' ~ app.session.get('photo')) }}">
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img alt="avatar" src="{{ asset('/uploads/' ~ app.session.get('photo')) }}">                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-medium d-block">{{ username }}</span>
+                                                    <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
-                                            <div class="flex-grow-1">
-                    <span class="fw-medium d-block">
-                                            John Doe
-                                          </span>
-                                                <small class="text-muted">Admin</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages/profile-user.html">
-                                        <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages/account-settings-billing.html">
-                <span class="d-flex align-items-center align-middle">
-                  <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                  <span class="flex-grow-1 align-middle">Billing</span>
-                  <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="auth/login-basic.html">
-                                        <i class='bx bx-log-in me-2'></i>
-                                        <span class="align-middle">Login</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/profile">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                    <span class="d-flex align-items-center align-middle">
+                        <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
+                        <span class="flex-grow-1 align-middle">Billing</span>
+                        <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                    </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/logout">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         <!--/ User -->
                     </ul>
                 </div>
@@ -701,6 +697,8 @@
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
 </div>
+</body>
+
 <!-- / Layout wrapper -->
 <!--/ Layout Content -->
 
@@ -710,6 +708,9 @@
 <!-- Include Scripts -->
 <!-- $isFront is used to append the front layout scripts only on the front layout otherwise the variable will be blank -->
 <!-- BEGIN: Vendor JS-->
+{% block script %}
+{% endblock %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="/assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a"></script>
 <script src="/assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c"></script>
 <script src="/assets/vendor/js/bootstrapcfc4.js?id=4648227467e3fd3f4cf976cfb0e43aea"></script>

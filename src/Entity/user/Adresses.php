@@ -120,4 +120,17 @@ class Adresses
         $this->lat = $lat;
         return $this;
     }
+    public function __toString(): string
+    {
+        $addressParts = [];
+        $addressParts[] = $this->getStreet();
+        $addressParts[] = $this->getCity();
+        if ($this->getState()) {
+            $addressParts[] = $this->getState();
+        }
+        $addressParts[] = $this->getCountry();
+        $addressParts[] = $this->getCode();
+
+        return implode(", ", $addressParts);
+    }
 }

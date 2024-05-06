@@ -3,61 +3,105 @@
 namespace App\Controller;
 
 use App\Entity\user\User;
+use App\Form\UserType1;
 use App\Repository\user\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserCrudController extends AbstractController
 {
     #[Route('/back/user/crud', name: 'app_user_crud')]
-    public function index(EntityManagerInterface $entityManager,UserRepository $userrepo,Request $request): Response
+    public function index(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request/*,PasswordHasherInterface $encoder*/): Response
     {
-        $user = new User();
-
-        $users = $userrepo->findAll();
-        $userCount = $userrepo->count([]);
-        if ($request->isMethod('POST')) {
-            $id = $request->request->get('idfield');
-            $nom = $request->request->get('nomfield');
-            $prenom = $request->request->get('prenomfield');
-            $mail = $request->request->get('mailfield');
-            $password = $request->request->get('passwordfield');
-            $fileName = $request->request->get('filefield');
-            $type = $request->request->get('type');
-            $user = $entityManager->getRepository(User::class)->find($id);
-            $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
-
-            // Check if the file is a picture
-            $isPicture = false;
-            if ($fileExtension !== '') {
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                $isPicture = in_array(strtolower($fileExtension), $allowedExtensions);
+        $users = $userRepository->findAll();
+        $adminCount = 0;
+        $clientCount = 0;
+        $livreurCount = 0;
+        foreach ($users as $user) {
+            switch ($user->getType()) {
+                case 'admin':
+                    $adminCount++;
+                    break;
+                case 'client':
+                    $clientCount++;
+                    break;
+                case 'livreur':
+                    $livreurCount++;
+                    break;
+                // Add more cases if you have more roles
             }
-
-            if (!$user) {
-                throw $this->createNotFoundException('User not found');
-            }
-            $file =
-                // Update user properties
-                $user->setNom($nom);
-            $user->setPrenom($prenom);
-            $user->setAdresseMail($mail);
-            $user->setMdp($password);
-            if ($type = "2")
-                $user->setType("client");
-            if ($type = "1")
-                $user->setType("admin");
-            $user->setPhoto($fileName);
-            // Persist changes to the database
-            $entityManager->flush();
         }
+        $userCount = count($users);
+        $user = new User();
+        // Create the form and pass the User object to it
+        $form = $this->createForm(UserType1::class, $user);
+
+        // Handle the form submission
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $photo = $form['photo']->getData();
+            if ($photo) {
+                $fichier = md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('upload_directory'), $fichier);
+                $user->setPhoto($fichier);
+            }
+            //$user->setMdp($encoder->hash($user->getMdp()));
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // Redirect to prevent form resubmission
+            return $this->redirectToRoute('app_user_crud');
+        }
+
         return $this->render('user_crud/index.html.twig', [
+            'adminCount' => $adminCount,
+            'clientCount' => $clientCount,
+            'livreurCount' => $livreurCount,
             'users' => $users,
             'count' => $userCount,
             'controller_name' => 'UserCrudController',
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/stat', name: 'app_stat_user')]
+    public function stat(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request/*,PasswordHasherInterface $encoder*/): Response
+    {
+        $users = $userRepository->findAll();
+        $adminCount = 0;
+        $clientCount = 0;
+        $livreurCount = 0;
+        foreach ($users as $user) {
+            switch ($user->getType()) {
+                case 'admin':
+                    $adminCount++;
+                    break;
+                case 'client':
+                    $clientCount++;
+                    break;
+                case 'livreur':
+                    $livreurCount++;
+                    break;
+                // Add more cases if you have more roles
+            }
+        }
+
+        return $this->render('user_crud/stats.html.twig', [
+            'adminCount' => $adminCount,
+            'clientCount' => $clientCount,
+            'livreurCount' => $livreurCount,
+        ]);
+    }
+    #[Route('/profile', name: 'app_profile_user')]
+    public function profile(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request/*,PasswordHasherInterface $encoder*/): Response
+    {
+        return $this->render('user_crud/profile.html.twig', [
         ]);
     }
     #[Route('/back/user/crud/delete{id}', name: 'app_user_crud_delete')]
