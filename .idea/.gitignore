@@ -6,3 +6,5 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+/jsLinters/jshint.xml
+/commandlinetools/Symfony_5_6_24__10_24_AM.xml
