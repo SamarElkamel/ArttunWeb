@@ -1,5 +1,3 @@
 framework:
     mailer:
-        dsn: '%env(MAILER_DSN)%'
-     
-     
+        dsn: "smtp://artun763@gmail.com:lljyyibggwkbnmkq@smtp.gmail.com:587"

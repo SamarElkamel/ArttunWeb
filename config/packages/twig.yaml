@@ -1,12 +1,6 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-    debug: '%kernel.debug%'
-    strict_variables: false  # Set to true in production if needed
 
-    form_themes:
-        - 'bootstrap_4_layout.html.twig'
-
-    globals:
-        google_charts: 'CMEN\GoogleChartsBundle\Twig\GoogleChartsExtension'
-
-    # Other Twig configurations...
+when@test:
+    twig:
+        strict_variables: true

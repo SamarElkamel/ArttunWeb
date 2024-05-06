@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Evenement;
-use phpDocumentor\Reflection\PseudoTypes\False_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +18,7 @@ class EvenementType extends AbstractType
             ->add('date')
             ->add('frais')
             ->add('photo', FileType::class, [
-                'label' => false,
+                'label' => 'Photo',
                 'mapped' => false, 
                 'required' => false, 
             ])

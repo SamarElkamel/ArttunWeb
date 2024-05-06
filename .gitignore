@@ -18,5 +18,3 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-/.idea/php.xml
-/.idea/workspace.xml
