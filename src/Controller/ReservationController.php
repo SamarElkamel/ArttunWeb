@@ -11,14 +11,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 #[Route('/reservation')]
 class ReservationController extends AbstractController
 {
     #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager , Security $security): Response
     {
-        $userId = 44; 
+        $user = $security->getUser();
+        $userId = $user->getId();
         $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findBy(['idClient' => $userId]);
 
     return $this->render('reservation/index.html.twig', [
@@ -26,18 +31,23 @@ class ReservationController extends AbstractController
     ]);
     }
 
+  
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository ,Security $security  ): Response
     {
        
         $evenementId = $request->query->get('id'); 
+        
         $evenement = $evenementRepository->find($evenementId);
         
        // $eventId = $request->request->get('eventId');
         $reservation = new Reservation();
       //  $event = $evenementRepository->find($eventId );
+      
       if ($request->isMethod('POST')) {
-        $user = $entityManager->getRepository(User::class)->find(44);
+        $user = $security->getUser();
+       // $user = $entityManager->getRepository(User::class)->find(44);
+       
         $numberOfGuests = $request->request->get('guests');
         $totalPrice = $request->request->get('totalPrice');
        
@@ -46,9 +56,12 @@ class ReservationController extends AbstractController
         $reservation->setNbinvite($numberOfGuests ?? 0);
         $reservation->setTotalPrix($totalPrice ?? 0);
         $reservation->setDate(new \DateTime());
-        
+
+       
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($reservation);
+
         $entityManager->flush();
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);

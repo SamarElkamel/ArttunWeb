@@ -17,7 +17,7 @@ class UserType extends AbstractType
                 'label' => 'First Name',
                 'row_attr' => ['class' => 'row'],
                 'label_attr' => ['class' => 'active'],
-                'attr' => ['id' => 'first_name']
+               
             ])
             ->add('prenom', null, [
                 'label' => 'Last Name',

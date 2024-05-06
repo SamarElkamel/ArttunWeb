@@ -101,7 +101,7 @@
 </div>
 
 <div class="main-menu  d-none d-lg-block">
-  <div style="padding: 10px 20px 4px 20px;" class="card-stor">
+  <div class="card-stor">
       <nav>
           {% if app.session.get('name') is not null %}
               <ul id="navigation">
@@ -111,17 +111,14 @@
                   <li>
                       <p style="color: black">{{ app.session.get('name') }}</p>
                       <ul style="right:-60px;left:auto" class="submenu">
-                          <li><a href="/profile">My Profile</a></li>
+                          <li><a href="#">My Profile</a></li>
                           <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
-                          <li><a href="/logout">Log Out</a></li>
+                          <li><a href="#">Log Out</a></li>
                       </ul>
                   </li>
               </ul>
-          {% else %}
-                      <a href="/login"> <p style="color: black">Login</p></a>
           {% endif %}
       </nav>
-
 
   </div>
                             </div>

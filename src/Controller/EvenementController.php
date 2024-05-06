@@ -13,11 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
-use BaconQrCode\Renderer\Image\ImageBackEndInterface;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\BarChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 
 
 
@@ -29,7 +29,7 @@ class EvenementController extends AbstractController
     public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository ,  Request $request): Response
     {
       
-    
+       
         $reservations = $reservationRepository->findAll();
 
         $reservationCount = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
@@ -54,7 +54,9 @@ class EvenementController extends AbstractController
         ->getQuery()
         ->getSingleScalarResult();
 
-        
+
+
+    
         
         
         return $this->render('Evenement/index.html.twig', [
@@ -94,6 +96,54 @@ class EvenementController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/statistics', name: 'app__statistics' , methods: ['GET'])]
+   
+    public function showCharts(EntityManagerInterface $entityManager, EvenementRepository $evenementRepository): Response
+    {
+       
+        $reservationsByDate = $entityManager->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->select('r.date as reservationDate, COUNT(r.id) as totalReservations')
+            ->groupBy('reservationDate')
+            ->getQuery()
+            ->getResult();
+    
+   
+        foreach ($reservationsByDate as $key => $reservation) {
+            $date = $reservation['reservationDate'];
+            $formattedDate = $date->format('Y-m-d');
+            $reservationsByDate[$key]['reservationDate'] = $formattedDate;
+        }
+    
+        $expensesByEvent = $entityManager->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->select('e.libelle as eventName, SUM(r.totalprix) as totalExpenses')
+            ->leftJoin('r.idEvenement', 'e')
+            ->groupBy('eventName')
+            ->getQuery()
+            ->getResult();
+
+            
+    
+        return $this->render('Evenement/statistics.html.twig', [
+            'reservationsByDate' => $reservationsByDate,
+            'expensesByEvent' => $expensesByEvent,
+        ]);
+    }
+    
+
+    #[Route('/calendar', name: "app_booking_calendar", methods: ['GET'])]
+     public function calendar(): Response
+    {
+    $events = $this->getDoctrine()->getRepository(Evenement::class)->findAll();
+
+    return $this->render('Evenement/calander.html.twig', [
+        'events' => $events,
+    ]);
+    }
+
+   
 
     #[Route('/{id}', name: 'app__venement_show', methods: ['GET'])]
     public function show(Evenement $Evenement ): Response
@@ -160,9 +210,8 @@ class EvenementController extends AbstractController
         return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);
     }
 
+
+    
    
 
-  
-
-
-}
+    }
