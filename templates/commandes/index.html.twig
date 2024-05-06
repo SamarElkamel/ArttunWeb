@@ -1,0 +1,61 @@
+{% extends 'basemission.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                <form action="{{ path('create_mission') }}" method="post">
+                        <h1 class="text-center mb-4" style="font-size: 2.5rem; color: #333; font-weight: bold; text-transform: uppercase;">LISTE DES COMMANDES</h1>
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-hover mx-auto" style="color: black; background-color: white; border-radius: 40px;">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" onclick="checkAll(this)" style="width: 20px; height: 20px;">
+                                        </th>
+                                        <th>Référence</th>
+                                        <th>Date</th>
+                                        <th>Prix</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for commande in commandes %}
+                                        <tr>
+                                            <td><input type="checkbox" name="selected_commands[]" value="{{ commande.id }}" style="width: 20px; height: 20px;"></td>
+                                            <td>{{ commande.refernce }}</td>
+                                            <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+                                            <td>{{ commande.prix }}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="4" class="text-center">Aucun enregistrement trouvé</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                       <div class="text-center">
+    <button type="submit" class="btn btn-primary mx-2">Créer mission</button>
+    <a href="{{ path('app_mission_index') }}" class="btn btn-primary mx-2">Retour</a>
+</div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkAll(source) {
+        const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = source.checked;
+        });
+    }
+</script>
+{% endblock %}
