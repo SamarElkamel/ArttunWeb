@@ -1,0 +1,1810 @@
+Index: src/Form/ChangePasswordFormType.php
+===================================================================
+diff --git a/src/Form/ChangePasswordFormType.php b/src/Form/ChangePasswordFormType.php
+deleted file mode 100644
+--- a/src/Form/ChangePasswordFormType.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,54 +0,0 @@
+-<?php
+-
+-namespace App\Form;
+-
+-use Symfony\Component\Form\AbstractType;
+-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+-use Symfony\Component\Form\FormBuilderInterface;
+-use Symfony\Component\OptionsResolver\OptionsResolver;
+-use Symfony\Component\Validator\Constraints\Length;
+-use Symfony\Component\Validator\Constraints\NotBlank;
+-
+-class ChangePasswordFormType extends AbstractType
+-{
+-    public function buildForm(FormBuilderInterface $builder, array $options): void
+-    {
+-        $builder
+-            ->add('plainPassword', RepeatedType::class, [
+-                'type' => PasswordType::class,
+-                'options' => [
+-                    'attr' => [
+-                        'autocomplete' => 'new-password',
+-                    ],
+-                ],
+-                'first_options' => [
+-                    'constraints' => [
+-                        new NotBlank([
+-                            'message' => 'Please enter a password',
+-                        ]),
+-                        new Length([
+-                            'min' => 6,
+-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+-                            // max length allowed by Symfony for security reasons
+-                            'max' => 4096,
+-                        ]),
+-                    ],
+-                    'label' => 'New password',
+-                ],
+-                'second_options' => [
+-                    'label' => 'Repeat Password',
+-                ],
+-                'invalid_message' => 'The password fields must match.',
+-                // Instead of being set onto the object directly,
+-                // this is read and encoded in the controller
+-                'mapped' => false,
+-            ])
+-        ;
+-    }
+-
+-    public function configureOptions(OptionsResolver $resolver): void
+-    {
+-        $resolver->setDefaults([]);
+-    }
+-}
+Index: src/Repository/ResetPasswordRequestRepository.php
+===================================================================
+diff --git a/src/Repository/ResetPasswordRequestRepository.php b/src/Repository/ResetPasswordRequestRepository.php
+deleted file mode 100644
+--- a/src/Repository/ResetPasswordRequestRepository.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,33 +0,0 @@
+-<?php
+-
+-namespace App\Repository;
+-
+-use App\Entity\ResetPasswordRequest;
+-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+-use Doctrine\Persistence\ManagerRegistry;
+-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
+-use SymfonyCasts\Bundle\ResetPassword\Persistence\Repository\ResetPasswordRequestRepositoryTrait;
+-use SymfonyCasts\Bundle\ResetPassword\Persistence\ResetPasswordRequestRepositoryInterface;
+-
+-/**
+- * @extends ServiceEntityRepository<ResetPasswordRequest>
+- *
+- * @method ResetPasswordRequest|null find($id, $lockMode = null, $lockVersion = null)
+- * @method ResetPasswordRequest|null findOneBy(array $criteria, array $orderBy = null)
+- * @method ResetPasswordRequest[]    findAll()
+- * @method ResetPasswordRequest[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+- */
+-class ResetPasswordRequestRepository extends ServiceEntityRepository implements ResetPasswordRequestRepositoryInterface
+-{
+-    use ResetPasswordRequestRepositoryTrait;
+-
+-    public function __construct(ManagerRegistry $registry)
+-    {
+-        parent::__construct($registry, ResetPasswordRequest::class);
+-    }
+-
+-    public function createResetPasswordRequest(object $user, \DateTimeInterface $expiresAt, string $selector, string $hashedToken): ResetPasswordRequestInterface
+-    {
+-        return new ResetPasswordRequest($user, $expiresAt, $selector, $hashedToken);
+-    }
+-}
+Index: config/packages/gregwar_captcha.yaml
+===================================================================
+diff --git a/config/packages/gregwar_captcha.yaml b/config/packages/gregwar_captcha.yaml
+deleted file mode 100644
+--- a/config/packages/gregwar_captcha.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,3 +0,0 @@
+-gregwar_captcha:
+-  width: 160
+-  height: 50
+\ No newline at end of file
+Index: templates/reset_password/reset.html.twig
+===================================================================
+diff --git a/templates/reset_password/reset.html.twig b/templates/reset_password/reset.html.twig
+deleted file mode 100644
+--- a/templates/reset_password/reset.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,12 +0,0 @@
+-{% extends 'base.html.twig' %}
+-
+-{% block title %}Reset your password{% endblock %}
+-
+-{% block body %}
+-    <h1>Reset your password</h1>
+-
+-    {{ form_start(resetForm) }}
+-        {{ form_row(resetForm.plainPassword) }}
+-        <button class="btn btn-primary">Reset password</button>
+-    {{ form_end(resetForm) }}
+-{% endblock %}
+Index: templates/reset_password/email.html.twig
+===================================================================
+diff --git a/templates/reset_password/email.html.twig b/templates/reset_password/email.html.twig
+deleted file mode 100644
+--- a/templates/reset_password/email.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,9 +0,0 @@
+-<h1>Hi!</h1>
+-
+-<p>To reset your password, please visit the following link</p>
+-
+-<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+-
+-<p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+-
+-<p>Cheers!</p>
+Index: config/packages/reset_password.yaml
+===================================================================
+diff --git a/config/packages/reset_password.yaml b/config/packages/reset_password.yaml
+deleted file mode 100644
+--- a/config/packages/reset_password.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,2 +0,0 @@
+-symfonycasts_reset_password:
+-    request_password_repository: App\Repository\ResetPasswordRequestRepository
+Index: src/Form/ResetPasswordRequestFormType.php
+===================================================================
+diff --git a/src/Form/ResetPasswordRequestFormType.php b/src/Form/ResetPasswordRequestFormType.php
+deleted file mode 100644
+--- a/src/Form/ResetPasswordRequestFormType.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,31 +0,0 @@
+-<?php
+-
+-namespace App\Form;
+-
+-use Symfony\Component\Form\AbstractType;
+-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+-use Symfony\Component\Form\FormBuilderInterface;
+-use Symfony\Component\OptionsResolver\OptionsResolver;
+-use Symfony\Component\Validator\Constraints\NotBlank;
+-
+-class ResetPasswordRequestFormType extends AbstractType
+-{
+-    public function buildForm(FormBuilderInterface $builder, array $options): void
+-    {
+-        $builder
+-            ->add('adresseMail', EmailType::class, [
+-                'attr' => ['autocomplete' => 'email'],
+-                'constraints' => [
+-                    new NotBlank([
+-                        'message' => 'Please enter your email',
+-                    ]),
+-                ],
+-            ])
+-        ;
+-    }
+-
+-    public function configureOptions(OptionsResolver $resolver): void
+-    {
+-        $resolver->setDefaults([]);
+-    }
+-}
+Index: config/routes/scheb_2fa.yaml
+===================================================================
+diff --git a/config/routes/scheb_2fa.yaml b/config/routes/scheb_2fa.yaml
+deleted file mode 100644
+--- a/config/routes/scheb_2fa.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,7 +0,0 @@
+-2fa_login:
+-    path: /2fa
+-    defaults:
+-        _controller: "scheb_two_factor.form_controller::form"
+-
+-2fa_login_check:
+-    path: /2fa_check
+Index: config/packages/captcha.php
+===================================================================
+diff --git a/config/packages/captcha.php b/config/packages/captcha.php
+deleted file mode 100644
+--- a/config/packages/captcha.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,23 +0,0 @@
+-<?php if (!class_exists('CaptchaConfiguration')) { return; }
+-
+-// BotDetect PHP Captcha configuration options
+-
+-return [
+-    // Captcha configuration for example page
+-    'ExampleCaptcha' => [
+-        'UserInputID' => 'captchaCode',
+-        'ImageWidth' => 250,
+-        'ImageHeight' => 50,
+-    ],
+-
+-    // Captcha configuration for login page
+-    'LoginCaptcha' => [
+-        'UserInputID' => 'captchaCode',
+-        'CodeLength' => CaptchaRandomization::GetRandomCodeLength(4, 6),
+-        'ImageStyle' => [
+-            ImageStyle::Radar,
+-            ImageStyle::Collage,
+-            ImageStyle::Fingerprints,
+-        ],
+-    ],
+-];
+\ No newline at end of file
+Index: src/Entity/ResetPasswordRequest.php
+===================================================================
+diff --git a/src/Entity/ResetPasswordRequest.php b/src/Entity/ResetPasswordRequest.php
+deleted file mode 100644
+--- a/src/Entity/ResetPasswordRequest.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ /dev/null	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
+@@ -1,40 +0,0 @@
+-<?php
+-
+-namespace App\Entity;
+-
+-use App\Entity\user\User;
+-use App\Repository\ResetPasswordRequestRepository;
+-use Doctrine\ORM\Mapping as ORM;
+-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
+-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
+-
+-#[ORM\Entity(repositoryClass: ResetPasswordRequestRepository::class)]
+-class ResetPasswordRequest implements ResetPasswordRequestInterface
+-{
+-    use ResetPasswordRequestTrait;
+-
+-    #[ORM\Id]
+-    #[ORM\GeneratedValue]
+-    #[ORM\Column]
+-    private ?int $id = null;
+-
+-    #[ORM\ManyToOne]
+-    #[ORM\JoinColumn(nullable: false)]
+-    private ?User $user = null;
+-
+-    public function __construct(object $user, \DateTimeInterface $expiresAt, string $selector, string $hashedToken)
+-    {
+-        $this->user = $user;
+-        $this->initialize($expiresAt, $selector, $hashedToken);
+-    }
+-
+-    public function getId(): ?int
+-    {
+-        return $this->id;
+-    }
+-
+-    public function getUser(): object
+-    {
+-        return $this->user;
+-    }
+-}
+Index: config/routes/calendar.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/routes/calendar.yaml b/config/routes/calendar.yaml
+new file mode 100644
+--- /dev/null	(date 1715017965393)
++++ b/config/routes/calendar.yaml	(date 1715017965393)
+@@ -0,0 +1,2 @@
++calendar:
++    resource: "@CalendarBundle/Resources/config/routing.yaml"
+Index: config/packages/mailer.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>framework:\r\n    mailer:\r\n        dsn: '%env(MAILER_DSN)%'\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/packages/mailer.yaml b/config/packages/mailer.yaml
+--- a/config/packages/mailer.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/config/packages/mailer.yaml	(date 1715017965379)
+@@ -1,3 +1,4 @@
+ framework:
+     mailer:
+         dsn: '%env(MAILER_DSN)%'
++     
+Index: config/packages/test/swiftmailer.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/packages/test/swiftmailer.yaml b/config/packages/test/swiftmailer.yaml
+new file mode 100644
+--- /dev/null	(date 1715017965383)
++++ b/config/packages/test/swiftmailer.yaml	(date 1715017965383)
+@@ -0,0 +1,2 @@
++swiftmailer:
++    disable_delivery: true
+Index: src/Entity/Evenement.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nnamespace App\\Entity;\r\n\r\nuse Doctrine\\ORM\\Mapping as ORM;\r\nuse App\\Repository\\EvenementRepository;\r\nuse Symfony\\Component\\Validator\\Constraints as Assert;\r\nuse Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType;\r\n\r\n#[ORM\\Entity(repositoryClass: EvenementRepository::class)]\r\n\r\nclass Evenement\r\n{\r\n    #[ORM\\Id]\r\n    #[ORM\\GeneratedValue(strategy: \"IDENTITY\")]\r\n    #[ORM\\Column(name: \"id\", type: \"integer\", nullable: false)]\r\n    private int $id;\r\n    \r\n    #[Assert\\NotBlank(message: \"Please enter the event name.\")]\r\n    #[ORM\\Column(name: \"Libelle\", type: \"string\", length: 50, nullable: false)]\r\n    private string $libelle;\r\n\r\n    #[Assert\\NotBlank(message: \"Please enter a description .\")]\r\n    #[ORM\\Column(name: \"description\", type: \"string\", length: 1000, nullable: false)]\r\n    private string $description;\r\n\r\n    #[Assert\\GreaterThanOrEqual(\"today\", message: \"The date should not be in the past.\")]\r\n    #[ORM\\Column(name: \"date\", type: \"date\", nullable: false)]\r\n    private \\DateTime $date;\r\n\r\n    #[Assert\\NotBlank(message: \"Please enter the event costs .\")]\r\n    #[Assert\\Type(type: \"float\", message: \"Costs must be a numerical value.\")]\r\n    #[ORM\\Column(name: \"frais\", type: \"float\", precision: 10, scale: 0, nullable: false)]\r\n    private float $frais;\r\n\r\n\r\n    #[ORM\\Column(name: \"photo\", type: \"string\", length: 1000, nullable: false)]\r\n    private string $photo;\r\n\r\n    #[Assert\\NotBlank(message: \"Please enter the event localisation.\")]\r\n    #[ORM\\Column(name: \"localisation\", type: \"string\", length: 100, nullable: false)]\r\n    private string $localisation;\r\n\r\n    #[Assert\\NotBlank(message: \"Please enter the event website.\")]\r\n    #[ORM\\Column(name: \"siteweb\", type: \"string\", length: 1000, nullable: false)]\r\n    private string $siteweb;\r\n\r\n\r\n    public function getId(): ?int\r\n    {\r\n        return $this->id;\r\n    }\r\n\r\n    public function getLibelle(): ?string\r\n    {\r\n        return $this->libelle;\r\n    }\r\n\r\n    public function setLibelle(string $libelle): self\r\n    {\r\n        $this->libelle = $libelle;\r\n        return $this;\r\n    }\r\n\r\n    public function getDescription(): ?string\r\n    {\r\n        return $this->description;\r\n    }\r\n\r\n    public function setDescription(string $description): self\r\n    {\r\n        $this->description = $description;\r\n        return $this;\r\n    }\r\n\r\n    public function getDate(): ?\\DateTime\r\n    {\r\n        return $this->date;\r\n    }\r\n\r\n    public function setDate(\\DateTime $date): self\r\n    {\r\n        $this->date = $date;\r\n        return $this;\r\n    }\r\n\r\n    public function getFrais(): ?float\r\n    {\r\n        return $this->frais;\r\n    }\r\n\r\n    public function setFrais(float $frais): self\r\n    {\r\n        $this->frais = $frais;\r\n        return $this;\r\n    }\r\n\r\n    public function getPhoto(): ?string\r\n    {\r\n        return $this->photo;\r\n    }\r\n\r\n    public function setPhoto(string $photo): self\r\n    {\r\n        $this->photo = $photo;\r\n        return $this;\r\n    }\r\n\r\n    public function getLocalisation(): ?string\r\n    {\r\n        return $this->localisation;\r\n    }\r\n\r\n    public function setLocalisation(string $localisation): self\r\n    {\r\n        $this->localisation = $localisation;\r\n        return $this;\r\n    }\r\n\r\n    public function getSiteweb(): ?string\r\n    {\r\n        return $this->siteweb;\r\n    }\r\n\r\n    public function setSiteweb(string $siteweb): self\r\n    {\r\n        $this->siteweb = $siteweb;\r\n        return $this;\r\n    }\r\n\r\n    public function __toString(): string\r\n{\r\n    return $this->libelle;\r\n}\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Entity/Evenement.php b/src/Entity/Evenement.php
+--- a/src/Entity/Evenement.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/src/Entity/Evenement.php	(date 1715017965403)
+@@ -133,4 +133,6 @@
+     return $this->libelle;
+ }
+ 
++
++
+ }
+\ No newline at end of file
+Index: templates/Evenement/calander.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/Evenement/calander.html.twig b/templates/Evenement/calander.html.twig
+new file mode 100644
+--- /dev/null	(date 1715017965406)
++++ b/templates/Evenement/calander.html.twig	(date 1715017965406)
+@@ -0,0 +1,45 @@
++{% extends 'baseFront.html.twig' %}
++
++{% block body %}
++<html lang='en'>
++  <head>
++    <meta charset='utf-8' />
++    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
++    <script>
++      document.addEventListener('DOMContentLoaded', function() {
++        var calendarEl = document.getElementById('calendar');
++        var calendar = new FullCalendar.Calendar(calendarEl, {
++          initialView: 'dayGridMonth',
++          events: [
++            {% for event in events %}
++              {
++                title: '{{ event.libelle }}',
++                start: '{{ event.date|date('Y-m-d') }}',
++                end: '{{ event.date|date('Y-m-d') }}',
++                photo:  '{{ asset("/uploads/" ~ event.photo) }}',
++                id: '{{ event.id }}',
++              },
++            {% endfor %}
++          ],
++          
++       eventContent: function(arg) {
++          return {
++            html: '<div style="text-align: center;"><img src="' + arg.event.extendedProps.photo + '" style="max-width:100px;max-height:100px;"><br>' + arg.event.title + '</div>',
++          };
++        },
++        
++      });
++        calendar.render();
++      });
++    </script>
++  </head>
++  <body>
++    <div id='calendar'></div>
++  </body>
++  <style>
++    #calendar {
++      margin: 100px; 
++    }
++  </style>
++</html>
++{% endblock %}
+Index: config/packages/swiftmailer.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/packages/swiftmailer.yaml b/config/packages/swiftmailer.yaml
+new file mode 100644
+--- /dev/null	(date 1715017965382)
++++ b/config/packages/swiftmailer.yaml	(date 1715017965382)
+@@ -0,0 +1,4 @@
++swiftmailer:
++    url: '%env(MAILER_URL)%'
++    spool: { type: 'memory' }
++
+Index: config/packages/dev/swiftmailer.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/packages/dev/swiftmailer.yaml b/config/packages/dev/swiftmailer.yaml
+new file mode 100644
+--- /dev/null	(date 1715017965378)
++++ b/config/packages/dev/swiftmailer.yaml	(date 1715017965378)
+@@ -0,0 +1,4 @@
++# See https://symfony.com/doc/current/email/dev_environment.html
++#swiftmailer:
++#    send all emails to a specific address
++#    delivery_addresses: ['me@example.com']
+Index: templates/Evenement/statistics.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/Evenement/statistics.html.twig b/templates/Evenement/statistics.html.twig
+new file mode 100644
+--- /dev/null	(date 1715017965413)
++++ b/templates/Evenement/statistics.html.twig	(date 1715017965413)
+@@ -0,0 +1,135 @@
++{% extends 'base.html.twig' %}
++
++{% block body %}
++<div class="container">
++    <div class="chart-container">
++        <div class="chart">
++            <h1>Total Reservations by Date</h1>
++            <canvas id="reservationsChart" width="400" height="400"></canvas>
++        </div>
++        <div class="chart">
++            <h1>Total Expenses in DT by Event</h1>
++            <canvas id="expensesChart" width="400" height="400"></canvas>
++        </div>
++    </div>
++</div>
++
++<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
++
++<script>
++    document.addEventListener('DOMContentLoaded', function() {
++        var reservationsData = {{ reservationsByDate|json_encode|raw }};
++        var expensesData = {{ expensesByEvent|json_encode|raw }};
++        var reservationsPercentageData = {{ reservationsPercentageByEvent|json_encode|raw }};
++
++    
++        reservationsData.forEach(function(entry) {
++            entry.reservationDate = new Date(entry.reservationDate);
++        });
++
++       
++        var reservationsCtx = document.getElementById('reservationsChart').getContext('2d');
++        var reservationsChart = new Chart(reservationsCtx, {
++            type: 'bar',
++            data: {
++                labels: reservationsData.map(function(entry) {
++                    return entry.reservationDate.toLocaleDateString();
++                }),
++                datasets: [{
++                    label: 'Total Reservations',
++                    data: reservationsData.map(function(entry) {
++                        return entry.totalReservations;
++                    }),
++                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
++                    borderColor: 'rgba(255, 99, 132, 1)',
++                    borderWidth: 1
++                }]
++            },
++            options: {
++                scales: {
++                    y: {
++                        beginAtZero: true
++                    }
++                }
++            }
++        });
++
++
++        var expensesCtx = document.getElementById('expensesChart').getContext('2d');
++        var expensesChart = new Chart(expensesCtx, {
++            type: 'bar',
++            data: {
++                labels: expensesData.map(function(entry) {
++                    return entry.eventName;
++                }),
++                datasets: [{
++                    label: 'Total Expenses',
++                    data: expensesData.map(function(entry) {
++                        return entry.totalExpenses;
++                    }),
++                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
++                    borderColor: 'rgba(54, 162, 235, 1)',
++                    borderWidth: 1
++                }]
++            },
++            options: {
++                scales: {
++                    y: {
++                        beginAtZero: true
++                    }
++                }
++            }
++        });
++
++    
++        var reservationsPercentageCtx = document.getElementById('reservationsPercentageChart').getContext('2d');
++        var reservationsPercentageChart = new Chart(reservationsPercentageCtx, {
++            type: 'pie',
++            data: {
++                labels: reservationsPercentageData.map(function(entry) {
++                    return entry.eventName;
++                }),
++                datasets: [{
++                    label: 'Reservations Percentage',
++                    data: reservationsPercentageData.map(function(entry) {
++                        return entry.reservationsPercentage;
++                    }),
++                    backgroundColor: [
++                        'rgba(255, 99, 132, 0.2)',
++                        'rgba(54, 162, 235, 0.2)',
++                        'rgba(255, 206, 86, 0.2)',
++                        'rgba(75, 192, 192, 0.2)',
++                        'rgba(153, 102, 255, 0.2)',
++                        'rgba(255, 159, 64, 0.2)'
++                    ],
++                    borderColor: [
++                        'rgba(255, 99, 132, 1)',
++                        'rgba(54, 162, 235, 1)',
++                        'rgba(255, 206, 86, 1)',
++                        'rgba(75, 192, 192, 1)',
++                        'rgba(153, 102, 255, 1)',
++                        'rgba(255, 159, 64, 1)'
++                    ],
++                    borderWidth: 1
++                }]
++            },
++            options: {
++                responsive: true,
++                maintainAspectRatio: false
++            }
++        });
++    });
++</script>
++<style>
++    .chart-container {
++        display: grid;
++        grid-template-columns: repeat(2, 1fr);
++        gap: 0px;
++       
++    }
++
++    .chart {
++        margin-bottom: 20px;
++    }
++</style>
++{% endblock %}
+Index: src/Form/user/UserType.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nnamespace App\\Form\\user;\r\n\r\nuse App\\Entity\\user\\User;\r\nuse Symfony\\Component\\Form\\AbstractType;\r\nuse Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType;\r\nuse Symfony\\Component\\Form\\FormBuilderInterface;\r\nuse Symfony\\Component\\OptionsResolver\\OptionsResolver;\r\nuse Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType;\r\nuse Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType;\r\nuse Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType;\r\nuse Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType;\r\n\r\nclass UserType extends AbstractType\r\n{\r\n    public function buildForm(FormBuilderInterface $builder, array $options): void\r\n    {\r\n        $builder\r\n            ->add('nom', TextType::class, [\r\n                'attr' => [\r\n                    'placeholder' => 'Nom',\r\n                    'id' => 'first_name'\r\n                ],\r\n                'label' => false,\r\n                'row_attr' => ['class' => 'row'],\r\n            ])\r\n            ->add('prenom', TextType::class, [\r\n                'attr' => [\r\n                    'placeholder' => 'Prenom',\r\n                    'id' => 'last_name'\r\n                ],\r\n                'label' => false,\r\n                'row_attr' => ['class' => 'row'],\r\n            ])\r\n            ->add('adresseMail', EmailType::class, [\r\n                'attr' => [\r\n                    'placeholder' => 'Email',\r\n                    'id' => 'email'\r\n                ],\r\n                'label' => false,\r\n                'row_attr' => ['class' => 'row'],\r\n            ])\r\n            ->add('mdp', PasswordType::class, [\r\n                'attr' => [\r\n                    'placeholder' => 'Password',\r\n                    'id' => 'password'\r\n                ],\r\n                'label' => false,\r\n                'row_attr' => ['class' => 'row'],\r\n            ])\r\n            ->add('confirmPassword', PasswordType::class, [\r\n                'attr' => [\r\n                    'placeholder' => 'Confirm Password',\r\n                ],\r\n                'label' => false,\r\n                'row_attr' => ['class' => 'row'],\r\n            ])\r\n            ->add('photo', FileType::class, [\r\n                'label' => false,\r\n                'row_attr' => ['class' => 'row'],\r\n            ])\r\n            ->add('submit', SubmitType::class, [\r\n                'label' => 'Sign Up',\r\n            ]);\r\n\r\n    }\r\n\r\n    public function configureOptions(OptionsResolver $resolver): void\r\n    {\r\n        $resolver->setDefaults([\r\n            'data_class' => User::class,\r\n        ]);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Form/user/UserType.php b/src/Form/user/UserType.php
+--- a/src/Form/user/UserType.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/src/Form/user/UserType.php	(date 1715017965405)
+@@ -4,64 +4,51 @@
+ 
+ use App\Entity\user\User;
+ use Symfony\Component\Form\AbstractType;
+-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+ use Symfony\Component\Form\FormBuilderInterface;
+ use Symfony\Component\OptionsResolver\OptionsResolver;
+-use Symfony\Component\Form\Extension\Core\Type\TextType;
+-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+-use Symfony\Component\Form\Extension\Core\Type\FileType;
+ 
+ class UserType extends AbstractType
+ {
+     public function buildForm(FormBuilderInterface $builder, array $options): void
+     {
+         $builder
+-            ->add('nom', TextType::class, [
+-                'attr' => [
+-                    'placeholder' => 'Nom',
+-                    'id' => 'first_name'
+-                ],
+-                'label' => false,
++            ->add('nom', null, [
++                'attr' => ['placeholder' => 'Placeholder'],
++                'label' => 'First Name',
+                 'row_attr' => ['class' => 'row'],
++                'label_attr' => ['class' => 'active'],
++                'attr' => ['id' => 'first_name']
+             ])
+-            ->add('prenom', TextType::class, [
+-                'attr' => [
+-                    'placeholder' => 'Prenom',
+-                    'id' => 'last_name'
+-                ],
+-                'label' => false,
++            ->add('prenom', null, [
++                'label' => 'Last Name',
+                 'row_attr' => ['class' => 'row'],
++                'label_attr' => ['class' => 'active'],
++                'attr' => ['id' => 'last_name']
+             ])
+-            ->add('adresseMail', EmailType::class, [
+-                'attr' => [
+-                    'placeholder' => 'Email',
+-                    'id' => 'email'
+-                ],
+-                'label' => false,
++            ->add('type', null, [
++                'disabled' => true,
++                'label' => 'Disabled',
+                 'row_attr' => ['class' => 'row'],
++                'label_attr' => ['class' => 'active'],
++                'attr' => ['id' => 'disabled']
+             ])
+-            ->add('mdp', PasswordType::class, [
+-                'attr' => [
+-                    'placeholder' => 'Password',
+-                    'id' => 'password'
+-                ],
+-                'label' => false,
++            ->add('mdp', null, [
++                'label' => 'Password',
+                 'row_attr' => ['class' => 'row'],
++                'label_attr' => ['class' => 'active'],
++                'attr' => ['id' => 'password']
+             ])
+-            ->add('confirmPassword', PasswordType::class, [
+-                'attr' => [
+-                    'placeholder' => 'Confirm Password',
+-                ],
+-                'label' => false,
++            ->add('adresseMail', null, [
++                'label' => 'Email',
+                 'row_attr' => ['class' => 'row'],
++                'label_attr' => ['class' => 'active'],
++                'attr' => ['id' => 'email']
+             ])
+-            ->add('photo', FileType::class, [
+-                'label' => false,
++            ->add('photo', null, [
++                'label' => 'Photo',
+                 'row_attr' => ['class' => 'row'],
+-            ])
+-            ->add('submit', SubmitType::class, [
+-                'label' => 'Sign Up',
++                'label_attr' => ['class' => 'active'],
++                'attr' => ['id' => 'photo']
+             ]);
+ 
+     }
+Index: config/packages/security.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>security:\r\n    enable_authenticator_manager: true\r\n    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords\r\n    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider\r\n    providers:\r\n        users_in_memory:\r\n            entity:\r\n                class: App\\Entity\\user\\User\r\n                property: adresseMail\r\n    encoders:\r\n        App\\Entity\\user\\User:\r\n            algorithm: sha512\r\n    firewalls:\r\n        dev:\r\n            pattern: ^/(_(profiler|wdt)|css|images|js)/\r\n            security: false\r\n        main:\r\n            lazy: true\r\n            provider: users_in_memory\r\n            custom_authenticator: App\\Security\\UserAuthAuthenticator\r\n            logout:\r\n                path: app_logout\r\n            two_factor:\r\n                auth_form_path: 2fa_login\r\n                check_path: 2fa_login_check\r\n                # where to redirect after logout\r\n                # target: app_any_route\r\n\r\n\r\n            # activate different ways to authenticate\r\n            # https://symfony.com/doc/current/security.html#the-firewall\r\n\r\n            # https://symfony.com/doc/current/security/impersonating_user.html\r\n            # switch_user: true\r\n\r\n    # Easy way to control access for large sections of your site\r\n    # Note: Only the *first* access control that matches will be used\r\n    access_control:\r\n        - { path: ^/back/user/crud, roles: ROLE_ADMIN }\r\n        # - { path: ^/profile, roles: ROLE_USER }\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/packages/security.yaml b/config/packages/security.yaml
+--- a/config/packages/security.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/config/packages/security.yaml	(date 1715017965380)
+@@ -20,9 +20,6 @@
+             custom_authenticator: App\Security\UserAuthAuthenticator
+             logout:
+                 path: app_logout
+-            two_factor:
+-                auth_form_path: 2fa_login
+-                check_path: 2fa_login_check
+                 # where to redirect after logout
+                 # target: app_any_route
+ 
+Index: templates/Evenement/show.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{% extends 'baseFront.html.twig' %}\r\n\r\n{% block title %}Events{% endblock %}\r\n\r\n{% block body %}\r\n\r\n <img src=\"{{ asset('/uploads/' ~ _venement.photo) }}\" class=\"event-photo\">\r\n\r\n    <table class=\"table\">\r\n        <tbody>\r\n    \r\n            <tr>\r\n                \r\n                <td>{{ _venement.libelle }}</td>\r\n            </tr>\r\n            <tr>\r\n             \r\n                <td>{{ _venement.description }}</td>\r\n            </tr>\r\n            <tr>\r\n                \r\n                <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>\r\n            </tr>\r\n            <tr>\r\n                \r\n                <td>{{ _venement.frais }} DT</td>\r\n            </tr>\r\n         \r\n       \r\n    </td>\r\n                \r\n            </tr>\r\n            <tr>\r\n              \r\n                <td>{{ _venement.localisation }}</td>\r\n            </tr>\r\n            <tr>\r\n               \r\n                <td>{{ _venement.siteweb }}</td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n\r\n\r\n\r\n\r\n\r\n{% block stylesheets %}\r\n  <style>\r\n\r\n .event-photo {\r\n            width: 100%;\r\n            height:400px ;\r\n            border-radius: 5px;\r\n            margin-bottom: 20px;\r\n        }\r\n\r\n   #back-button {\r\n  display: inline-block;\r\n  margin : 10px 0 20px 10px \r\n}\r\n\r\nh1 {\r\n  text-align: center;\r\n}\r\n\r\n\r\n  </style>\r\n {% endblock %}\r\n\r\n\r\n{% endblock %}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/Evenement/show.html.twig b/templates/Evenement/show.html.twig
+--- a/templates/Evenement/show.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/templates/Evenement/show.html.twig	(date 1715017965410)
+@@ -3,70 +3,450 @@
+ {% block title %}Events{% endblock %}
+ 
+ {% block body %}
++<section class="section about-section gray-bg" id="about">
++            <div class="container">
++                <div class="row align-items-center flex-row-reverse">
++                    <div class="col-lg-6">
++                        <div class="about-text go-to">
++                            <h3 class="dark-color">{{ _venement.libelle }}</h3>
++                           
++                           <p>{{ _venement.description }}</p>
++                            <div class="row about-list">
++                                <div class="col-md-6">
++                                    <div class="media">
++                                        <label>Date</label>
++                                      
++                                        <p>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</p>
++                                    </div>
++                                    <div class="media">
++                                        <label>Frais</label>
++                                        <p>{{ _venement.frais }} DT</p>
++                                    </div>
++                                    <div class="media">
++                                        <label>Localisation</label>
++                                        &nbsp &nbsp &nbsp &nbsp
++                                        <p>{{ _venement.localisation }}</p>
++                                    </div>
++                                    <div >
++                                  
++                                        <a href={{ _venement.siteweb }} class="website" <label>Cliquer pour consulter le site Web</label></a>
++                                
++                                         </a>
++                                         <div qrCode>
++                                         <label > ou Scanner</label>
++                                        
++                                        <img src="data:image/svg+xml;base64,{{ qrCode }}" alt="QR Code">
++                                        </div>
++                                       
+ 
+- <img src="{{ asset('/uploads/' ~ _venement.photo) }}" class="event-photo">
+-
+-    <table class="table">
+-        <tbody>
+-    
+-            <tr>
+-                
+-                <td>{{ _venement.libelle }}</td>
+-            </tr>
+-            <tr>
+-             
+-                <td>{{ _venement.description }}</td>
+-            </tr>
+-            <tr>
+-                
+-                <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>
+-            </tr>
+-            <tr>
+-                
+-                <td>{{ _venement.frais }} DT</td>
+-            </tr>
+-         
+-       
+-    </td>
+-                
+-            </tr>
+-            <tr>
+-              
+-                <td>{{ _venement.localisation }}</td>
+-            </tr>
+-            <tr>
+-               
+-                <td>{{ _venement.siteweb }}</td>
+-            </tr>
+-        </tbody>
+-    </table>
+-
+-
+-
++                                    
++                                    </div>
++                                </div>
++                            
++                            </div>
++                        </div>
++                    </div>
++                    <div class="col-lg-6">
++                        <div class="about-avatar">
++                           <img src="{{ asset('/uploads/' ~ _venement.photo) }}" class="event-photo">
++                        </div>
++                    </div>
++                </div>
++              
++                   <div class="counter-container">
++
++                   
++        <div class="counter-item">
++            <span class="days" id="counter1"></span>
++            <span class="counter-label" id="count">Days</span>
++        </div>
++        <div class="counter-item">
++            <span class="hours" id="counter1"></span>
++            <span class="counter-label" id="count">Hours</span>
++        </div>
++        <div class="counter-item">
++            <span class="minutes" id="counter1"></span>
++            <span class="counter-label" id="count">Minutes</span>
++        </div>
++        <div class="counter-item" id="counter1">
++            <span class="seconds"  id="counter1"></span>
++            <span class="counter-label" id="count">Seconds</span>
++        </div>
++    </div>
++
++         
++        </section>
+ 
+ 
+ {% block stylesheets %}
+   <style>
+ 
+- .event-photo {
+-            width: 100%;
+-            height:400px ;
+-            border-radius: 5px;
+-            margin-bottom: 20px;
+-        }
++  .qrCode
++   {
++    margin-left : 40px ;
++   }
++
++
++.website
++{
++   color:#9F78FF;
++  font-weight: bold;
++  font-size: 15px;  
++
++
++}
+ 
+-   #back-button {
+-  display: inline-block;
+-  margin : 10px 0 20px 10px 
++#website
++{
++   color:#9F78FF;
++ 
++
++
+ }
+ 
+-h1 {
+-  text-align: center;
++
++#count
++ {
++  font-size : 14px ;
++ }
++
++ #counter1
++ {
++   font-size : 60px ;
++ }
++
++.counter-container {
++    background:white ;
++    display: flex;
++    justify-content: center;
++    align-items: center;
++    margin-top: 20px;
++    font-family: Arial, sans-serif;
++}
++
++.counter-item {
++    margin: 0 10px;
++    text-align: center;
+ }
+ 
++.counter-item span {
++    display: block;
++    font-size: 26px;
++    font-weight: bold;
++    color: black;
++}
++
++.counter-item.counter-label {
++    font-size: 4px;
++    color: #6F8BA4;
++}
++
++@media (max-width: 767px) {
++    .counter-item {
++        margin: 0 5px;
++    }
++
++    .counter-item span {
++        font-size: 24px;
++    }
++
++    .counter-item.counter-label {
++        font-size: 4px;
++    }
++}
++
++
++
++* {
++  box-sizing: border-box;
++}
++body {
++  font-family: "Trebuchet MS", "Lucida Sans Unicode", sans-serif;
++  margin: 0;
++}
++
++body{
++    color: #6F8BA4;
++    margin-top:20px;
++}
++.section {
++    padding: 100px 0;
++    position: relative;
++}
++.gray-bg {
++    background-color: #f5f5f5;
++}
++img {
++    max-width: 100%;
++}
++img {
++    vertical-align: middle;
++    border-style: none;
++}
++
++.about-text h3 {
++  font-size: 45px;
++  font-weight: 700;
++  margin: 0 0 6px;
++}
++@media (max-width: 767px) {
++  .about-text h3 {
++    font-size: 35px;
++  }
++}
++.about-text h6 {
++  font-weight: 600;
++  margin-bottom: 15px;
++}
++@media (max-width: 767px) {
++  .about-text h6 {
++    font-size: 18px;
++  }
++}
++.about-text p {
++  font-size: 18px;
++  max-width: 450px;
++}
++.about-text p mark {
++  font-weight: 600;
++  color: black;
++}
++
++.about-list {
++  padding-top: 10px;
++}
++.about-list .media {
++  padding: 5px 0;
++}
++.about-list label {
++  color: black;
++  font-weight: 600;
++  width: 88px;
++  margin: 0;
++  position: relative;
++}
++.about-list label:after {
++  content: "";
++  position: absolute;
++  top: 0;
++  bottom: 0;
++  right: 11px;
++  width: 1px;
++  height: 12px;
++  background: black;
++  -moz-transform: rotate(15deg);
++  -o-transform: rotate(15deg);
++  -ms-transform: rotate(15deg);
++  -webkit-transform: rotate(15deg);
++  transform: rotate(15deg);
++  margin: auto;
++  opacity: 0.5;
++}
++.about-list p {
++  margin: 0;
++  font-size: 15px;
++}
++
++@media (max-width: 991px) {
++  .about-avatar {
++    margin-top: 30px;
++  }
++}
++
++.about-section .counter {
++  padding: 22px 20px;
++  background: #ffffff;
++  border-radius: 10px;
++  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
++}
++.about-section .counter .count-data {
++  margin-top: 10px;
++  margin-bottom: 10px;
++}
++.about-section .counter .count {
++  font-weight: 700;
++  color: black;
++  margin: 0 0 5px;
++}
++.about-section .counter p {
++  font-weight: 600;
++  margin: 0;
++}
++mark {
++    background-image: linear-gradient(rgba(252, 83, 86, 0.6), rgba(252, 83, 86, 0.6));
++    background-size: 100% 3px;
++    background-repeat: no-repeat;
++    background-position: 0 bottom;
++    background-color: transparent;
++    padding: 0;
++    color: currentColor;
++}
++.theme-color {
++    color: #fc5356;
++}
++.dark-color {
++    color: black;
++}
++
++.cloader {
++  width: 10em;
++  height: 10em;
++  border: 4px solid white;
++  border-radius: 50%;
++  margin: 50px auto;
++  position: relative;
++  padding: 2rem;
++}
++
++.clface {
++  position: relative;
++  width: 100%;
++  height: 100%;
++  transform: translateY(-3px);
++}
++
++.top {
++  height: 10px;
++  width: 4px;
++  content: '';
++  background-color: white;
++  border-radius: 5em;
++  margin-top: -30px;
++  margin-left: 42px;
++}
++
++.bottom {
++  height: 10px;
++  width: 4px;
++  content: '';
++  background-color: white;
++  border-radius: 5em;
++  margin-top: 135px;
++  margin-left: 42px;
++}
++
++.left {
++  height: 4px;
++  width: 10px;
++  content: '';
++  background-color: white;
++  border-radius: 5em;
++  margin-top: -82px;
++  margin-left: 112px;
++}
++
++.right {
++  height: 4px;
++  width: 10px;
++  content: '';
++  background-color: white;
++  border-radius: 5em;
++  margin-top: -4px;
++  margin-left: -35px;
++}
++
++.clsface {
++  position: absolute;
++  width: 40px;
++  height: 40px;
++  margin-left: 24px;
++  margin-top: 15px;
++  border-radius: 6em;
++  border: 2px solid #636363;
++}
++
++.hand {
++  width: 65%;
++  height: 4px;
++  background-color: white;
++  border-radius: 3em;
++  border: none;
++  position: absolute;
++  top: 85%;
++  left: -15%;
++  transform-origin: 100%;
++  transform: rotate(90deg);
++}
++
++.pin {
++  width: 25%;
++  height: 25%;
++  border-radius: 50%;
++  background: white;
++  position: absolute;
++  top: 86%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++}
++
++#sub {
++  width: 10%;
++  height: 10%;
++  border-radius: 50%;
++  background: #636363;
++  position: absolute;
++  top: 40%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++}
++
++#h1 {
++  animation: rotate 4s linear infinite;
++}
++
++#h2 {
++  width: 45%;
++  left: 5%;
++  top: 45%;
++  background-color: #636363;
++  animation: rotate 1s linear infinite;
++}
++
++@keyframes rotate {
++  from {
++    transform: rotate(90deg);
++  }
++
++  to {
++    transform: rotate(450deg);
++  }
++}
++
++
+ 
+   </style>
+  {% endblock %}
+ 
++{% block javascripts %}
++ <script>
++
++  let countDownDate = new Date("{{ _venement.date|date('M d, Y H:i:s') }}").getTime();
++
++   let counter = setInterval(() => {
++
++  let dateNow = new Date().getTime();
++
++
++  let dateDiff = countDownDate - dateNow;
++
++ 
++  let days = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
++  let hours = Math.floor((dateDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
++  let minutes = Math.floor((dateDiff % (1000 * 60 * 60)) / (1000 * 60));
++  let seconds = Math.floor((dateDiff % (1000 * 60)) / 1000);
++
++  document.querySelector(".days").innerHTML = days < 10 ? `0${days}` : days ;
++  document.querySelector(".hours").innerHTML = hours < 10 ? `0${hours}`+ ":" : hours + ":" ;
++  document.querySelector(".minutes").innerHTML = minutes < 10 ? `0${minutes}` + ":": minutes + ":";
++  document.querySelector(".seconds").innerHTML = seconds < 10 ? `0${seconds}` : seconds;
++
++  if (dateDiff < 0) {
++    clearInterval(counter);
++  }
++}, 1000);
++
++ </script>
++
++{% endblock %}
+ 
+ {% endblock %}
+Index: src/Controller/EvenementController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nnamespace App\\Controller;\r\n\r\nuse App\\Repository\\EvenementRepository;\r\nuse App\\Repository\\ReservationRepository;\r\nuse App\\Entity\\Evenement;\r\nuse App\\Entity\\Reservation;\r\nuse App\\Form\\EvenementType;\r\nuse Doctrine\\ORM\\EntityManagerInterface;\r\nuse Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;\r\nuse Symfony\\Component\\HttpFoundation\\Request;\r\nuse Symfony\\Component\\HttpFoundation\\Response;\r\nuse Symfony\\Component\\Routing\\Annotation\\Route;\r\nuse Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType;\r\n\r\n#[Route('/evenement')]\r\nclass EvenementController extends AbstractController\r\n{\r\n    #[Route('/', name: 'app__venement_index', methods: ['GET'])]\r\n    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository): Response\r\n    {\r\n        $reservations = $reservationRepository->findAll();\r\n\r\n        $reservationCount = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')\r\n        ->select('COUNT(r.id)')\r\n        ->getQuery()\r\n        ->getSingleScalarResult();\r\n\r\n        $totalPrice = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')\r\n        ->select('SUM(r.totalprix)')\r\n        ->getQuery()\r\n        ->getSingleScalarResult();\r\n\r\n        $totalEvents = $entityManager->getRepository(Evenement::class)->createQueryBuilder('e')\r\n        ->select('COUNT(e.id)')\r\n        ->getQuery()\r\n        ->getSingleScalarResult();\r\n\r\n       $upcomingEvents = $entityManager->getRepository(Evenement::class)->createQueryBuilder('e')\r\n        ->select('COUNT(e.id)')\r\n        ->where('e.date > :currentDate')\r\n        ->setParameter('currentDate', new \\DateTime())\r\n        ->getQuery()\r\n        ->getSingleScalarResult();\r\n        \r\n        \r\n        return $this->render('Evenement/index.html.twig', [\r\n            'reservationCount' => $reservationCount,\r\n            'totalPrice' => $totalPrice,\r\n            'totalEvents' => $totalEvents,\r\n            'upcomingEvents' => $upcomingEvents,\r\n            '_venements' => $evenementRepository->findAll(),\r\n            'reservations' => $reservations,\r\n        ]);\r\n    }\r\n\r\n    #[Route('/new', name: 'app__venement_new', methods: ['GET', 'POST'])]\r\n    public function new(Request $request, EntityManagerInterface $entityManager): Response\r\n    {\r\n        $Evenement = new Evenement();\r\n        $form = $this->createForm(EvenementType::class, $Evenement);\r\n        $form->handleRequest($request);\r\n    \r\n        if ($form->isSubmitted() && $form->isValid()) {\r\n            $photo = $form->get('photo')->getData();\r\n    \r\n            if ($photo) {\r\n                $fichier = md5(uniqid()) . '.' . $photo->guessExtension();\r\n                $photo->move($this->getParameter('upload_directory'), $fichier);\r\n                $Evenement->setPhoto($fichier);\r\n            }\r\n    \r\n            $entityManager->persist($Evenement);\r\n            $entityManager->flush();\r\n    \r\n            return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);\r\n        }\r\n    \r\n        return $this->renderForm('Evenement/new.html.twig', [\r\n            '_venement' => $Evenement,\r\n            'form' => $form,\r\n        ]);\r\n    }\r\n\r\n    #[Route('/{id}', name: 'app__venement_show', methods: ['GET'])]\r\n    public function show(Evenement $Evenement): Response\r\n    {\r\n        return $this->render('Evenement/show.html.twig', [\r\n            '_venement' => $Evenement,\r\n        ]);\r\n    }\r\n\r\n    #[Route('/{id}/edit', name: 'app__venement_edit', methods: ['GET', 'POST'])]\r\n    public function edit(Request $request, Evenement $Evenement, EntityManagerInterface $entityManager): Response\r\n    {\r\n        $form = $this->createForm(EvenementType::class, $Evenement);\r\n        $form->handleRequest($request);\r\n        if ($form->isSubmitted() && $form->isValid()) {\r\n            $photo = $form->get('photo')->getData();\r\n    \r\n            if ($photo) {\r\n                $fichier = md5(uniqid()) . '.' . $photo->guessExtension();\r\n                $photo->move($this->getParameter('upload_directory'), $fichier);\r\n                $Evenement->setPhoto($fichier);\r\n            }\r\n    \r\n            $entityManager->persist($Evenement);\r\n            $entityManager->flush();\r\n            return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);\r\n        }\r\n        \r\n    return $this->renderForm('Evenement/edit.html.twig', [\r\n        '_venement' => $Evenement,\r\n        'form' => $form,\r\n    ]);\r\n        \r\n     \r\n    }\r\n\r\n    #[Route('/{id}', name: 'app__venement_delete', methods: ['POST'])]\r\n    public function delete(Request $request, Evenement $Evenement, EntityManagerInterface $entityManager): Response\r\n    {\r\n        if ($this->isCsrfTokenValid('delete'.$Evenement->getId(), $request->request->get('_token'))) {\r\n            $entityManager->remove($Evenement);\r\n            $entityManager->flush();\r\n        }\r\n\r\n        return $this->redirectToRoute('app__venement_index', [], Response::HTTP_SEE_OTHER);\r\n    }\r\n\r\n\r\n  \r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Controller/EvenementController.php b/src/Controller/EvenementController.php
+--- a/src/Controller/EvenementController.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/src/Controller/EvenementController.php	(date 1715017965397)
+@@ -7,19 +7,29 @@
+ use App\Entity\Evenement;
+ use App\Entity\Reservation;
+ use App\Form\EvenementType;
++use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+ use Doctrine\ORM\EntityManagerInterface;
+ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+ use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\Routing\Annotation\Route;
+-use Symfony\Component\Form\Extension\Core\Type\FileType;
++use BaconQrCode\Renderer\ImageRenderer;
++use BaconQrCode\Renderer\RendererStyle\RendererStyle;
++use BaconQrCode\Writer;
++use CMEN\GoogleChartsBundle\GoogleCharts\Charts\BarChart;
++use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
++
++
++
+ 
+ #[Route('/evenement')]
+ class EvenementController extends AbstractController
+ {
+     #[Route('/', name: 'app__venement_index', methods: ['GET'])]
+-    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository): Response
++    public function index(EvenementRepository $evenementRepository , EntityManagerInterface $entityManager ,  ReservationRepository $reservationRepository ,  Request $request): Response
+     {
++      
++       
+         $reservations = $reservationRepository->findAll();
+ 
+         $reservationCount = $entityManager->getRepository(Reservation::class)->createQueryBuilder('r')
+@@ -43,6 +53,10 @@
+         ->setParameter('currentDate', new \DateTime())
+         ->getQuery()
+         ->getSingleScalarResult();
++
++
++
++    
+         
+         
+         return $this->render('Evenement/index.html.twig', [
+@@ -83,13 +97,80 @@
+         ]);
+     }
+ 
++    #[Route('/statistics', name: 'app__statistics' , methods: ['GET'])]
++   
++    public function showCharts(EntityManagerInterface $entityManager, EvenementRepository $evenementRepository): Response
++    {
++       
++        $reservationsByDate = $entityManager->getRepository(Reservation::class)
++            ->createQueryBuilder('r')
++            ->select('r.date as reservationDate, COUNT(r.id) as totalReservations')
++            ->groupBy('reservationDate')
++            ->getQuery()
++            ->getResult();
++    
++   
++        foreach ($reservationsByDate as $key => $reservation) {
++            $date = $reservation['reservationDate'];
++            $formattedDate = $date->format('Y-m-d');
++            $reservationsByDate[$key]['reservationDate'] = $formattedDate;
++        }
++    
++        $expensesByEvent = $entityManager->getRepository(Reservation::class)
++            ->createQueryBuilder('r')
++            ->select('e.libelle as eventName, SUM(r.totalprix) as totalExpenses')
++            ->leftJoin('r.idEvenement', 'e')
++            ->groupBy('eventName')
++            ->getQuery()
++            ->getResult();
++
++            
++    
++        return $this->render('Evenement/statistics.html.twig', [
++            'reservationsByDate' => $reservationsByDate,
++            'expensesByEvent' => $expensesByEvent,
++        ]);
++    }
++    
++
++    #[Route('/calendar', name: "app_booking_calendar", methods: ['GET'])]
++     public function calendar(): Response
++    {
++    $events = $this->getDoctrine()->getRepository(Evenement::class)->findAll();
++
++    return $this->render('Evenement/calander.html.twig', [
++        'events' => $events,
++    ]);
++    }
++
++   
++
+     #[Route('/{id}', name: 'app__venement_show', methods: ['GET'])]
+-    public function show(Evenement $Evenement): Response
+-    {
++    public function show(Evenement $Evenement ): Response
++    {    
++        $url = $Evenement->getSiteweb();
++        $qrCode = $this->generateQRCode($url);
++    
++      
++    
++
+         return $this->render('Evenement/show.html.twig', [
+             '_venement' => $Evenement,
++            'qrCode' => $qrCode,
+         ]);
+     }
++
++    private function generateQRCode($url)
++    {
++        $renderer = new ImageRenderer( new RendererStyle(200), new SvgImageBackEnd()
++        );
++        $writer = new Writer($renderer);
++        $qrCode = $writer->writeString($url);
++        $qrCodeBase64 = base64_encode($qrCode);
++
++    return $qrCodeBase64;
++      
++    }
+ 
+     #[Route('/{id}/edit', name: 'app__venement_edit', methods: ['GET', 'POST'])]
+     public function edit(Request $request, Evenement $Evenement, EntityManagerInterface $entityManager): Response
+@@ -130,6 +211,7 @@
+     }
+ 
+ 
+-  
++    
++   
+ 
+-}
++    }
+Index: templates/Evenement/index.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n{% extends 'base.html.twig' %}\r\n\r\n\r\n\r\n{% block title %}Events{% endblock %}\r\n\r\n{% block body %}\r\n\r\n<div class=\"card mb-4\" id=\"stat_card\">\r\n  <div class=\"card-widget-separator-wrapper\">\r\n    <div class=\"card-body card-widget-separator\">\r\n      <div class=\"row gy-4 gy-sm-1\">\r\n        <div class=\"col-sm-6 col-lg-3\">\r\n          <div class=\"d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0\">\r\n            <div>\r\n              <h6 class=\"mb-2\">Total Reservations</h6>\r\n              <h4 class=\"mb-2\">{{reservationCount}} Reservations</h4>\r\n            </div>\r\n            <div class=\"avatar me-sm-4\">\r\n              <span class=\"avatar-initial rounded bg-label-secondary\">\r\n                <i class=\"fas fa-calendar-alt\" ></i>\r\n              </span>\r\n            </div>\r\n          </div>\r\n          <hr class=\"d-none d-sm-block d-lg-none me-4\">\r\n        </div>\r\n        <div class=\"col-sm-6 col-lg-3\">\r\n          <div class=\"d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0\">\r\n            <div>\r\n              <h6 class=\"mb-2\">Upcoming Events </h6>\r\n              <h4 class=\"mb-2\">{{upcomingEvents}} Events</h4>\r\n            </div>\r\n            <div class=\"avatar me-lg-4\">\r\n              <span class=\"avatar-initial rounded bg-label-secondary\">\r\n                <i class=\"bx bx-laptop bx-sm\"></i>\r\n              </span>\r\n            </div>\r\n          </div>\r\n          <hr class=\"d-none d-sm-block d-lg-none\">\r\n        </div>\r\n        <div class=\"col-sm-6 col-lg-3\">\r\n          <div class=\"d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3\">\r\n            <div>\r\n              <h6 class=\"mb-2\">Total Clients Expences</h6>\r\n              <h4 class=\"mb-2\">{{totalPrice}} DT</h4>\r\n            </div>\r\n            <div class=\"avatar me-sm-4\">\r\n              <span class=\"avatar-initial rounded bg-label-secondary\">\r\n                <i class=\"bx bx-wallet bx-sm\"></i>\r\n              </span>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-sm-6 col-lg-3\">\r\n          <div class=\"d-flex justify-content-between align-items-start\">\r\n            <div>\r\n              <h6 class=\"mb-2\">Total Events</h6>\r\n              <h4 class=\"mb-2\">{{totalEvents}} Events</h4>\r\n            </div>\r\n            <div class=\"avatar\">\r\n              <span class=\"avatar-initial rounded bg-label-secondary\">\r\n                <i class=\"bx bx-laptop bx-sm\"></i>\r\n              </span>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n  <div class=\"card\" id=\"Table\">\r\n<div class=\"card-header\" >\r\n<h5 class=\"card-title\">Filter</h5>\r\n<div class=\"d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0\">\r\n<div class=\"col-md-4 product_status\">\r\n<select id=\"ProductStatus\" class=\"form-select text-capitalize\">\r\n<option value=\"\">Status</option>\r\n<option value=\"upcoming\">Upcoming Events\r\n</option><option value=\"old\">Old Events</option></select></div>\r\n</div>\r\n</div>\r\n<div class=\"card-datatable table-responsive\" >\r\n<div id=\"DataTables_Table_0_wrapper\" class=\"dataTables_wrapper dt-bootstrap5 no-footer\">\r\n<div class=\"card-header d-flex border-top rounded-0 flex-wrap py-md-0\">\r\n<div class=\"me-5 ms-n2 pe-5\">\r\n<div id=\"DataTables_Table_0_filter\" class=\"dataTables_filter\">\r\n<label>\r\n\r\n<input type=\"search\" id=\"event_search\" class=\"form-control\" placeholder=\"Search Event\" aria-controls=\"DataTables_Table_0\" id=\"head_card\">\r\n</label>\r\n</div>\r\n</div>\r\n<div class=\"d-flex justify-content-start justify-content-md-end align-items-baseline\">\r\n<div class=\"dt-action-buttons d-flex align-items-start align-items-md-center justify-content-sm-center mb-3 mb-sm-0\"><div class=\"dataTables_length mt-0 mt-md-3 me-3\" id=\"DataTables_Table_0_length\"><label>\r\n</label>\r\n\r\n</div><div class=\"dt-buttons d-flex flex-wrap\" id=\"head_card\"> \r\n\r\n<button class=\"dt-button add-new btn btn-primary\" tabindex=\"0\" aria-controls=\"DataTables_Table_0\" type=\"button\" id=\"Add_but\"><span>\r\n<a href=\"{{ path('app__venement_new') }}\" id=\"addButton\">\r\n    <i class=\"fas fa-plus\"></i> Add new event</a>\r\n    <div class=\"container-fluid\">\r\n\r\n </div></div></div></div>\r\n\r\n    <table class=\"table\">\r\n        <thead>\r\n            <tr>\r\n                <th>Title</th>\r\n                <th>Description</th>\r\n                <th>Date</th>\r\n                <th>Costs</th>\r\n                <th>Photo</th>\r\n                <th>Location</th>\r\n                <th>Website</th>\r\n                <th>Total Participation</th>\r\n                <th>actions</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n        {% for _venement in _venements %}\r\n            <tr>\r\n                <td>{{ _venement.libelle }}</td>\r\n                <td>{{ _venement.description }}</td>\r\n                <td>{{ _venement.date ? _venement.date|date('Y-m-d') : '' }}</td>\r\n                <td>{{ _venement.frais }}</td>\r\n                <td> <img src=\"{{ asset('/uploads/' ~ _venement.photo) }}\" class=\"event-photo\"></td>\r\n                <td>{{ _venement.localisation }}</td>\r\n                <td>{{ _venement.siteweb }}</td>\r\n                <td>  {% set totalParticipation = 0 %}\r\n                     {% for reservation in reservations %}\r\n                      {% if reservation.idEvenement == _venement %}\r\n                        {% set totalParticipation = totalParticipation + reservation.nbinvite + 1 %}\r\n                    {% endif %}\r\n                {% endfor %}\r\n                {{ totalParticipation }}</td>\r\n             <td>\r\n   \r\n    <div>\r\n        <a href=\"{{ path('app__venement_edit', {'id': _venement.id}) }}\" class=\"action-link\">\r\n            <i class=\"fas fa-edit\"></i> Edit\r\n        </a>\r\n         {{ include('Evenement/_delete_form.html.twig') }}\r\n    </div>\r\n    <div>\r\n    \r\n    </div>\r\n</td>\r\n   \r\n            </tr>\r\n        {% else %}\r\n            <tr>\r\n                <td colspan=\"9\">no records found</td>\r\n            </tr>\r\n        {% endfor %}\r\n        </tbody>\r\n    </table>\r\n    </div>\r\n\r\n{% block stylesheets %}\r\n  <style>\r\n  .event-photo {\r\n    width: 250px;\r\n    height: 250px;\r\n  }\r\n\r\n  #addButton {\r\n  color:white ;\r\n}\r\n \r\n #Add_but\r\n  {\r\n    margin-right : 0 ;\r\n     float: right; \r\n  }\r\n\r\nh1 {\r\n  text-align: center;\r\n  margin:20px 0 0 0 ;\r\n}\r\n\r\n.action-link {\r\n    display: block; \r\n    margin-bottom: 5px; \r\n}\r\n\r\n#stat_card\r\n{\r\n    margin : 50px 50px 50px 50px ;\r\n}\r\n\r\n#Table\r\n{\r\n    margin : 10px 50px 50px 50px ;\r\n}\r\n\r\n#head_card\r\n {\r\n    margin-top : 10px ; \r\n    margin-bottom:10px;\r\n }\r\n\r\n  </style>\r\n {% endblock %}\r\n\r\n {% block javascripts %}\r\n <script>\r\n   document.addEventListener('DOMContentLoaded', function () {\r\n  function search(keyword) {\r\n            var tableRows = document.querySelectorAll('.table tbody tr');\r\n            var searchInput = keyword.trim().toLowerCase();\r\n\r\n            tableRows.forEach(function (row) {\r\n                var cells = row.querySelectorAll('td');\r\n                var found = false;\r\n\r\n                cells.forEach(function (cell) {\r\n                    if (cell.textContent.trim().toLowerCase().includes(searchInput)) {\r\n                        found = true;\r\n                    }\r\n                });\r\n\r\n                if (found) {\r\n                    row.style.display = '';\r\n                } else {\r\n                    row.style.display = 'none';\r\n                }\r\n            });\r\n        }\r\n\r\n       \r\n        var searchInput = document.getElementById('event_search');\r\n        if (searchInput) {\r\n            searchInput.addEventListener('keyup', function () {\r\n                var searchText = this.value;\r\n                search(searchText);\r\n            });\r\n        }\r\n    ;\r\n      });\r\n\r\n\r\n    document.addEventListener('DOMContentLoaded', function () {\r\n    var filterSelect = document.getElementById('ProductStatus');\r\n    var tableRows = document.querySelectorAll('.table tbody tr');\r\n\r\n    filterSelect.addEventListener('change', function () {\r\n        var selectedValue = this.value;\r\n\r\n        var currentDate = new Date(); \r\n\r\n        tableRows.forEach(function (row) {\r\n            var dateCell = row.querySelector('td:nth-child(3)'); \r\n            if (dateCell) {\r\n                var eventDate = new Date(dateCell.textContent.trim()); \r\n                eventDate.setHours(0, 0, 0, 0); \r\n\r\n                if (selectedValue === 'old' && eventDate < currentDate) {\r\n                    row.style.display = '';\r\n                } else if (selectedValue === 'upcoming' && eventDate >= currentDate) {\r\n                    row.style.display = '';\r\n                } else {\r\n                    row.style.display = 'none';\r\n                }\r\n            }\r\n        });\r\n    });\r\n});\r\n\r\n\r\n\r\n\r\n    </script>\r\n {% endblock %}\r\n  \r\n{% endblock %}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/Evenement/index.html.twig b/templates/Evenement/index.html.twig
+--- a/templates/Evenement/index.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/templates/Evenement/index.html.twig	(date 1715017965408)
+@@ -101,10 +101,14 @@
+ <button class="dt-button add-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" id="Add_but"><span>
+ <a href="{{ path('app__venement_new') }}" id="addButton">
+     <i class="fas fa-plus"></i> Add new event</a>
++    
++
+     <div class="container-fluid">
+ 
+  </div></div></div></div>
+-
++ 
++<a href="{{ path('app__statistics') }}" id="stat" class="dt-button add-new btn btn-primary">  <i class="fas fa-chart-bar"></i>
++ Statistiques</a>
+     <table class="table">
+         <thead>
+             <tr>
+@@ -137,7 +141,8 @@
+                 {% endfor %}
+                 {{ totalParticipation }}</td>
+              <td>
+-   
++
++     
+     <div>
+         <a href="{{ path('app__venement_edit', {'id': _venement.id}) }}" class="action-link">
+             <i class="fas fa-edit"></i> Edit
+@@ -166,6 +171,15 @@
+     height: 250px;
+   }
+ 
++  #stat
++  {
++     color : #595cd9 ;
++     background: white ;
++     margin-left:20px;
++     margin-top:10px;
++     height:40px ;
++  }
++  
+   #addButton {
+   color:white ;
+ }
+@@ -206,7 +220,9 @@
+  {% endblock %}
+ 
+  {% block javascripts %}
++     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
++
+    document.addEventListener('DOMContentLoaded', function () {
+   function search(keyword) {
+             var tableRows = document.querySelectorAll('.table tbody tr');
+@@ -270,9 +286,8 @@
+ });
+ 
+ 
+-
+-
+     </script>
++ 
+  {% endblock %}
+   
+ {% endblock %}
+Index: config/packages/twig.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>twig:\r\n    default_path: '%kernel.project_dir%/templates'\r\n\r\nwhen@test:\r\n    twig:\r\n        strict_variables: true\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/packages/twig.yaml b/config/packages/twig.yaml
+--- a/config/packages/twig.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/config/packages/twig.yaml	(date 1715017965390)
+@@ -1,6 +1,12 @@
+ twig:
+     default_path: '%kernel.project_dir%/templates'
++    debug: '%kernel.debug%'
++    strict_variables: false  # Set to true in production if needed
++
++    form_themes:
++        - 'bootstrap_4_layout.html.twig'
+ 
+-when@test:
+-    twig:
+-        strict_variables: true
++    globals:
++        google_charts: 'CMEN\GoogleChartsBundle\Twig\GoogleChartsExtension'
++
++    # Other Twig configurations...
+Index: config/routes.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#index:\r\n#    path: /\r\n#    controller: App\\Controller\\DefaultController::index\r\n\r\nfront_office_home:\r\n    path: /\r\n    controller: App\\Controller\\FrontOfficeController::index\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/routes.yaml b/config/routes.yaml
+--- a/config/routes.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/config/routes.yaml	(date 1715017965392)
+@@ -7,4 +7,3 @@
+     controller: App\Controller\FrontOfficeController::index
+ 
+ 
+-
+Index: templates/reservation/index.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{% extends 'baseFront.html.twig' %}\r\n\r\n{% block title %}Reservation {% endblock %}\r\n\r\n{% block body %}\r\n\r\n<h1> My reservations </h1>\r\n\r\n    <div class=\"container\">\r\n<div class=\"row\">\r\n\r\n        {% for reservation in reservations %}\r\n         \r\n        \r\n<div class=\"col-md-4\">\r\n    <hr>\r\n    <div class=\"profile-card-6\">\r\n    <img src=\"{{ asset('/uploads/' ~ reservation.idEvenement.photo) }}\"  class=\"img\">\r\n   \r\n        <div class=\"profile-name\">{{reservation.idEvenement.libelle}}\r\n            <br>{{reservation.totalprix}} DT</div>\r\n        <div class=\"profile-position\">{{reservation.idEvenement.date  ? reservation.idEvenement.date|date('Y-m-d') : ''}}</div>\r\n        <div class=\"profile-overview\">\r\n            <div class=\"profile-overview\">\r\n                <div class=\"row text-center\">\r\n                    <div class=\"col-xs-4\">\r\n                        <h3>{{reservation.nbinvite}}</h3>\r\n                        <p>Guests</p>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n     {{ include('reservation/_delete_form.html.twig') }}\r\n</div>\r\n\r\n\t\t\r\n        {% else %}\r\n            <tr>\r\n                <td colspan=\"5\">you don't have any reservations yet</td>\r\n            </tr>\r\n        {% endfor %}\r\n\r\n</div>\r\n</div>\r\n{% block stylesheets %}\r\n<style>\r\n\r\n\r\n\r\n\r\n\r\n/* Title */\r\nheader h1 {\r\n    font-weight:300;\r\n    font-size:24px;\r\n    color:#eee;\t\r\n\tletter-spacing:2px;\r\n\ttext-align:center;\r\n\ttext-transform:uppercase;\r\n\tmargin:0 !important;\r\n\tpadding-bottom:25px;\r\n}\r\n@charset \"utf-8\";\r\n@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Open Sans:400,600,800');\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6,\r\ndiv,\r\ninput,\r\np,\r\na {\r\n    font-family: \"Open Sans\";\r\n    margin: 0px;\r\n}\r\n\r\na,\r\na:hover,\r\na:focus {\r\n    color: inherit;\r\n}\r\n\r\nbody {\r\n    background-color: #F1F2F3;\r\n}\r\n\r\n.container-fluid,\r\n.container {\r\n    max-width: 1200px;\r\n}\r\n\r\n.card-container {\r\n    padding: 100px 0px;\r\n    -webkit-perspective: 1000;\r\n    perspective: 1000;\r\n}\r\n\r\n.profile-card-1 {\r\n    background-color: #FFF;\r\n    border-radius: 10px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    background-image: url(../img/profile-bg-1.jpg);\r\n    background-position: center;\r\n    padding-top: 100px;\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n    max-width: 300px;\r\n}\r\n\r\n.profile-card-1 .profile-content {\r\n    position: relative;\r\n    background-color: #FFF;\r\n    padding: 70px 20px 20px 20px;\r\n    text-align: center;\r\n}\r\n\r\n.profile-card-1 .profile-img {\r\n    position: absolute;\r\n    height: 100px;\r\n    left: 0px;\r\n    right: 0px;\r\n    z-index: 10;\r\n    top: -50px;\r\n    transition: all 0.25s linear;\r\n    transform-style: preserve-3d;\r\n}\r\n\r\n.profile-card-1 .profile-img img {\r\n    height: 100px;\r\n    margin: auto;\r\n    border-radius: 50%;\r\n    border: 5px solid #FFF;\r\n    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n.profile-card-1 .profile-name {\r\n    font-size: 18px;\r\n    font-weight: bold;\r\n    color: #021830;\r\n}\r\n\r\n.profile-card-1 .profile-address {\r\n    color: #777;\r\n    font-size: 12px;\r\n    margin: 0px 0px 15px 0px;\r\n}\r\n\r\n.profile-card-1 .profile-description {\r\n    font-size: 13px;\r\n    padding: 5px 10px;\r\n    color: #777;\r\n}\r\n\r\n.profile-card-1 .profile-icons .fa {\r\n    margin: 5px;\r\n    color: #777;\r\n}\r\n\r\n.profile-card-1:hover {\r\n    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.profile-card-1:hover .profile-img {\r\n    transform: rotateY(180deg);\r\n}\r\n\r\n.profile-card-2 {\r\n    max-width: 300px;\r\n    background-color: #FFF;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    background-position: center;\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n    border-radius: 10px;\r\n}\r\n\r\n.profile-card-2 img {\r\n    transition: all linear 0.25s;\r\n}\r\n\r\n.profile-card-2 .profile-name {\r\n    position: absolute;\r\n    left: 30px;\r\n    bottom: 70px;\r\n    font-size: 30px;\r\n    color: #FFF;\r\n    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);\r\n    font-weight: bold;\r\n    transition: all linear 0.25s;\r\n}\r\n\r\n.profile-card-2 .profile-icons {\r\n    position: absolute;\r\n    bottom: 30px;\r\n    right: 30px;\r\n    color: #FFF;\r\n    transition: all linear 0.25s;\r\n}\r\n\r\n.profile-card-2 .profile-username {\r\n    position: absolute;\r\n    bottom: 50px;\r\n    left: 30px;\r\n    color: #FFF;\r\n    font-size: 13px;\r\n    transition: all linear 0.25s;\r\n}\r\n\r\n.profile-card-2 .profile-icons .fa {\r\n    margin: 5px;\r\n}\r\n\r\n.profile-card-2:hover img {\r\n    filter: grayscale(100%);\r\n}\r\n\r\n.profile-card-2:hover .profile-name {\r\n    bottom: 80px;\r\n}\r\n\r\n.profile-card-2:hover .profile-username {\r\n    bottom: 60px;\r\n}\r\n\r\n.profile-card-2:hover .profile-icons {\r\n    right: 40px;\r\n}\r\n\r\n.profile-card-3 {\r\n    background-color: #FFF;\r\n    border-radius: 5px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n    padding: 25px 15px;\r\n}\r\n\r\n.profile-card-3 .profile-name {\r\n    font-weight: bold;\r\n    color: #21304e;\r\n}\r\n\r\n.profile-card-3 .profile-location {\r\n    color: #999;\r\n    font-size: 13px;\r\n    font-weight: 600;\r\n}\r\n\r\n.profile-card-3 img {\r\n    height: 100px;\r\n    width: 100px;\r\n    object-fit: cover;\r\n    margin: 10px auto;\r\n    border-radius: 50%;\r\n    transition: all linear 0.25s;\r\n}\r\n\r\n.profile-card-3 .profile-description {\r\n    font-size: 13px;\r\n    color: #777;\r\n    padding: 10px;\r\n}\r\n\r\n.profile-card-3 .profile-icons {\r\n    margin: 15px 0px;\r\n}\r\n\r\n.profile-card-3 .profile-icons .fa {\r\n    color: #fe455a;\r\n    margin: 0px 5px;\r\n}\r\n\r\n.profile-card-3:hover img {\r\n    height: 110px;\r\n    width: 110px;\r\n    margin: 5px auto;\r\n}\r\n\r\n.profile-card-4 {\r\n    max-width: 300px;\r\n    background-color: #FFF;\r\n    border-radius: 5px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n}\r\n\r\n.profile-card-4 img {\r\n    transition: all 0.25s linear;\r\n}\r\n\r\n.profile-card-4 .profile-content {\r\n    position: relative;\r\n    padding: 15px;\r\n    background-color: #FFF;\r\n}\r\n\r\n.profile-card-4 .profile-name {\r\n    font-weight: bold;\r\n    position: absolute;\r\n    left: 0px;\r\n    right: 0px;\r\n    top: -70px;\r\n    color: #FFF;\r\n    font-size: 17px;\r\n}\r\n\r\n.profile-card-4 .profile-name p {\r\n    font-weight: 600;\r\n    font-size: 13px;\r\n    letter-spacing: 1.5px;\r\n}\r\n\r\n.profile-card-4 .profile-description {\r\n    color: #777;\r\n    font-size: 12px;\r\n    padding: 10px;\r\n}\r\n\r\n.profile-card-4 .profile-overview {\r\n    padding: 15px 0px;\r\n}\r\n\r\n.profile-card-4 .profile-overview p {\r\n    font-size: 10px;\r\n    font-weight: 600;\r\n    color: #777;\r\n}\r\n\r\n.profile-card-4 .profile-overview h4 {\r\n    color: #273751;\r\n    font-weight: bold;\r\n}\r\n\r\n.profile-card-4 .profile-content::before {\r\n    content: \"\";\r\n    position: absolute;\r\n    height: 20px;\r\n    top: -10px;\r\n    left: 0px;\r\n    right: 0px;\r\n    background-color: #FFF;\r\n    z-index: 0;\r\n    transform: skewY(3deg);\r\n}\r\n\r\n.profile-card-4:hover img {\r\n    transform: rotate(5deg) scale(1.1, 1.1);\r\n    filter: brightness(110%);\r\n}\r\n\r\n.profile-card-5 {\r\n    max-width: 300px;\r\n    background-color: #FFF;\r\n    border-radius: 5px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n    padding: 50px 15px 25px 15px;\r\n}\r\n\r\n.profile-card-5 img {\r\n    height: 100px;\r\n    width: 100px;\r\n    object-fit: cover;\r\n    margin: 10px auto;\r\n    border-radius: 50%;\r\n    transition: all linear 0.25s;\r\n    position: relative;\r\n}\r\n\r\n.profile-card-5::before {\r\n    content: \"\";\r\n    position: absolute;\r\n    top: -60px;\r\n    right: 0px;\r\n    left: 0px;\r\n    height: 170px;\r\n    background-color: #4fb96e;\r\n    transform: skewY(-20deg);\r\n}\r\n\r\n.profile-card-5 .profile-name {\r\n    padding-top: 15px;\r\n    font-weight: bold;\r\n    color: #333;\r\n}\r\n\r\n.profile-card-5 .profile-designation {\r\n    font-size: 13px;\r\n    color: #777;\r\n}\r\n\r\n.profile-card-3 .profile-location {\r\n    color: #999;\r\n    font-size: 13px;\r\n    font-weight: 600;\r\n}\r\n\r\n.profile-card-5 .profile-description {\r\n    font-size: 13px;\r\n    color: #777;\r\n    padding: 10px;\r\n}\r\n\r\n.profile-card-5 .profile-overview {\r\n    padding: 15px 0px;\r\n}\r\n\r\n.profile-card-5 .profile-overview p {\r\n    color: #777;\r\n    font-size: 13px;\r\n}\r\n\r\n.profile-card-5 .profile-overview h2 {\r\n    font-weight: bold;\r\n    color: #1e2832;\r\n}\r\n\r\n.profile-card-5 .profile-icons .fa {\r\n    margin: 7px;\r\n    color: #4fb96e;\r\n}\r\n\r\n.profile-card-5:hover img {\r\n    transform: rotate(-5deg);\r\n}\r\n\r\n.profile-card-6 {\r\n    max-width: 300px;\r\n    background-color: #FFF;\r\n    border-radius: 5px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n}\r\n\r\n.profile-card-6 img {\r\n    transition: all 0.15s linear;\r\n}\r\n\r\n.profile-card-6 .profile-name {\r\n    position: absolute;\r\n    top: 10px;\r\n    left: 10px;\r\n    font-size: 25px;\r\n    font-weight: bold;\r\n    color: #FFF;\r\n    padding: 15px 20px;\r\n    background: linear-gradient(140deg, rgba(0, 0, 0, 0.4) 50%, rgba(255, 255, 0, 0) 50%);\r\n    transition: all 0.15s linear;\r\n}\r\n\r\n.profile-card-6 .profile-position {\r\n    position: absolute;\r\n    color: rgba(255, 255, 255, 0.4);\r\n    left: 30px;\r\n    top: 100px;\r\n    transition: all 0.15s linear;\r\n}\r\n\r\n.profile-card-6 .profile-overview {\r\n    position: absolute;\r\n    bottom: 0px;\r\n    left: 0px;\r\n    right: 0px;\r\n    background: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 50%, rgba(255, 255, 0, 0));\r\n    color: #FFF;\r\n    padding: 50px 0px 20px 0px;\r\n    transition: all 0.15s linear;\r\n}\r\n\r\n.profile-card-6 .profile-overview h3 {\r\n    font-weight: bold;\r\n}\r\n\r\n.profile-card-6 .profile-overview p {\r\n    color: rgba(255, 255, 255, 0.7);\r\n}\r\n\r\n.profile-card-6:hover img {\r\n    filter: brightness(80%);\r\n}\r\n\r\n.profile-card-6:hover .profile-name {\r\n    padding-left: 25px;\r\n    padding-top: 20px;\r\n}\r\n\r\n.profile-card-6:hover .profile-position {\r\n    left: 40px;\r\n}\r\n\r\n.profile-card-6:hover .profile-overview {\r\n    padding-bottom: 25px;\r\n}\r\n\r\n.profile-card-7 {\r\n    background-color: #FFF;\r\n    border-radius: 5px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n}\r\n\r\n.profile-card-7 .profile-content {\r\n    padding: 60px 30px 30px 30px;\r\n    background-color: #FFF;\r\n    position: relative;\r\n}\r\n\r\n.profile-card-7 .profile-content img {\r\n    position: absolute;\r\n    height: 80px;\r\n    width: 80px;\r\n    border-radius: 50%;\r\n    top: -40px;\r\n    border: 5px solid #FFF;\r\n}\r\n\r\n.profile-card-7 .profile-content .profile-name {\r\n    position: absolute;\r\n    font-size: 17px;\r\n    font-weight: bold;\r\n    top: -35px;\r\n    left: 125px;\r\n    color: #FFF;\r\n}\r\n\r\n.profile-card-7 .profile-overview {\r\n    padding: 5px 0px;\r\n}\r\n\r\n.profile-card-7 .profile-overview p {\r\n    color: #777;\r\n    font-size: 11px;\r\n    font-weight: 600;\r\n}\r\n\r\n.profile-card-7 .profile-overview h5 {\r\n    color: #142437;\r\n    font-weight: bold;\r\n}\r\n\r\n.profile-card-8 {\r\n    background: linear-gradient(#09121c, #36445a);\r\n    border-radius: 5px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n    transition: all 0.25s linear;\r\n}\r\n\r\n.profile-card-8 .profile-name {\r\n    position: absolute;\r\n    left: 0px;\r\n    right: 0px;\r\n    top: 25px;\r\n    color: #58d683;\r\n    font-size: 17px;\r\n    font-weight: bold;\r\n}\r\n\r\n.profile-card-8 .profile-designation {\r\n    position: absolute;\r\n    left: 0px;\r\n    right: 0px;\r\n    top: 50px;\r\n    color: #FFF;\r\n    font-size: 13px;\r\n    font-weight: 600;\r\n    letter-spacing: 1px;\r\n}\r\n\r\n.profile-card-8 .profile-icons {\r\n    position: absolute;\r\n    left: 0px;\r\n    right: 0px;\r\n    top: 80px;\r\n    color: rgba(255, 255, 255, 0.7);\r\n}\r\n\r\n.profile-card-8 .profile-icons .fa {\r\n    margin: 5px;\r\n}\r\n\r\n.profile-card-8:hover {\r\n    transform: scale(1.05, 1.05);\r\n}\r\n\r\n.profile-card-9 {\r\n    border-radius: 10px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n    padding: 30px 15px;\r\n    background-color: #FFF;\r\n    transition: all 0.25s linear;\r\n}\r\n\r\n.profile-card-9 img {\r\n    height: 120px;\r\n    width: 120px;\r\n    border-radius: 50%;\r\n    margin: 10px auto;\r\n}\r\n\r\n.profile-card-9 .profile-name {\r\n    font-size: 15px;\r\n    color: #3249b9;\r\n    font-weight: 600;\r\n}\r\n\r\n.profile-card-9 .profile-designation {\r\n    font-size: 13px;\r\n    color: #777;\r\n}\r\n\r\n.profile-card-9 .profile-description {\r\n    padding: 10px;\r\n    font-size: 13px;\r\n    color: #777;\r\n    margin: 15px 0px;\r\n    background-color: #F1F2F3;\r\n    border-radius: 5px;\r\n}\r\n\r\n.profile-card-9 a {\r\n    padding: 10px 15px;\r\n    background-color: #3249b9;\r\n    color: #FFF;\r\n    font-size: 11px;\r\n    border-radius: 25px;\r\n}\r\n\r\n.profile-card-9:hover {\r\n    transform: scale(1.05, 1.05);\r\n}\r\n\r\n.profile-card-10 {\r\n    border-radius: 5px;\r\n    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);\r\n    overflow: hidden;\r\n    position: relative;\r\n    margin: 10px auto;\r\n    cursor: pointer;\r\n    padding: 30px 15px;\r\n    background-color: #1f2124;\r\n    color: #EEE;\r\n}\r\n\r\n.profile-card-10 img {\r\n    margin: 10px auto;\r\n    width: 100px;\r\n    height: 100px;\r\n    border-radius: 50%;\r\n    border: 10px solid transparent;\r\n    box-shadow: 0px 0px 0px 2px #64c17b;\r\n    transition: all 0.25s linear;\r\n}\r\n\r\n.profile-card-10 .profile-name {\r\n    color: #FFF;\r\n    font-weight: bold;\r\n    font-size: 17px;\r\n}\r\n\r\n.profile-card-10 .profile-location {\r\n    font-size: 13px;\r\n    opacity: 0.7;\r\n}\r\n\r\n.profile-card-10 .profile-description {\r\n    padding: 10px;\r\n    font-size: 13px;\r\n}\r\n\r\n.profile-card-10 .profile-icons .fa {\r\n    color: #ffc75e;\r\n    margin: 10px;\r\n}\r\n\r\n.profile-card-10:hover img {\r\n    transform: scale(1.1);\r\n}\r\n\r\n\r\n.img \r\n{\r\n    width : 550px ;\r\n    height:350px;\r\n}\r\n\r\n\r\nh1 {\r\n     text-align: center;\r\n     color: #333; \r\n     font-size: 32px; \r\n     margin-top: 20px; \r\n        }\r\n\r\n\r\n</style>\r\n{% endblock %}\r\n\r\n\r\n{% endblock %}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/reservation/index.html.twig b/templates/reservation/index.html.twig
+--- a/templates/reservation/index.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/templates/reservation/index.html.twig	(date 1715017965422)
+@@ -10,8 +10,6 @@
+ <div class="row">
+ 
+         {% for reservation in reservations %}
+-         
+-        
+ <div class="col-md-4">
+     <hr>
+     <div class="profile-card-6">
+@@ -20,18 +18,12 @@
+         <div class="profile-name">{{reservation.idEvenement.libelle}}
+             <br>{{reservation.totalprix}} DT</div>
+         <div class="profile-position">{{reservation.idEvenement.date  ? reservation.idEvenement.date|date('Y-m-d') : ''}}</div>
+-        <div class="profile-overview">
+-            <div class="profile-overview">
+-                <div class="row text-center">
+-                    <div class="col-xs-4">
+-                        <h3>{{reservation.nbinvite}}</h3>
+-                        <p>Guests</p>
+-                    </div>
+-                </div>
+-            </div>
+-        </div>
+-    </div>
+-     {{ include('reservation/_delete_form.html.twig') }}
++
++    </div>
++    <div class="buttons">
++      <button type="button" id="button" class="btn btn-primary" data-toggle="modal" data-target="#ticketModal{{ reservation.id }}">See Ticket</button>
++     {{ include('reservation/_delete_form.html.twig') }}
++</div>
+ </div>
+ 
+ 		
+@@ -43,14 +35,59 @@
+ 
+ </div>
+ </div>
++
++
++{% for reservation in reservations %}
++<div class="modal fade" id="ticketModal{{ reservation.id }}" tabindex="-1" role="dialog" aria-labelledby="ticketModalLabel{{ reservation.id }}" aria-hidden="true">
++  <div class="modal-dialog" role="document">
++    <div class="modal-content">
++      <div class="modal-header">
++        <h5 class="modal-title" id="ticketModalLabel{{ reservation.id }}">Reservation Ticket</h5>
++        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
++          <span aria-hidden="true">&times;</span>
++        </button>
++      </div>
++
++    <div class="picture ">
++        <img src="{{ asset('/uploads/' ~ "c85894f979b8451cb92646a56dc6c3d2.png") }}"  class="logo">
++      <div class="modal-body">
++        <p>Client: {{ reservation.idClient.username }}</p>
++        <p>Date: {{ reservation.date|date('d-m-Y') }}</p>
++        <p>Total Price: {{ reservation.totalprix }} DT</p>
++         <p>Number of guests: {{ reservation.nbinvite}} Guests</p>
++      </div>
++      <div>
++    </div>
++  </div>
++</div>
++ </div>
++</div>
++{% endfor %}
++    
++
++
+ {% block stylesheets %}
+ <style>
+-
++.picture
++{
++     display: flex; 
++     align-items: center;
++}
+ 
++.buttons
++{
++      display: flex; 
++      align-items: center;
++}
+ 
++#button {
++    background-color: #696cff;
++    color: white;
++    font-size: 14px; 
++    padding: 20px 20px;
++    margin-left:35px;
++}
+ 
+-
+-/* Title */
+ header h1 {
+     font-weight:300;
+     font-size:24px;
+Index: templates/reservation/_delete_form.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><form method=\"post\" action=\"{{ path('app_reservation_delete', {'id': reservation.id}) }}\" onsubmit=\"return confirm('Are you sure you want to delete this item?');\">\r\n    <input type=\"hidden\" name=\"_token\" value=\"{{ csrf_token('delete' ~ reservation.id) }}\">\r\n    <div class=\"btn-container\">\r\n    <button class=\"btn btn-cancel\">Cancel Reservation</button>\r\n    </div>\r\n</form>\r\n\r\n<style>\r\n.btn-cancel {\r\n    background-color: #696cff;\r\n    color: white;\r\n    font-size: 14px; \r\n    padding: 15px 24px;\r\n}\r\n\r\n.btn-container {\r\n    display: flex;\r\n    justify-content: center;\r\n \r\n}\r\n</style>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/reservation/_delete_form.html.twig b/templates/reservation/_delete_form.html.twig
+--- a/templates/reservation/_delete_form.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/templates/reservation/_delete_form.html.twig	(date 1715017965419)
+@@ -7,15 +7,11 @@
+ 
+ <style>
+ .btn-cancel {
+-    background-color: #696cff;
+-    color: white;
++    background-color: white;
++    color: #696cff;;
+     font-size: 14px; 
+-    padding: 15px 24px;
++    padding: 20px 20px
+ }
+ 
+-.btn-container {
+-    display: flex;
+-    justify-content: center;
+- 
+-}
++
+ </style>
+\ No newline at end of file
+Index: config/services.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># This file is the entry point to configure your own services.\r\n# Files in the packages/ subdirectory configure your dependencies.\r\n\r\n# Put parameters here that don't need to change on each machine where the app is deployed\r\n# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration\r\nparameters:\r\n upload_directory: '%kernel.project_dir%/public/uploads'\r\n\r\nservices:\r\n    # default configuration for services in *this* file\r\n    _defaults:\r\n        autowire: true      # Automatically injects dependencies in your services.\r\n        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.\r\n\r\n    # makes classes in src/ available to be used as services\r\n    # this creates a service per class whose id is the fully-qualified class name\r\n    App\\:\r\n        resource: '../src/'\r\n        exclude:\r\n            - '../src/DependencyInjection/'\r\n            - '../src/Entity/'\r\n            - '../src/Kernel.php'\r\n\r\n    # add more service definitions when explicit configuration is needed\r\n    # please note that last definitions always *replace* previous ones\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/services.yaml b/config/services.yaml
+--- a/config/services.yaml	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/config/services.yaml	(date 1715017965394)
+@@ -7,10 +7,12 @@
+  upload_directory: '%kernel.project_dir%/public/uploads'
+ 
+ services:
++
+     # default configuration for services in *this* file
+     _defaults:
+         autowire: true      # Automatically injects dependencies in your services.
+         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
++       
+ 
+     # makes classes in src/ available to be used as services
+     # this creates a service per class whose id is the fully-qualified class name
+@@ -20,6 +22,10 @@
+             - '../src/DependencyInjection/'
+             - '../src/Entity/'
+             - '../src/Kernel.php'
++             
+ 
++
++            
++
+     # add more service definitions when explicit configuration is needed
+     # please note that last definitions always *replace* previous ones
+Index: templates/front_office/Evenement/showEvent.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{% extends 'baseFront.html.twig' %}\r\n\r\n{% block title %}Events{% endblock %}\r\n\r\n{% block body %}\r\n\r\n\r\n<section class=\"light\">\r\n\t<div class=\"container py-2\">\r\n\t\t<div class=\"h1 text-center text-dark\" id=\"pageHeaderTitle\">Events</div>\r\n\r\n        {% for _venement in _venements %}\r\n\t\t<article class=\"postcard light blue\">\r\n\t\t\t<a class=\"postcard__img_link\" href=\"#\">\r\n\t\t\t\t<img src=\"{{ asset('/uploads/' ~ _venement.photo) }}\"  class=\"postcard__img\">\r\n\t\t\t</a>\r\n\t\t\t<div class=\"postcard__text t-dark\">\r\n\t\t\t\t<h1 class=\"postcard__title blue\"><a href=\"#\">{{ _venement.libelle }}</a></h1>\r\n\t\t\t\t<div class=\"postcard__subtitle small\">\r\n\t\t\t\t\t<time>\r\n\t\t\t\t\t\t<i class=\"fas fa-calendar-alt mr-2\"></i>\r\n                        {{ _venement.date ? _venement.date|date('Y-m-d') : '' }}\r\n\t\t\t\t\t</time>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"postcard__bar\"></div>\r\n                {{ _venement.description }}\r\n\t\t\t\t<div class=\"postcard__preview-txt\">\r\n\r\n                </div>\r\n\t\t\t\t<ul class=\"postcard__tagbox\">\r\n\t\t\t\t\t<li class=\"tag__item\"><i class=\"fas fa-tag mr-2\"></i>{{ _venement.localisation }}</li>\r\n                    <li class=\"tag__item play blue\"><a href=\"{{ path('app__venement_show', {'id': _venement.id}) }}\"><i class=\"fas fa-info-circle mr-2\"></i>Details</li>\r\n\t\t\t\t\t<li class=\"tag__item play blue\">\r\n                     <i class=\"fas fa-money-bill-wave mr-2\"></i>\r\n\t\t\t\t\t\t<a href=\"{{ path('app_reservation_new', {'id': _venement.id}) }}\" class=\"action-link\"><i class=\"fas fa-ticket-alt mr-2\"></i>Buy Tickets</a>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t</div>\r\n\t\t</article>\r\n        {% endfor %}\r\n\t</div>\r\n</section>\r\n \r\n{% block stylesheets %}\r\n\r\n<style>\r\n@import url(\"https://fonts.googleapis.com/css2?family=Baloo+2&display=swap\");\r\n$main-green: #79dd09 !default;\r\n$main-green-rgb-015: rgba(121, 221, 9, 0.1) !default;\r\n$main-yellow: #bdbb49 !default;\r\n$main-yellow-rgb-015: rgba(189, 187, 73, 0.1) !default;\r\n$main-red: #bd150b !default;\r\n$main-red-rgb-015: rgba(189, 21, 11, 0.1) !default;\r\n$main-blue: #0076bd !default;\r\n$main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;\r\n\r\n/* This pen */\r\nbody {\r\n\tfont-family: \"Baloo 2\", cursive;\r\n\tfont-size: 16px;\r\n\tcolor: #ffffff;\r\n\ttext-rendering: optimizeLegibility;\r\n\tfont-weight: initial;\r\n}\r\n\r\n.dark {\r\n\tbackground: #110f16;\r\n}\r\n\r\n\r\n.light {\r\n\tbackground: #f3f5f7;\r\n}\r\n\r\na, a:hover {\r\n\ttext-decoration: none;\r\n\ttransition: color 0.3s ease-in-out;\r\n}\r\n\r\n#pageHeaderTitle {\r\n\tmargin: 2rem 0;\r\n\ttext-transform: uppercase;\r\n\ttext-align: center;\r\n\tfont-size: 2.5rem;\r\n}\r\n\r\n/* Cards */\r\n.postcard {\r\n  flex-wrap: wrap;\r\n  display: flex;\r\n  \r\n  box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);\r\n  border-radius: 10px;\r\n  margin: 0 0 2rem 0;\r\n  overflow: hidden;\r\n  position: relative;\r\n  color: #ffffff;\r\n\r\n\t&.dark {\r\n\t\tbackground-color: #18151f;\r\n\t}\r\n\t&.light {\r\n\t\tbackground-color: #e1e5ea;\r\n\t}\r\n\t\r\n\t.t-dark {\r\n\t\tcolor: #18151f;\r\n\t}\r\n\t\r\n  a {\r\n    color: inherit;\r\n  }\r\n\t\r\n\th1,\t.h1 {\r\n\t\tmargin-bottom: 0.5rem;\r\n\t\tfont-weight: 500;\r\n\t\tline-height: 1.2;\r\n\t}\r\n\t\r\n\t.small {\r\n\t\tfont-size: 80%;\r\n\t}\r\n\r\n  .postcard__title {\r\n    font-size: 1.75rem;\r\n  }\r\n\r\n  .postcard__img {\r\n    max-height: 180px;\r\n    width: 100%;\r\n    object-fit: cover;\r\n    position: relative;\r\n  }\r\n\r\n  .postcard__img_link {\r\n    display: contents;\r\n  }\r\n\r\n  .postcard__bar {\r\n    width: 50px;\r\n    height: 10px;\r\n    margin: 10px 0;\r\n    border-radius: 5px;\r\n    background-color: #424242;\r\n    transition: width 0.2s ease;\r\n  }\r\n\r\n  .postcard__text {\r\n    padding: 1.5rem;\r\n    position: relative;\r\n    display: flex;\r\n    flex-direction: column;\r\n  }\r\n\r\n  .postcard__preview-txt {\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    text-align: justify;\r\n    height: 100%;\r\n  }\r\n\r\n  .postcard__tagbox {\r\n    display: flex;\r\n    flex-flow: row wrap;\r\n    font-size: 14px;\r\n    margin: 20px 0 0 0;\r\n\t\tpadding: 0;\r\n    justify-content: center;\r\n\r\n    .tag__item {\r\n      display: inline-block;\r\n      background: rgba(83, 83, 83, 0.4);\r\n      border-radius: 3px;\r\n      padding: 2.5px 10px;\r\n      margin: 0 5px 5px 0;\r\n      cursor: default;\r\n      user-select: none;\r\n      transition: background-color 0.3s;\r\n\r\n      &:hover {\r\n        background: rgba(83, 83, 83, 0.8);\r\n      }\r\n    }\r\n  }\r\n\r\n  &:before {\r\n    content: \"\";\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-image: linear-gradient(-70deg, #424242, transparent 50%);\r\n    opacity: 1;\r\n    border-radius: 10px;\r\n  }\r\n\r\n  &:hover .postcard__bar {\r\n    width: 100px;\r\n  }\r\n}\r\n\r\n@media screen and (min-width: 769px) {\r\n  .postcard {\r\n    flex-wrap: inherit;\r\n\r\n    .postcard__title {\r\n      font-size: 2rem;\r\n    }\r\n\r\n    .postcard__tagbox {\r\n      justify-content: start;\r\n    }\r\n\r\n    .postcard__img {\r\n      max-width: 300px;\r\n      max-height: 100%;\r\n      transition: transform 0.3s ease;\r\n    }\r\n\r\n    .postcard__text {\r\n      padding: 3rem;\r\n      width: 100%;\r\n    }\r\n\r\n    .media.postcard__text:before {\r\n      content: \"\";\r\n      position: absolute;\r\n      display: block;\r\n      background: #18151f;\r\n      top: -20%;\r\n      height: 130%;\r\n      width: 55px;\r\n    }\r\n\r\n    &:hover .postcard__img {\r\n      transform: scale(1.1);\r\n    }\r\n\r\n    &:nth-child(2n+1) {\r\n      flex-direction: row;\r\n    }\r\n\r\n    &:nth-child(2n+0) {\r\n      flex-direction: row-reverse;\r\n    }\r\n\r\n    &:nth-child(2n+1) .postcard__text::before {\r\n      left: -12px !important;\r\n      transform: rotate(4deg);\r\n    }\r\n\r\n    &:nth-child(2n+0) .postcard__text::before {\r\n      right: -12px !important;\r\n      transform: rotate(-4deg);\r\n    }\r\n  }\r\n}\r\n@media screen and (min-width: 1024px){\r\n\t\t.postcard__text {\r\n      padding: 2rem 3.5rem;\r\n    }\r\n\t\t\r\n\t\t.postcard__text:before {\r\n      content: \"\";\r\n      position: absolute;\r\n      display: block;\r\n      \r\n      top: -20%;\r\n      height: 130%;\r\n      width: 55px;\r\n    }\r\n\t\r\n  .postcard.dark {\r\n\t\t.postcard__text:before {\r\n\t\t\tbackground: #18151f;\r\n\t\t}\r\n  }\r\n\t.postcard.light {\r\n\t\t.postcard__text:before {\r\n\t\t\tbackground: #e1e5ea;\r\n\t\t}\r\n  }\r\n}\r\n\r\n/* COLORS */\r\n.postcard .postcard__tagbox .green.play:hover {\r\n\tbackground: $main-green;\r\n\tcolor: black;\r\n}\r\n.green .postcard__title:hover {\r\n\tcolor: $main-green;\r\n}\r\n.green .postcard__bar {\r\n\tbackground-color: $main-green;\r\n}\r\n.green::before {\r\n\tbackground-image: linear-gradient(\r\n\t\t-30deg,\r\n\t\t$main-green-rgb-015,\r\n\t\ttransparent 50%\r\n\t);\r\n}\r\n.green:nth-child(2n)::before {\r\n\tbackground-image: linear-gradient(30deg, $main-green-rgb-015, transparent 50%);\r\n}\r\n\r\n.postcard .postcard__tagbox .blue.play:hover {\r\n\tbackground: $main-blue;\r\n}\r\n.blue .postcard__title:hover {\r\n\tcolor: $main-blue;\r\n}\r\n.blue .postcard__bar {\r\n\tbackground-color: $main-blue;\r\n}\r\n.blue::before {\r\n\tbackground-image: linear-gradient(-30deg, $main-blue-rgb-015, transparent 50%);\r\n}\r\n.blue:nth-child(2n)::before {\r\n\tbackground-image: linear-gradient(30deg, $main-blue-rgb-015, transparent 50%);\r\n}\r\n\r\n.postcard .postcard__tagbox .red.play:hover {\r\n\tbackground: $main-red;\r\n}\r\n.red .postcard__title:hover {\r\n\tcolor: $main-red;\r\n}\r\n.red .postcard__bar {\r\n\tbackground-color: $main-red;\r\n}\r\n.red::before {\r\n\tbackground-image: linear-gradient(-30deg, $main-red-rgb-015, transparent 50%);\r\n}\r\n.red:nth-child(2n)::before {\r\n\tbackground-image: linear-gradient(30deg, $main-red-rgb-015, transparent 50%);\r\n}\r\n\r\n.postcard .postcard__tagbox .yellow.play:hover {\r\n\tbackground: $main-yellow;\r\n\tcolor: black;\r\n}\r\n.yellow .postcard__title:hover {\r\n\tcolor: $main-yellow;\r\n}\r\n.yellow .postcard__bar {\r\n\tbackground-color: $main-yellow;\r\n}\r\n.yellow::before {\r\n\tbackground-image: linear-gradient(\r\n\t\t-30deg,\r\n\t\t$main-yellow-rgb-015,\r\n\t\ttransparent 50%\r\n\t);\r\n}\r\n.yellow:nth-child(2n)::before {\r\n\tbackground-image: linear-gradient(\r\n\t\t30deg,\r\n\t\t$main-yellow-rgb-015,\r\n\t\ttransparent 50%\r\n\t);\r\n}\r\n\r\n@media screen and (min-width: 769px) {\r\n\t.green::before {\r\n\t\tbackground-image: linear-gradient(\r\n\t\t\t-80deg,\r\n\t\t\t$main-green-rgb-015,\r\n\t\t\ttransparent 50%\r\n\t\t);\r\n\t}\r\n\t.green:nth-child(2n)::before {\r\n\t\tbackground-image: linear-gradient(\r\n\t\t\t80deg,\r\n\t\t\t$main-green-rgb-015,\r\n\t\t\ttransparent 50%\r\n\t\t);\r\n\t}\r\n\r\n\t.blue::before {\r\n\t\tbackground-image: linear-gradient(\r\n\t\t\t-80deg,\r\n\t\t\t$main-blue-rgb-015,\r\n\t\t\ttransparent 50%\r\n\t\t);\r\n\t}\r\n\t.blue:nth-child(2n)::before {\r\n\t\tbackground-image: linear-gradient(80deg, $main-blue-rgb-015, transparent 50%);\r\n\t}\r\n\r\n\t.red::before {\r\n\t\tbackground-image: linear-gradient(-80deg, $main-red-rgb-015, transparent 50%);\r\n\t}\r\n\t.red:nth-child(2n)::before {\r\n\t\tbackground-image: linear-gradient(80deg, $main-red-rgb-015, transparent 50%);\r\n\t}\r\n\t\r\n\t.yellow::before {\r\n\t\tbackground-image: linear-gradient(\r\n\t\t\t-80deg,\r\n\t\t\t$main-yellow-rgb-015,\r\n\t\t\ttransparent 50%\r\n\t\t);\r\n\t}\r\n\t.yellow:nth-child(2n)::before {\r\n\t\tbackground-image: linear-gradient(\r\n\t\t\t80deg,\r\n\t\t\t$main-yellow-rgb-015,\r\n\t\t\ttransparent 50%\r\n\t\t);\r\n\t}\r\n}\r\n</style>\r\n\r\n {% endblock %}\r\n\r\n\r\n{% endblock %}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/front_office/Evenement/showEvent.html.twig b/templates/front_office/Evenement/showEvent.html.twig
+--- a/templates/front_office/Evenement/showEvent.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/templates/front_office/Evenement/showEvent.html.twig	(date 1715017965415)
+@@ -4,12 +4,14 @@
+ 
+ {% block body %}
+ 
+-
++<a href="{{ path('app_booking_calendar') }}" class="action-link" id="CalanderBut"><i class="far fa-calendar-alt"></i>Consult Calander </a>
+ <section class="light">
+ 	<div class="container py-2">
++	
+ 		<div class="h1 text-center text-dark" id="pageHeaderTitle">Events</div>
+-
++        
+         {% for _venement in _venements %}
++		{% if _venement.date|date('Y-m-d') > "now"|date('Y-m-d') %}
+ 		<article class="postcard light blue">
+ 			<a class="postcard__img_link" href="#">
+ 				<img src="{{ asset('/uploads/' ~ _venement.photo) }}"  class="postcard__img">
+@@ -37,6 +39,7 @@
+ 				</ul>
+ 			</div>
+ 		</article>
++		  {% endif %}
+         {% endfor %}
+ 	</div>
+ </section>
+@@ -54,7 +57,7 @@
+ $main-blue: #0076bd !default;
+ $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
+ 
+-/* This pen */
++
+ body {
+ 	font-family: "Baloo 2", cursive;
+ 	font-size: 16px;
+@@ -63,6 +66,11 @@
+ 	font-weight: initial;
+ }
+ 
++#CalanderBut
++{
++  color : black ;
++}
++
+ .dark {
+ 	background: #110f16;
+ }
+Index: src/Controller/ReservationController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nnamespace App\\Controller;\r\n\r\nuse App\\Entity\\Reservation;\r\nuse App\\Entity\\user\\User;\r\nuse App\\Repository\\EvenementRepository;\r\nuse App\\Form\\ReservationType;\r\nuse Doctrine\\ORM\\EntityManagerInterface;\r\nuse Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController;\r\nuse Symfony\\Component\\HttpFoundation\\Request;\r\nuse Symfony\\Component\\HttpFoundation\\Response;\r\nuse Symfony\\Component\\Routing\\Annotation\\Route;\r\n\r\n#[Route('/reservation')]\r\nclass ReservationController extends AbstractController\r\n{\r\n    #[Route('/', name: 'app_reservation_index', methods: ['GET'])]\r\n    public function index(EntityManagerInterface $entityManager): Response\r\n    {\r\n        $userId = 44; \r\n        $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findBy(['idClient' => $userId]);\r\n\r\n    return $this->render('reservation/index.html.twig', [\r\n        'reservations' => $reservations,\r\n    ]);\r\n    }\r\n\r\n    #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]\r\n    public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository): Response\r\n    {\r\n       \r\n        $evenementId = $request->query->get('id'); \r\n        $evenement = $evenementRepository->find($evenementId);\r\n        \r\n       // $eventId = $request->request->get('eventId');\r\n        $reservation = new Reservation();\r\n      //  $event = $evenementRepository->find($eventId );\r\n      if ($request->isMethod('POST')) {\r\n        $user = $entityManager->getRepository(User::class)->find(44);\r\n        $numberOfGuests = $request->request->get('guests');\r\n        $totalPrice = $request->request->get('totalPrice');\r\n       \r\n        $reservation->setIdClient($user); \r\n        $reservation->setIdEvenement($evenement);\r\n        $reservation->setNbinvite($numberOfGuests ?? 0);\r\n        $reservation->setTotalPrix($totalPrice ?? 0);\r\n        $reservation->setDate(new \\DateTime());\r\n        \r\n        $entityManager = $this->getDoctrine()->getManager();\r\n        $entityManager->persist($reservation);\r\n        $entityManager->flush();\r\n\r\n        return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);\r\n        \r\n\r\n        }\r\n        \r\n\r\n        return $this->renderForm('reservation/new.html.twig', [\r\n            'reservation' => $reservation,\r\n            '_venement' => $evenement,\r\n            \r\n        ]);\r\n    }\r\n\r\n    #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]\r\n    public function show(Reservation $reservation): Response\r\n    {\r\n        return $this->render('reservation/show.html.twig', [\r\n            'reservation' => $reservation,\r\n        ]);\r\n    }\r\n\r\n    #[Route('/{id}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]\r\n    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response\r\n    {\r\n        $form = $this->createForm(ReservationType::class, $reservation);\r\n        $form->handleRequest($request);\r\n\r\n        if ($form->isSubmitted() && $form->isValid()) {\r\n            $entityManager->flush();\r\n\r\n            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);\r\n        }\r\n\r\n        return $this->renderForm('reservation/edit.html.twig', [\r\n            'reservation' => $reservation,\r\n            'form' => $form,\r\n        ]);\r\n    }\r\n\r\n    #[Route('/{id}', name: 'app_reservation_delete', methods: ['POST'])]\r\n    public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response\r\n    {\r\n        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {\r\n            $entityManager->remove($reservation);\r\n            $entityManager->flush();\r\n        }\r\n\r\n        return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);\r\n    }\r\n\r\n   \r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Controller/ReservationController.php b/src/Controller/ReservationController.php
+--- a/src/Controller/ReservationController.php	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/src/Controller/ReservationController.php	(date 1715017965400)
+@@ -11,6 +11,9 @@
+ use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\Routing\Annotation\Route;
++use Symfony\Component\Mailer\MailerInterface;
++use Symfony\Component\Mime\Email;
++
+ 
+ #[Route('/reservation')]
+ class ReservationController extends AbstractController
+@@ -26,8 +29,9 @@
+     ]);
+     }
+ 
++  
+     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+-    public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository): Response
++    public function new(Request $request, EntityManagerInterface $entityManager , EvenementRepository $evenementRepository  ): Response
+     {
+        
+         $evenementId = $request->query->get('id'); 
+@@ -46,9 +50,12 @@
+         $reservation->setNbinvite($numberOfGuests ?? 0);
+         $reservation->setTotalPrix($totalPrice ?? 0);
+         $reservation->setDate(new \DateTime());
+-        
++
++       
++
+         $entityManager = $this->getDoctrine()->getManager();
+         $entityManager->persist($reservation);
++
+         $entityManager->flush();
+ 
+         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+Index: templates/login_signup/index.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{% extends 'baseFront.html.twig' %}\r\n{% block head %}\r\n<!DOCTYPE html>\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css\">\r\n    <link rel=\"stylesheet\" href=\"../../public/assets/js/style.css\">\r\n    <title>Modern Login Page | AsmrProg</title>\r\n    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');\r\n        .form{\r\n            margin-left: 8%;\r\n        }\r\n        h1, h2, h3, h4, h5, h6 {\r\n            color: #212128;\r\n            margin-top: 20px;\r\n            font-size: 28px;\r\n            font-family: \"Poppins\",sans-serif;\r\n            font-weight:600;\r\n            text-transform: uppercase;\r\n        }\r\n        p{\r\n            color : white;\r\n        }\r\n        *{\r\n            margin: 0;\r\n            padding: 0;\r\n            box-sizing: border-box;\r\n            font-family: 'Montserrat', sans-serif;\r\n        }\r\n\r\n        .container{\r\n            margin:50px;\r\n            background-color: #fff;\r\n            border-radius: 30px;\r\n            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);\r\n            position: relative;\r\n            overflow: hidden;\r\n            width: 968px;\r\n            max-width: 100%;\r\n            min-height: 580px;\r\n        }\r\n\r\n        .container p{\r\n            font-size: 14px;\r\n            line-height: 20px;\r\n            letter-spacing: 0.3px;\r\n            margin: 20px 0;\r\n        }\r\n\r\n        .container span{\r\n            font-size: 12px;\r\n        }\r\n\r\n        .container a{\r\n            color: #333;\r\n            font-size: 13px;\r\n            text-decoration: none;\r\n            margin: 15px 0 10px;\r\n        }\r\n\r\n        .container button{\r\n            background-color: #9F78FF;\r\n            color: #fff;\r\n            font-size: 12px;\r\n            padding: 10px 45px;\r\n            border: 1px solid transparent;\r\n            border-radius: 8px;\r\n            font-weight: 600;\r\n            letter-spacing: 0.5px;\r\n            text-transform: uppercase;\r\n            margin-top: 10px;\r\n            cursor: pointer;\r\n        }\r\n\r\n        .container button.hidden{\r\n            background-color: transparent;\r\n            border-color: #fff;\r\n        }\r\n\r\n\r\n        .container form{\r\n            background-color: #fff;\r\n            display: flex;\r\n            align-items: center;\r\n            justify-content: center;\r\n            flex-direction: column;\r\n            padding: 0 40px;\r\n            height: 100%;\r\n        }\r\n\r\n        .container input{\r\n            background-color: #eee;\r\n            border: none;\r\n            margin: 8px 0;\r\n            padding: 10px 15px;\r\n            font-size: 13px;\r\n            border-radius: 8px;\r\n            width: 100%;\r\n            outline: none;\r\n        }\r\n\r\n        .form-container{\r\n            position: absolute;\r\n            top: 0;\r\n            height: 100%;\r\n            transition: all 0.6s ease-in-out;\r\n        }\r\n\r\n        .sign-in{\r\n            left: 0;\r\n            width: 50%;\r\n            z-index: 2;\r\n        }\r\n\r\n        .container.active .sign-in{\r\n            transform: translateX(100%);\r\n        }\r\n\r\n        .sign-up{\r\n            left: 0;\r\n            width: 50%;\r\n            opacity: 0;\r\n            z-index: 1;\r\n        }\r\n\r\n        .container.active .sign-up{\r\n            transform: translateX(100%);\r\n            opacity: 1;\r\n            z-index: 5;\r\n            animation: move 0.6s;\r\n        }\r\n\r\n        @keyframes move{\r\n            0%, 49.99%{\r\n                opacity: 0;\r\n                z-index: 1;\r\n            }\r\n            50%, 100%{\r\n                opacity: 1;\r\n                z-index: 5;\r\n            }\r\n        }\r\n\r\n        .social-icons{\r\n            margin: 20px 0;\r\n        }\r\n\r\n        .social-icons a{\r\n            border: 1px solid #ccc;\r\n            border-radius: 20%;\r\n            display: inline-flex;\r\n            justify-content: center;\r\n            align-items: center;\r\n            margin: 0 3px;\r\n            width: 40px;\r\n            height: 40px;\r\n        }\r\n\r\n        .toggle-container{\r\n            position: absolute;\r\n            top: 0;\r\n            left: 50%;\r\n            width: 50%;\r\n            height: 100%;\r\n            overflow: hidden;\r\n            transition: all 0.6s ease-in-out;\r\n            border-radius: 150px 0 0 100px;\r\n            z-index: 1000;\r\n        }\r\n\r\n        .container.active .toggle-container{\r\n            transform: translateX(-100%);\r\n            border-radius: 0 150px 100px 0;\r\n        }\r\n\r\n        .toggle{\r\n            background-color: #512da8;\r\n            height: 100%;\r\n            background: linear-gradient(to right, #5c6bc0, #512da8);\r\n            color: #fff;\r\n            position: relative;\r\n            left: -100%;\r\n            height: 100%;\r\n            width: 200%;\r\n            transform: translateX(0);\r\n            transition: all 0.6s ease-in-out;\r\n        }\r\n\r\n        .container.active .toggle{\r\n            transform: translateX(50%);\r\n        }\r\n\r\n        .toggle-panel{\r\n            position: absolute;\r\n            width: 50%;\r\n            height: 100%;\r\n            display: flex;\r\n            align-items: center;\r\n            justify-content: center;\r\n            flex-direction: column;\r\n            padding: 0 30px;\r\n            text-align: center;\r\n            top: 0;\r\n            transform: translateX(0);\r\n            transition: all 0.6s ease-in-out;\r\n        }\r\n\r\n        .toggle-left{\r\n            transform: translateX(-200%);\r\n        }\r\n\r\n        .container.active .toggle-left{\r\n            transform: translateX(0);\r\n        }\r\n\r\n        .toggle-right{\r\n            right: 0;\r\n            transform: translateX(0);\r\n        }\r\n\r\n        .container.active .toggle-right{\r\n            transform: translateX(200%);\r\n        }</style>\r\n</head>\r\n{% endblock %}\r\n\r\n\r\n{% block body %}\r\n<div class=\"form\">\r\n<div class=\"container\" id=\"container\">\r\n    <div class=\"form-container sign-in\">\r\n        <form method=\"post\">\r\n            <h1>Sign In</h1>\r\n            <div class=\"social-icons\">\r\n                <a href=\"#\" class=\"icon\"><i class=\"fa-brands fa-google-plus-g\"></i></a>\r\n                <a href=\"#\" class=\"icon\"><i class=\"fa-brands fa-facebook-f\"></i></a>\r\n                <a href=\"#\" class=\"icon\"><i class=\"fa-brands fa-github\"></i></a>\r\n                <a href=\"#\" class=\"icon\"><i class=\"fa-brands fa-linkedin-in\"></i></a>\r\n            </div>\r\n\r\n            <span>or use your email password</span>\r\n            <input type=\"hidden\" name=\"_csrf_token\" value=\"{{ csrf_token('authenticate') }}\">\r\n            <input name=\"adresseMail\" type=\"email\" value=\"{{ last_username }}\" placeholder=\"Email\">\r\n            <input name=\"password\" type=\"password\" placeholder=\"Password\">\r\n            <a href=\"{{ path('app_forgot_password_request') }}\">Forget Your Password?</a>\r\n            <button type=\"submit\">Sign In</button>\r\n            {% if error %}\r\n                <div class=\"alert alert-danger\" style=\"width: 160px;\r\n  font-size: 14px;\r\n  margin-top: 10px;\">{{ error.messageKey|trans(error.messageData, 'security') }}</div>\r\n            {% endif %}\r\n\r\n        </form>\r\n\r\n    </div>\r\n    <div class=\"toggle-container\">\r\n        <div class=\"toggle\">\r\n            <div class=\"toggle-panel toggle-left\">\r\n                <h1>Welcome Back!</h1>\r\n                <p>Enter your personal details to use all of site features</p>\r\n                <button href=\"/login\" class=\"hidden\" id=\"login\">Sign In</button>\r\n            </div>\r\n            <div class=\"toggle-panel toggle-right\">\r\n                <h1>Hello, Friend!</h1>\r\n                <p>Register with your personal details to use all of site features</p>\r\n                <button href=\"/login\" class=\"hidden\" id=\"register\">Sign Up</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<script>\r\n    const container = document.getElementById('container');\r\n    const registerBtn = document.getElementById('register');\r\n    const loginBtn = document.getElementById('login');\r\n\r\n    registerBtn.addEventListener('click', () => {\r\n        container.classList.add(\"active\");\r\n    });\r\n\r\n    loginBtn.addEventListener('click', () => {\r\n        container.classList.remove(\"active\");\r\n    });</script>\r\n</div>\r\n</html>\r\n\r\n{% endblock %}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/login_signup/index.html.twig b/templates/login_signup/index.html.twig
+--- a/templates/login_signup/index.html.twig	(revision cc2b099ca23ef1a4ca6f757582d6c008d6dc6a66)
++++ b/templates/login_signup/index.html.twig	(date 1715017965417)
+@@ -230,8 +230,30 @@
+ {% block body %}
+ <div class="form">
+ <div class="container" id="container">
++    <div class="form-container sign-up">
++        <form>
++            <h1>Create Account</h1>
++            <div class="social-icons">
++                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
++                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
++                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
++                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
++            </div>
++            <span>or use your email for registeration</span>
++            <input type="text" placeholder="Nom">
++            <input type="text" placeholder="Prenom">
++            <input type="email" placeholder="Email">
++            <input type="password" placeholder="Password">
++            <input type="password" placeholder="Confirm Password">
++            <div class="mb-3">
++                <input class="form-control" type="file" id="formFile">
++            </div>
++
++            <button>Sign Up</button>
++        </form>
++    </div>
+     <div class="form-container sign-in">
+-        <form method="post">
++        <form method="post"">
+             <h1>Sign In</h1>
+             <div class="social-icons">
+                 <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+@@ -244,7 +266,12 @@
+             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+             <input name="adresseMail" type="email" value="{{ last_username }}" placeholder="Email">
+             <input name="password" type="password" placeholder="Password">
+-            <a href="{{ path('app_forgot_password_request') }}">Forget Your Password?</a>
++            <a href="#">Forget Your Password?</a>
++        {% if app.user %}
++            <div class="mb-3">
++                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
++            </div>
++        {% endif %}
+             <button type="submit">Sign In</button>
+             {% if error %}
+                 <div class="alert alert-danger" style="width: 160px;
+@@ -253,7 +280,6 @@
+             {% endif %}
+ 
+         </form>
+-
+     </div>
+     <div class="toggle-container">
+         <div class="toggle">
+@@ -271,8 +297,7 @@
+     </div>
+ </div>
+ 
+-<script>
+-    const container = document.getElementById('container');
++<script>const container = document.getElementById('container');
+     const registerBtn = document.getElementById('register');
+     const loginBtn = document.getElementById('login');
+ 
