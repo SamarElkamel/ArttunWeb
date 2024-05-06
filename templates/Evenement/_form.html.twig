@@ -1,87 +1,59 @@
-{# basic_form_template.twig #}
+{% for child in form.children %}
+    {% if child.vars.errors|length > 0 %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in child.vars.errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endfor %}
 
-<div class="text-center"> 
-<div class="col-md-6 d-inline-block">
-<div class="card mb-3"> 
- <br>
-<div class="card-header d-flex justify-content-between align-items-center">
- </div>
-<div class="card-body">
 {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
-      <div class="mb-3 text-start">
+    <div class="form-group">
         {{ form_label(form.libelle , 'Title') }}
-       </div>
-        <div class="mb-3">
-        <div class="input-group input-group-merge">
-        {{ form_widget(form.libelle, {'attr': {'class': 'form-control' ,'placeholder': 'Enter Title'}}) }}
-        </div>
-        {{ form_errors(form.libelle) }}
-        </div>
+        {{ form_widget(form.libelle, {'attr': {'class': 'form-control'}}) }}
        
-         <div class="mb-3 text-start">
+      
+    </div>
+    <div class="form-group">
         {{ form_label(form.description, 'Description') }}
-       </div>
-        <div class="mb-3">
-        <div class="input-group input-group-merge">
-         {{ form_widget(form.description, {'attr': {'class': 'form-control', 'style': 'height: 150px;', 'placeholder': 'Enter description...'}}) }}
-          </div>
-         {{ form_errors(form.description) }}
-         </div>
-    
-
-     <div class="mb-3 text-start">
-        {{ form_label(form.date, 'Date') }}
-        </div>
-        <div class="mb-3 text-center">
-        <div class="input-group input-group-merge">
-        {{ form_widget(form.date, {'attr': {'type': 'date'}}) }}
-        </div>
-        {{ form_errors(form.date) }}
-        </div>
- 
-    
-       <div class="mb-3 text-start">
-        {{ form_label(form.frais, 'Costs') }}
-       </div>
-        <div class="mb-3">
-        <div class="input-group input-group-merge">
-        {{ form_widget(form.frais, {'attr': {'class': 'form-control' , 'placeholder': 'Enter Cost'}}) }}
-        </div>
-        {{ form_errors(form.frais) }}
-        </div>
-
-        <div class="mb-3 text-start">
-        {{ form_label(form.localisation, 'Location') }}
-       </div>
-        <div class="mb-3">
-        <div class="input-group input-group-merge">
-        {{ form_widget(form.localisation, {'attr': {'class': 'form-control' ,'placeholder': 'Enter location'}}) }}
-        </div>
-        {{ form_errors(form.localisation) }}
-        </div>
-
-          <div class="mb-3 text-start">
-        {{ form_label(form.siteweb, 'Website') }}
-       </div>
-        <div class="mb-3">
-        <div class="input-group input-group-merge">
-        {{ form_widget(form.siteweb, {'attr': {'class': 'form-control' , 'placeholder': 'Enter website'}}) }}
-        </div>
-        {{ form_errors(form.siteweb) }}
-        </div>
-
-      <div class="mb-3">
-<div class="mb-3">
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+    </div>
+  
+   <div class="form-group">
     {{ form_label(form.photo, 'Photo') }}
-                    {{ form_widget(form.photo, {'attr': {'class': 'form-control-file', 'onchange': 'previewImage(event)'}}) }}
-                    <div id="image-preview"></div>
-                </div>
-              
-</div>
-<div class="text-center">
+    <div>
+        {% if form.photo.vars.value %}
+               <img src="{{ asset(form.photo.vars.value) }}" alt="Current Photo" style="max-width: 250px; display: inline-block;">
+        {% else %}
+            <p>No photo uploaded.</p>
+        {% endif %}
+        <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload Photo</button>
+        {{ form_widget(form.photo, {'attr': {'style': 'display: none;'}}) }}
+        <input type="file" id="photoUpload" style="display: none;" accept="image/*" />
+    </div>
+    
+     <div class="form-group">
+        {{ form_label(form.date, 'Date') }}
+        {{ form_widget(form.date, {'attr': {'type': 'date'}}) }}
+    </div>
+     <div class="form-group">
+          {{ form_label(form.frais, 'Costs') }}
+          {{ form_widget(form.frais, {'attr': {'class': 'form-control'}}) }}
+     </div>
+     <div class="form-group">
+          {{ form_label(form.localisation, 'Location') }}
+          {{ form_widget(form.localisation, {'attr': {'class': 'form-control'}}) }}
+     </div>
+     <div class="form-group">
+          {{ form_label(form.siteweb, 'Website') }}
+          {{ form_widget(form.siteweb, {'attr': {'class': 'form-control'}}) }}
+     </div>
+    
 
     <button class="btn btn-primary" id="save">{{ button_label|default('Save') }}</button>
-</div>
 {{ form_end(form) }}
 
 {% block stylesheets %}
@@ -95,37 +67,18 @@
     }
 
    </style>
-
- {% endblock %}
-   
-{% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    function previewImage(event) {
-        var input = event.target;
-        var reader = new FileReader();
-        reader.onload = function(){
-            var imgElement = document.getElementById("image-preview");
-            imgElement.innerHTML = '<img src="' + reader.result + '" class="img-fluid" alt="Preview">';
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
     $(document).ready(function() {
         $('#uploadButton').click(function() {
-            $('#photo').click();
+            $('#photoUpload').click();
         });
 
-        $('#photo').change(function() {
+        $('#photoUpload').change(function() {
             var fileName = $(this).val().split('\\').pop();
-            $('#uploadButton').text('Upload Photo: ' + fileName);
-        });
-
-        $('#save').click(function() {
-            $('#event_form').submit();
+            $('#uploadButton').text(fileName);
         });
     });
-    </script>
-{% endblock %}
+</script>
 
-
+ {% endblock %}
