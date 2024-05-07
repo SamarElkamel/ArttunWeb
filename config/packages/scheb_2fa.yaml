@@ -4,7 +4,7 @@ scheb_two_factor:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
         - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
     email:
-        enabled: true                  # If email authentication should be enabled, default false
+        enabled: false                  # If email authentication should be enabled, default false
         sender_email: haroun.trabelsi@esprit.tn   # Sender email address
         sender_name: John Doe          # Sender name
         digits: 4
