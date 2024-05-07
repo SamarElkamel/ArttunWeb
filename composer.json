@@ -14,7 +14,6 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.18.0",
         "dompdf/dompdf": "^2.0",
-        "gregwar/captcha-bundle": "*",
         "knplabs/knp-paginator-bundle": "^5.9",
         "pagerfanta/doctrine-orm-adapter": "^4.5",
         "phpdocumentor/reflection-docblock": "^5.3",
