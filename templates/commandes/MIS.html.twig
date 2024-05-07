@@ -23,10 +23,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for commande in commandes %}
+                                    {% for commande in commands %}
                                         <tr>
                                             <td><input type="checkbox" name="selected_commands[]" value="{{ commande.id }}" style="width: 20px; height: 20px;"></td>
-                                            <td>{{ commande.refernce }}</td>
+                                            <td>{{ commande.reference }}</td>
                                             <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
                                             <td>{{ commande.prix }}</td>
                                         </tr>

@@ -325,7 +325,8 @@
             <tbody>
                 {% for panier in paniers %}
                     <tr>
-                        <td><img src="{{ asset(panier.refproduit.image) }}" alt="Product Image"></td>
+                    
+                        <td><img src="{{ asset('uploads/' ~ panier.refproduit.image) }}" alt="Product Image"></td>
                         <td>{{ panier.refproduit.nom }}</td>
                         <td>{{ panier.refproduit.prix }}</td>
                         <td>

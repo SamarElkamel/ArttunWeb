@@ -70,15 +70,7 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a href="index.html">Home</a></li> 
-                                        <li><a href="blog.html">Shop</a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">Painting</a></li>
-                                                <li><a href="blog_details.html">Sculpture</a></li>
-                                                <li><a href="elements.html">Drawing materials</a></li>
-                                                <li><a href="product_details.html">Plastic art</a></li>
-                                            </ul>
-                                        </li>
+                                        <li><a href="{{ path('app_produit_indexfront') }}">Home</a> 
                                         <li><a href="/show/events/front">Events</a></li>
                                         <li><a href="{{ path('fetchf') }}">Claims</a></li>
                                     
@@ -117,7 +109,7 @@
                                            <img src="/assets/img/icons/user/profile.png" alt="User Icon">
                                             <ul class="submenu">
                                                 <li><a href="#">My Profile</a></li>
-                                               {# <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>#}
+                                               <li><a href="{{ path('app_reservation_index') }}">Reservations History</a></li>
                                                 <li><a href="#">Log Out</a></li>
                                             </ul>
                                         </li>

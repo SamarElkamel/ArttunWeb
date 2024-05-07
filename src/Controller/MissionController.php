@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Mission;
-use App\Entity\Commandes;
-use App\Controller\CommandesController;
+use App\Entity\Command;
+use App\Controller\CommandController;
 use App\Entity\Livreur;
 
 use App\Repository\MissionRepository;
@@ -130,15 +130,15 @@ echo 'Message SID: ' . $message->sid;
             // Boucle sur les ID des commandes sélectionnées
             foreach ($selectedCommandIds as $commandId) {
                 // Récupérer l'objet Commandes correspondant à partir de son ID
-                $commande = $entityManager->getRepository(Commandes::class)->find($commandId);
+                $command = $entityManager->getRepository(Command::class)->find($commandId);
     
                 // Vérifier si la commande existe
-                if ($commande) {
+                if ($command) {
                     // Définir l'ID de la mission sur la commande
-                    $commande->setMission($mission);
+                    $command->setIdMission($mission);
     
                     // Mettre à jour la commande dans la base de données
-                    $entityManager->persist($commande);
+                    $entityManager->persist($command);
                 }
             }
     

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-use App\Entity\Commandes;
+use App\Entity\Command;
 use App\Repository\MissionRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +22,7 @@ class Mission
     #[ORM\JoinColumn(name: 'id_livreur', referencedColumnName: 'id', nullable: true)]
     private ?Livreur $livreur = null;
     
-    #[ORM\OneToMany(targetEntity: Commandes::class, mappedBy: 'mission')]
+    #[ORM\OneToMany(targetEntity: Command::class, mappedBy: 'mission')]
     private Collection $commandes;
 
     public function __construct()
@@ -58,7 +58,7 @@ class Mission
     }
 
     
-    public function addCommande(Commandes $commande): self
+    public function addCommande(Command $commande): self
     {
         if (!$this->commandes->contains($commande)) {
             $this->commandes[] = $commande;
@@ -69,7 +69,7 @@ class Mission
     }
 
     
-    public function removeCommande(Commandes $commande): self
+    public function removeCommande(Command $commande): self
     {
         if ($this->commandes->removeElement($commande)) {
             // Définit le côté "mission" de la relation à null

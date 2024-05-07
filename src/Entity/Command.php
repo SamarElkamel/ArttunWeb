@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\user\User;
+use App\Entity\Mission;
 use App\Repository\CommandRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,7 +34,9 @@ class Command
     #[ORM\JoinColumn(name: "id_client", referencedColumnName: "id",nullable: false)]
     private ?User $id_client = null;
 
- 
+    #[ORM\ManyToOne(inversedBy: 'commands')]
+    #[ORM\JoinColumn(name: "id_mission", referencedColumnName: "id_mission",nullable: false)]
+    private ?Mission $id_mission = null;
 
  
 
@@ -100,7 +103,17 @@ class Command
         return $this;
     }
 
+    public function getIdMission(): ?Mission
+    {
+        return $this->id_mission;
+    }
 
+    public function setIdMission(?Mission $id_mission): static
+    {
+        $this->id_mission = $id_mission;
+
+        return $this;
+    }
 
    
 

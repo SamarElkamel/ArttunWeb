@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Livreur;
 use App\Repository\LivreurRepository;
 use App\Repository\MissionRepository;
-use App\Repository\CommandesRepository;
+use App\Repository\CommandRepository;
 
 use App\Form\LivreurType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,7 +43,7 @@ class LivreurController extends AbstractController
     public function stat(
         LivreurRepository $livreurRepository,
         MissionRepository $missionRepository,
-        CommandesRepository $commandeRepository
+        CommandRepository $commandRepository
     ): Response {
         // Récupérer le nombre total de livreurs
         $nombreLivreurs = count($livreurRepository->findAll());
@@ -52,7 +52,7 @@ class LivreurController extends AbstractController
         $nombreMissions = count($missionRepository->findAll());
 
         // Récupérer le nombre total de commandes
-        $nombreCommandes = count($commandeRepository->findAll());
+        $nombreCommandes = count($commandRepository->findAll());
 
         $nombreMissionsLivre = $missionRepository->countByEtat('livré');
 

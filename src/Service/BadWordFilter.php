@@ -13,7 +13,7 @@ class BadWordFilter
     public function filterBadWords(string $text): string
 {
     // Escape special characters in the bad words for regex
-    $badWords = ['ahmed', 'amineghassen', 'badword3'];
+    $badWords = ['idiot', 'dump', 'badword3'];
     $escapedBadWords = array_map('preg_quote', $badWords);
 
     // Create a regex pattern to match the bad words as whole words or as part of a word

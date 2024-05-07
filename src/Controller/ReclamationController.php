@@ -31,7 +31,9 @@ use Symfony\Component\Mime\Email;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
-{ private  $idClient =5;
+{ 
+    
+    private  $idClient =5;
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
     public function index(ReclamationRepository $reclamationRepository, BadWordFilter $badWordFilter): Response
     {
@@ -45,7 +47,7 @@ class ReclamationController extends AbstractController
     #[Route('/front', name: 'app_reclamation_front')]
     public function indexf(ReclamationRepository $reclamationRepository): Response
     {
-        return $this->render('basaFront.html.twig', [
+        return $this->render('baseFront.html.twig', [
             'reclamations' => $reclamationRepository->findAll()
            
         ]);

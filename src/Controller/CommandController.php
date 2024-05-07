@@ -42,8 +42,15 @@ class CommandController extends AbstractController
                     ]);
                 }
                     
-
-    
+                #[Route('/mis', name: 'app_command_commandMIS', methods: ['GET'])]
+                public function mision(CommandRepository $commandRepository): Response
+                {
+                    $commands = $commandRepository->findAll();
+                    return $this->render('commandes/MIS.html.twig', [
+                        'commands' => $commands,
+                       
+                    ]);
+                }
     
     
     
@@ -147,6 +154,11 @@ class CommandController extends AbstractController
         ]);
     }*/
     
+   
+
+
+   
+
     
 
    

@@ -20,7 +20,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         var reservationsData = {{ reservationsByDate|json_encode|raw }};
         var expensesData = {{ expensesByEvent|json_encode|raw }};
-        var reservationsPercentageData = {{ reservationsPercentageByEvent|json_encode|raw }};
+        
 
     
         reservationsData.forEach(function(entry) {
