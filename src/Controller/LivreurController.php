@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Livreur;
+use App\Entity\user\User;
 use App\Repository\LivreurRepository;
 use App\Repository\MissionRepository;
 use App\Repository\CommandRepository;
@@ -83,6 +84,7 @@ class LivreurController extends AbstractController
     #[Route('/new', name: 'app_livreur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = new User();
         $livreur = new Livreur();
         $form = $this->createForm(LivreurType::class, $livreur);
         $form->handleRequest($request);
@@ -97,10 +99,17 @@ class LivreurController extends AbstractController
                 );
                 $livreur->setPhoto($filename);
             }
+            $user->setAdresseMail($livreur->getMail());
+            $user->setMdp($livreur->getMdp());
+            $user->setType("livreur");
+            $user->setNom($livreur->getNom());
+            $user->setPhoto($livreur->getPhoto());
+            $user->setPrenom($livreur->getPrenom());
+            $entityManager->persist($user);
             $entityManager->persist($livreur);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_livreur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('livreur/new.html.twig', [
