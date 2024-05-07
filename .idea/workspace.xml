@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e32c0db-cff3-4a40-92f7-965f8937eb00" name="Changes" comment="various upgrades">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.override.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.override.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+    <list default="true" id="4e32c0db-cff3-4a40-92f7-965f8937eb00" name="Changes" comment="USER FIX">
+      <change afterPath="$PROJECT_DIR$/src/Form/UserType1.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user_crud/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/reset_password.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/reset_password.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/scheb_2fa.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/scheb_2fa.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseFront.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFront.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/scheb/2fa-bundle/Resources/views/Authentication/form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/scheb/2fa-bundle/Resources/views/Authentication/form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/scheb/2fa-email/Mailer/SymfonyAuthCodeMailer.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/scheb/2fa-email/Mailer/SymfonyAuthCodeMailer.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +46,7 @@
     </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="User" />
+        <entry key="$PROJECT_DIR$" value="Main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -215,6 +216,17 @@
       <path value="$PROJECT_DIR$/vendor/psr/clock" />
       <path value="$PROJECT_DIR$/vendor/symfony/mercure" />
       <path value="$PROJECT_DIR$/vendor/symfony/mercure-bundle" />
+      <path value="$PROJECT_DIR$/vendor/gregwar/captcha-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/google-mailer" />
+      <path value="$PROJECT_DIR$/vendor/spomky-labs/otphp" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/core" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/doctrine-orm-adapter" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -229,7 +241,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "newmain",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -448,6 +460,8 @@
     <MESSAGE value="picture upload work + 2fa perma work idk why + session working better + admin changed into ROLE ADMIN might cause problem in future" />
     <MESSAGE value="livreur dyal l 9lawi" />
     <MESSAGE value="various upgrades" />
-    <option name="LAST_COMMIT_MESSAGE" value="various upgrades" />
+    <MESSAGE value="nothing" />
+    <MESSAGE value="USER FIX" />
+    <option name="LAST_COMMIT_MESSAGE" value="USER FIX" />
   </component>
 </project>
