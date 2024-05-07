@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e58ecd-df67-4467-b298-8e4de0d5b5df" name="Changes" comment="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER" />
+    <list default="true" id="31e58ecd-df67-4467-b298-8e4de0d5b5df" name="Changes" comment="Merge remote-tracking branch 'origin/Main' into Main&#10;&#10;# Conflicts:&#10;#&#9;.idea/jsLinters/jshint.xml&#10;#&#9;.idea/php.xml&#10;#&#9;.idea/phpspec.xml&#10;#&#9;.idea/workspace.xml&#10;#&#9;composer.json&#10;#&#9;composer.lock&#10;#&#9;src/Entity/user/User.php&#10;#&#9;src/Form/UserType1.php&#10;#&#9;templates/baseFront.html.twig&#10;#&#9;templates/user_crud/index.html.twig">
+      <change beforePath="$PROJECT_DIR$/.idea/ArttunWeb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ArttunWeb.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -242,7 +245,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715034805112</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="FIXXX">
+      <option name="closed" value="true" />
+      <created>1715092016838</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715092016838</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Merge remote-tracking branch 'origin/Main' into Main&#10;&#10;# Conflicts:&#10;#&#9;.idea/jsLinters/jshint.xml&#10;#&#9;.idea/php.xml&#10;#&#9;.idea/phpspec.xml&#10;#&#9;.idea/workspace.xml&#10;#&#9;composer.json&#10;#&#9;composer.lock&#10;#&#9;src/Entity/user/User.php&#10;#&#9;src/Form/UserType1.php&#10;#&#9;templates/baseFront.html.twig&#10;#&#9;templates/user_crud/index.html.twig">
+      <option name="closed" value="true" />
+      <created>1715092240643</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715092240643</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +281,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="various upgrades" />
     <MESSAGE value="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER" />
-    <option name="LAST_COMMIT_MESSAGE" value="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER" />
+    <MESSAGE value="FIXXX" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/Main' into Main&#10;&#10;# Conflicts:&#10;#&#9;.idea/jsLinters/jshint.xml&#10;#&#9;.idea/php.xml&#10;#&#9;.idea/phpspec.xml&#10;#&#9;.idea/workspace.xml&#10;#&#9;composer.json&#10;#&#9;composer.lock&#10;#&#9;src/Entity/user/User.php&#10;#&#9;src/Form/UserType1.php&#10;#&#9;templates/baseFront.html.twig&#10;#&#9;templates/user_crud/index.html.twig" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/Main' into Main&#10;&#10;# Conflicts:&#10;#&#9;.idea/jsLinters/jshint.xml&#10;#&#9;.idea/php.xml&#10;#&#9;.idea/phpspec.xml&#10;#&#9;.idea/workspace.xml&#10;#&#9;composer.json&#10;#&#9;composer.lock&#10;#&#9;src/Entity/user/User.php&#10;#&#9;src/Form/UserType1.php&#10;#&#9;templates/baseFront.html.twig&#10;#&#9;templates/user_crud/index.html.twig" />
   </component>
 </project>
