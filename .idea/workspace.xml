@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e58ecd-df67-4467-b298-8e4de0d5b5df" name="Changes" comment="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER">
-      <change afterPath="$PROJECT_DIR$/src/Controller/ReclamationController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/TypeReclamationController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Reclamation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/TypeReclamation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/ReclamationType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/ReclamationRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/TypeReclamationRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/BadWordFilter.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/afficherRec.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/editfront.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/login.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/reply.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/reclamation/show.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/type_reclamation/Typeform.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/type_reclamation/afficherType.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/type_reclamation/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-    </list>
+    <list default="true" id="31e58ecd-df67-4467-b298-8e4de0d5b5df" name="Changes" comment="MASSIVE CHANGES ALL TASKS APPLIED ASIDE FROM PRODUIT/PANIER" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -220,23 +193,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\FanTasy CriT\PhpstormProjects\ArttunWeb\src\Repository" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
+      <option name="pathToComposerJson" value="$PROJECT_DIR$/composer.json" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

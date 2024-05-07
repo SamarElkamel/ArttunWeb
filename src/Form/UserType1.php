@@ -109,7 +109,7 @@ class UserType1 extends AbstractType
                 ],
                 'choices' => array_map('strval', array_flip($this->addressChoices)),
             ])
-            //->add('captcha', CaptchaType::class,['label'=>false,'attr'=>['placeholder'=>'Enter The Code']])
+            ->add('captcha', CaptchaType::class,['label'=>false,'attr'=>['placeholder'=>'Enter The Code']])
 
         ->add('submit', SubmitType::class, [
                 'label' => 'Submit',

@@ -230,8 +230,30 @@
 {% block body %}
 <div class="form">
 <div class="container" id="container">
+    <div class="form-container sign-up">
+        <form>
+            <h1>Create Account</h1>
+            <div class="social-icons">
+                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email for registeration</span>
+            <input type="text" placeholder="Nom">
+            <input type="text" placeholder="Prenom">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <input type="password" placeholder="Confirm Password">
+            <div class="mb-3">
+                <input class="form-control" type="file" id="formFile">
+            </div>
+
+            <button>Sign Up</button>
+        </form>
+    </div>
     <div class="form-container sign-in">
-        <form method="post">
+        <form method="post"">
             <h1>Sign In</h1>
             <div class="social-icons">
                 <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -244,7 +266,12 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <input name="adresseMail" type="email" value="{{ last_username }}" placeholder="Email">
             <input name="password" type="password" placeholder="Password">
-            <a href="{{ path('app_forgot_password_request') }}">Forget Your Password?</a>
+            <a href="#">Forget Your Password?</a>
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
             <button type="submit">Sign In</button>
             {% if error %}
                 <div class="alert alert-danger" style="width: 160px;
@@ -253,7 +280,6 @@
             {% endif %}
 
         </form>
-
     </div>
     <div class="toggle-container">
         <div class="toggle">
@@ -271,8 +297,7 @@
     </div>
 </div>
 
-<script>
-    const container = document.getElementById('container');
+<script>const container = document.getElementById('container');
     const registerBtn = document.getElementById('register');
     const loginBtn = document.getElementById('login');
 
