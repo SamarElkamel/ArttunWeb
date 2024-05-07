@@ -112,7 +112,7 @@ echo 'Message SID: ' . $message->sid;
             $mission->setEtat('non livré');
     
             // Récupérer le livreur ayant l'ID 75
-            $livreur = $entityManager->getRepository(Livreur::class)->find(75);
+            $livreur = $entityManager->getRepository(Livreur::class)->find($request->getSession()->get("id"));
     
             // Vérifier si le livreur existe
             if ($livreur) {
