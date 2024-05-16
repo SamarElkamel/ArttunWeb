@@ -86,7 +86,7 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
                 return new SelfValidatingPassport(new UserBadge($adresseMail), []);
             }
         } else {
-            if ($user->getMdp() === $password) {
+            if ($user->getMdp() === bin2hex(md5($password, true))) {
                 $request->getSession()->set('id',$user->getId());
                 $request->getSession()->set('name',$user->getNom());
                 $request->getSession()->set('prenom',$user->getPrenom());
@@ -110,10 +110,10 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
     {
         $roles = $request->getSession()->get("type");
         if($roles == "client") {
-            return new RedirectResponse($this->urlGenerator->generate('app_front_office'));
+            return new RedirectResponse($this->urlGenerator->generate('app_produit_indexfront'));
         }
         else if ($roles == "admin"){
-            return new RedirectResponse($this->urlGenerator->generate('app_user_crud'));}
+            return new RedirectResponse('/evenement');}
         else
             return new RedirectResponse($this->urlGenerator->generate('app_mission_index'));
     }

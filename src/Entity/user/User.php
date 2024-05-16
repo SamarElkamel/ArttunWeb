@@ -55,6 +55,11 @@ class User implements UserInterface,TwoFactorInterface
 
     public string $AuthCode ="";
 
+    function encryptString($input) {
+        return bin2hex(md5($input, true));
+    }
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -140,6 +145,7 @@ class User implements UserInterface,TwoFactorInterface
     public function setMdp(string $mdp): self
     {
         $this->mdp =$mdp;
+        $this->mdp =$this->encryptString($mdp);
         return $this;
     }
 

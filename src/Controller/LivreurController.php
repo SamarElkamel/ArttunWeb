@@ -103,6 +103,7 @@ class LivreurController extends AbstractController
             $user->setMdp($livreur->getMdp());
             $user->setType("livreur");
             $user->setNom($livreur->getNom());
+            $user->setAdresse(52);
             $user->setPhoto($livreur->getPhoto());
             $user->setPrenom($livreur->getPrenom());
             $entityManager->persist($user);
